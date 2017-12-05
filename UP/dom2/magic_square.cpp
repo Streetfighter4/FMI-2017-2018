@@ -40,7 +40,7 @@ int checkDiagonal(int array[][MAX_SIZE_ARRAY], int size, bool diagonal) {
 		if(diagonal)
 			sumDiagonal += array[i][i];
 		else
-			sumDiagonal += array[size - i][i];
+			sumDiagonal += array[size - (i+1)][i];
 	}
 	return sumDiagonal;
 }
@@ -61,7 +61,7 @@ int main() {
 		
 	int valueFirstDiagonal = checkDiagonal(array, size, true);
 	int valueSecondDiagonal = checkDiagonal(array, size, false);
-
+	
 	if ((magicCols && magicRows) &&
 			(valueRows == valueCols) &&
 			(valueRows == valueFirstDiagonal) &&
