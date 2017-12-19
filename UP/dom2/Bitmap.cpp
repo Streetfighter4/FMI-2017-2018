@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-	const size_t MAX_SIZE = 100000; // Можете да промените този размер,
+	const size_t MAX_SIZE = 1000000; // Можете да промените този размер,
 									// според това с колко големи
 									// изображения искате да работите 
 
@@ -15,7 +15,7 @@ int main()
 
 	// В последните три параметъра, функцията връща изображението и
 	// размерите му
-	rval = LoadBitmap("test.bmp", image, MAX_SIZE, width, height);
+	rval = LoadBitmap("test2.bmp", image, MAX_SIZE, width, height);
 
 	if (rval != ALL_OK)
 	{
