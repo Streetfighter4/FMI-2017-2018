@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 
 bool isAlph(char c) {
 	return (((c >= 'A') && (c <= 'Z')) || (c >= 'a') && (c <= 'z'));
