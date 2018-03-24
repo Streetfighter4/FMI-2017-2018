@@ -3,6 +3,11 @@
 //
 #include "Transactions.h"
 #include "Constants.h"
+
+#include <time.h>
+#include <fstream>
+#include <string.h>
+
 using std::cout;
 using std::cin;
 using std::endl;

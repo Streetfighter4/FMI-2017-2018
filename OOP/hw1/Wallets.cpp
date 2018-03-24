@@ -4,6 +4,9 @@
 #include "Wallets.h"
 #include "Transactions.h"
 #include "Constants.h"
+#include <fstream>
+#include <string.h>
+
 using std::cout;
 using std::cin;
 using std::endl;

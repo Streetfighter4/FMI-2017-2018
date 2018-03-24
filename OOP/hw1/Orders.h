@@ -6,8 +6,6 @@
 #define HW1_ORDERS_H
 
 #include <iostream>
-#include <fstream>
-#include <string.h>
 struct Order {
     enum Type { SELL, BUY } type;
     unsigned walletId;

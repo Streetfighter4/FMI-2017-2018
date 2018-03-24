@@ -5,6 +5,9 @@
 #include "Orders.h"
 #include "Wallets.h"
 #include "Constants.h"
+
+#include <fstream>
+#include <string.h>
 using std::cout;
 using std::cin;
 using std::endl;

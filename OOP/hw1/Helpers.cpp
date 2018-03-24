@@ -3,17 +3,19 @@
 //
 
 #include "Helpers.h"
-#include "Constants.h"
 #include "Wallets.h"
 #include "Transactions.h"
+#include "Orders.h"
+#include "Constants.h"
+#include <fstream>
+#include <string.h>
+
 using std::cout;
 using std::cin;
 using std::endl;
 using std::ofstream;
 using std::ifstream;
 using std::atof;
-
-
 
 
 void start() {

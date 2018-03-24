@@ -5,9 +5,6 @@
 #ifndef HW1_TRANSACTIONS_H
 #define HW1_TRANSACTIONS_H
 
-#include <time.h>
-#include <fstream>
-#include <string.h>
 #include <iostream>
 
 

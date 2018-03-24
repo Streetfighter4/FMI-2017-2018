@@ -6,7 +6,6 @@
 #define HW1_WALLETS_H
 
 #include <iostream>
-#include <fstream>
 struct Wallet {
     char owner[256];
     unsigned id;
