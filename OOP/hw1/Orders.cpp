@@ -72,7 +72,6 @@ size_t readOrderFromFileDB(Order*& orders) {
     return ordCnt;
 }
 
-
 Order compactOrder(char* type, double fmiCoin, unsigned walletId) {
     Order order;
     order.fmiCoins = fmiCoin;

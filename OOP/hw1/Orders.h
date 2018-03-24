@@ -10,12 +10,14 @@ struct Order {
     enum Type { SELL, BUY } type;
     unsigned walletId;
     double fmiCoins;
+
+
 };
 
 
+Order compactOrder(char*, double, unsigned);
 size_t readOrderFromFileDB(Order*&);
 
-Order compactOrder(char*, double, unsigned);
 
 void writeOrdersInFileDB(const Order*, size_t);
 

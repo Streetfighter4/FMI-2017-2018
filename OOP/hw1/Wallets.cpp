@@ -130,12 +130,10 @@ size_t readWalletsFromFileDB(Wallet*& wallets){
 }
 
 bool walletExistInDB(unsigned walletId, Wallet*& wallets, size_t size) {
-    cout << "Size of wallets.dat: " << size << endl;
     for (int j = 0; j < size; ++j) {
         cout << wallets[j].id << wallets[j].fiatMoney << wallets[j].owner << endl;
     }
     for (int i = 0; i < size; ++i) {
-        cout << "wallets[i].id: " << wallets[i].id << " - walletId: " << walletId << endl;
         if(wallets[i].id == walletId)
             return true;
     }
