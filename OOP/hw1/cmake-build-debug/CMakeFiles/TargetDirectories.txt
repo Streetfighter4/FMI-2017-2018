@@ -1,0 +1,3 @@
+/home/yasen/Programming/FMI-2017-2018/OOP/hw1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/yasen/Programming/FMI-2017-2018/OOP/hw1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/yasen/Programming/FMI-2017-2018/OOP/hw1/cmake-build-debug/CMakeFiles/hw1.dir

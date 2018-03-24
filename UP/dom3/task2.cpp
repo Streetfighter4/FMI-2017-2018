@@ -7,11 +7,18 @@ using namespace std;
 
 typedef unsigned int u_int;
 
-const char* words[] = {"apple", "orange", "month", "vehicle", "bookmarks"};
-const u_int wordsCount = 5;
+const char* words[] = {"apple", "orange", "month", "vehicle", "bookmarks",
+						"insert", "history", "scientist", "meaningless",
+						"wheelchair", "engineering", "mysterious", "stream",
+						"question", "eigenvectors", "scared", "challenge",
+						"crash", "dinosaurs", "extinct", "reverse", "infusion",
+						"sometimes", "elevated", "partnership", "freedom", "finally",
+						"religion", "happened", "extraordinary", "yesterday", "issues",
+						"programming", "language", "right", "ready", "easier", "way",
+						"always", "morning", "someone", "child", "season"};
+const u_int wordsCount = 44;
 const u_int historyLetters = 26;
-const u_int maxMistakes = 5;
-
+u_int maxMistakes = 5;
 
 bool isGuessWord(char historyArray[], u_int indexWord, u_int letters) {
 	u_int guessedLetters = 0;
@@ -54,10 +61,7 @@ void print(char historyArray[], u_int indexWord, u_int mistakes, u_int letters) 
 		cout << endl;
 }
 
-char enterLetter(u_int indexWord, u_int& mistakes) {
-	cout << "Choose a letter: ";
-	char letter;
-	cin >> letter;
+void checkLetterExistInWord(u_int indexWord, u_int& mistakes, char letter) {
 	u_int j = 0;
 	bool noSuchLetter = true;
 	while(words[indexWord][j]) {
@@ -72,11 +76,26 @@ char enterLetter(u_int indexWord, u_int& mistakes) {
 		mistakes++;
 		cout << "No such letter" << endl;	
 	}
+}
 
+char enterLetter(u_int indexWord, u_int& mistakes) {
+	cout << "Choose a letter: ";
+	char letter;
+	cin >> letter;
+
+	checkLetterExistInWord(indexWord, mistakes, letter);
 	return letter;
 }
 
-void play() {
+char generateLetter(u_int indexWord, u_int& mistakes, char historyArray[]) {
+	char letter;
+	letter = 'a' + rand() % 26;
+	cout << letter << endl;
+	checkLetterExistInWord(indexWord, mistakes, letter);
+	return letter;
+}
+
+void play(bool isAI) {
 	u_int indexInHistoryArray;
 	u_int mistakes;
 	u_int indexWord;	
@@ -91,7 +110,12 @@ void play() {
 		while(mistakes < maxMistakes) {
 			u_int lettersInWord = strlen(words[indexWord]);
 			print(historyArray, indexWord, mistakes, lettersInWord);	
-			char letter = enterLetter(indexWord, mistakes);	
+			char letter;
+			if (isAI) {
+				letter = generateLetter(indexWord, mistakes, historyArray);
+			} else	
+				letter = enterLetter(indexWord, mistakes);	
+			
 			historyArray[indexInHistoryArray++] = letter;
 			
 			if(isGuessWord(historyArray, indexWord, lettersInWord)) {
@@ -99,6 +123,8 @@ void play() {
 				break;
 			}
 		}
+		if(mistakes == maxMistakes)
+			cout << "Sorry, game over ;( The word was: " << words[indexWord] << endl;
 
 		char choice;
 		do {
@@ -109,12 +135,32 @@ void play() {
 		if(tolower(choice) == 'y') {
 			continue;
 		} else if(tolower(choice) == 'n') {
-			cout << "Bye, bye :)" << endl;
 			return;
 		}
 	}
 }
 int main() {
-	play();	
+	cout << "Welcome to new Ubisoft a game!" << endl
+		 << "How do you prefer to play this game?" << endl;
+	do {
+		 cout << "Player Vs Computer[p] OR Computer Vs Computer[c]" << endl <<
+		 	 "Change max mistake[m]. Now is: " << maxMistakes << endl <<
+		 	 "Exit[e]" << endl
+		 << "Choose option: ";
+		char option;
+		cin >> option;
+		if(tolower(option) == 'p')
+			play(false);
+		else if(tolower(option) == 'c')
+			play(true);
+		else if(tolower(option) == 'm') {
+			cout << "Set max mistakes: ";
+			cin >> maxMistakes;
+		}
+		else if(tolower(option) == 'e') {
+			cout << "Bye, bye :)" << endl;
+			break;
+		}
+	} while(true);
 	return 0;
 }
