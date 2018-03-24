@@ -7,7 +7,6 @@
 
 #include <iostream>
 
-
 struct Transaction {
     long long time;
     unsigned senderId;
@@ -18,7 +17,6 @@ struct Transaction {
 size_t readTransationsFromFileDB(Transaction*&);
 void makeTransaction(Transaction*, size_t&);
 struct Wallet;
-Transaction compactTransaction(Wallet&, unsigned);
 void writeTransactionsInFileDB(const Transaction*, size_t);
 
 #endif //HW1_TRANSACTIONS_H

@@ -69,3 +69,60 @@ void start() {
 }
 
 
+double countFMICoinsInWallet(const unsigned walletId, Transaction*& transactions, const size_t size) {
+    double startFMICoins = 0;
+
+    for (int i = 0; i < size; ++i) {
+        if(transactions[i].senderId == systemWalletId)
+            startFMICoins = transactions[i].fmiCoins;
+    }
+    for (int i = 0; i < size; ++i) {
+        if(transactions[i].senderId == walletId)
+            startFMICoins -= transactions[i].fmiCoins;
+        if(transactions[i].receiverId == walletId)
+            startFMICoins += transactions[i].fmiCoins;
+    }
+    return startFMICoins;
+}
+
+void makeOrder(const Order* newOrder, size_t& size, Wallet*& wallets, Transaction*& transactions) {
+    if (newOrder == nullptr) {
+        cout << "Order is failed...\n";
+        return;
+    }
+    if(!walletExistInDB(newOrder->walletId, wallets, size)) {
+        cout << "Wallet dont exist in DB, please try with other wallet: " << endl;
+        return;
+    }
+    if(!(countFMICoinsInWallet(newOrder->walletId, transactions, size) >= newOrder->fmiCoins)) {
+        cout << "Wallet dont have enough FMICoins. Try later :)" << endl;
+        return;
+    }
+    cout << newOrder->walletId << endl
+         << newOrder->fmiCoins << endl
+         << newOrder->type << endl;
+    ofstream file(ORDER_DB, std::ios::binary | std::ios::app);
+
+    if(!file.is_open()) {
+        cout << "Sorry, order not be added in DB :(" << endl;
+    }
+    file.write((char*)newOrder, sizeof(Order));
+
+    if (file.good())
+        cout << "Successfully done ! \n";
+    else
+        cout << "Error : while writing the new data! \n";
+
+    file.close();
+}
+
+Transaction compactTransaction(Wallet& wallet, unsigned senderId) {
+    Transaction tr;
+    tr.time = time(0);
+    tr.fmiCoins = wallet.fiatMoney / FMICoinExchangeRates;
+    cout << "fmiCoins: " << tr.fmiCoins << endl;
+    tr.senderId = senderId;
+    tr.receiverId = wallet.id;
+    return tr;
+}
+

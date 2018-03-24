@@ -96,16 +96,6 @@ void makeTransaction(const Transaction* newTransaction, size_t& size) {
     file.close();
 }
 
-Transaction compactTransaction(Wallet& wallet, unsigned senderId) {
-    Transaction tr;
-    tr.time = time(0);
-    tr.fmiCoins = wallet.fiatMoney / FMICoinExchangeRates;
-    cout << "fmiCoins: " << tr.fmiCoins << endl;
-    tr.senderId = senderId;
-    tr.receiverId = wallet.id;
-    return tr;
-}
-
 void writeTransactiosInFileDB(const Transaction* transactions, size_t size) {
     if (transactions == nullptr || size == 0) {
         cout << "nothing to save..." << endl;

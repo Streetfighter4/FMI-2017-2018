@@ -142,22 +142,6 @@ bool walletExistInDB(unsigned walletId, Wallet*& wallets, size_t size) {
     return false;
 }
 
-double countFMICoinsInWallet(const unsigned walletId, Transaction*& transactions, const size_t size) {
-    double startFMICoins = 0;
-
-    for (int i = 0; i < size; ++i) {
-        if(transactions[i].senderId == systemWalletId)
-            startFMICoins = transactions[i].fmiCoins;
-    }
-    for (int i = 0; i < size; ++i) {
-        if(transactions[i].senderId == walletId)
-            startFMICoins -= transactions[i].fmiCoins;
-        if(transactions[i].receiverId == walletId)
-            startFMICoins += transactions[i].fmiCoins;
-    }
-    return startFMICoins;
-}
-
 Wallet compactWallet(unsigned curr_max_id, double money, char* name) {
     Wallet wallet;
     wallet.id = ++curr_max_id;

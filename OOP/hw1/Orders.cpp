@@ -72,36 +72,6 @@ size_t readOrderFromFileDB(Order*& orders) {
     return ordCnt;
 }
 
-void makeOrder(const Order* newOrder, size_t& size, Wallet*& wallets, Transaction*& transactions) {
-    if (newOrder == nullptr) {
-        cout << "Order is failed...\n";
-        return;
-    }
-    if(!walletExistInDB(newOrder->walletId, wallets, size)) {
-        cout << "Wallet dont exist in DB, please try with other wallet: " << endl;
-        return;
-    }
-    if(!(countFMICoinsInWallet(newOrder->walletId, transactions, size) >= newOrder->fmiCoins)) {
-        cout << "Wallet dont have enough FMICoins. Try later :)" << endl;
-        return;
-    }
-    cout << newOrder->walletId << endl
-         << newOrder->fmiCoins << endl
-         << newOrder->type << endl;
-    ofstream file(ORDER_DB, std::ios::binary | std::ios::app);
-
-    if(!file.is_open()) {
-        cout << "Sorry, order not be added in DB :(" << endl;
-    }
-    file.write((char*)newOrder, sizeof(Order));
-
-    if (file.good())
-        cout << "Successfully done ! \n";
-    else
-        cout << "Error : while writing the new data! \n";
-
-    file.close();
-}
 
 Order compactOrder(char* type, double fmiCoin, unsigned walletId) {
     Order order;

@@ -14,9 +14,6 @@ struct Order {
 
 
 size_t readOrderFromFileDB(Order*&);
-struct Wallet;
-struct Transaction;
-void makeOrder(const Order*, size_t&, Wallet*&, Transaction*&);
 
 Order compactOrder(char*, double, unsigned);
 
