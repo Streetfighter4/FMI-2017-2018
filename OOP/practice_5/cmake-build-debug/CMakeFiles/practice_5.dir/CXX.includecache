@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/yasen/Programming/FMI-2017-2018/OOP/practice_5/DynamicArray.cpp
+DynamicArray.h
+/home/yasen/Programming/FMI-2017-2018/OOP/practice_5/DynamicArray.h
+
+/home/yasen/Programming/FMI-2017-2018/OOP/practice_5/DynamicArray.h
+iostream
+-
+
+/home/yasen/Programming/FMI-2017-2018/OOP/practice_5/main.cpp
+iostream
+-
+DynamicArray.h
+/home/yasen/Programming/FMI-2017-2018/OOP/practice_5/DynamicArray.h
+

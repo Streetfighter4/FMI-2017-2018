@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/practice_5.dir/main.cpp.o CMakeFiles/practice_5.dir/DynamicArray.cpp.o  -o practice_5 

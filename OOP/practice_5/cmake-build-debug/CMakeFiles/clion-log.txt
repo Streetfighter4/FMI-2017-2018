@@ -1,0 +1,4 @@
+/home/yasen/Installs/clion-2017.3.3/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=/usr/bin/c++ -G "CodeBlocks - Unix Makefiles" /home/yasen/Programming/FMI-2017-2018/OOP/practice_5
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/yasen/Programming/FMI-2017-2018/OOP/practice_5/cmake-build-debug
