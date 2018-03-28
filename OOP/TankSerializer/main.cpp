@@ -1,0 +1,13 @@
+#include <iostream>
+#include "Tank.h"
+int main() {
+    Tank tank("TankaNaAli", 10.0, 100.0);
+    ofstream outFile ("Tanks.bin", std::ios::binary);
+    tank.serialize(outFile);
+
+    Tank tank1;
+    ifstream inFile ("Tanks.bin" , std::ios::binary);
+    tank1.deserialize(inFile);
+    tank1.tankInfo();
+    return 0;
+}

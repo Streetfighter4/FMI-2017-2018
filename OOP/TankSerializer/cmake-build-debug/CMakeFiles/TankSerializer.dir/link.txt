@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/TankSerializer.dir/main.cpp.o CMakeFiles/TankSerializer.dir/Tank.cpp.o  -o TankSerializer 

@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/Tank.cpp
+string.h
+-
+iostream
+-
+Tank.h
+/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/Tank.h
+
+/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/Tank.h
+fstream
+-
+
+/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/main.cpp
+iostream
+-
+Tank.h
+/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/Tank.h
+
