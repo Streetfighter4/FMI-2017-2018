@@ -16,7 +16,7 @@ class Tank {
 
 public:
     Tank();
-    Tank(char* name, double shotPower, double lifePoints);
+    Tank(const char* name, double shotPower, double lifePoints);
     ~Tank();
 
     void serialize(ofstream& outFile);
