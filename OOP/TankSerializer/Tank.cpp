@@ -26,7 +26,6 @@ void Tank::serialize(ofstream& outFile) {
     }
 
     size_t len = strlen(this->name);
-    cout << "len: " << len << endl;
     outFile.write((char*)&len, sizeof(len));
 
     if(!outFile) return;
@@ -34,10 +33,10 @@ void Tank::serialize(ofstream& outFile) {
     outFile.write(this->name, len);
     if(!outFile) return;
 
-    outFile.write((char*)&this->shotPower, len + sizeof(double));
+    outFile.write((char*)&this->shotPower, sizeof(double));
     if(!outFile) return;
 
-    outFile.write((char*)&this->lifePoints, len + (2*sizeof(double)));
+    outFile.write((char*)&this->lifePoints, sizeof(double));
 
     if (outFile.good())
         std::cout << "Successfully serialize" << std::endl;
@@ -52,17 +51,13 @@ void Tank::deserialize(ifstream& inFile) {
     }
     size_t size;
     inFile.read((char*)&size, sizeof(size_t));
-    cout << "Size: " << size << endl;
     if(!inFile)
         return;
 
     delete[] this->name;
     this->name = new char[size+1];
 
-/*
     size_t readBytes = 0;
-
-    cout << "1" << endl;
 
     while (readBytes < size) {
         inFile.read(this->name + readBytes, size - readBytes);
@@ -70,12 +65,11 @@ void Tank::deserialize(ifstream& inFile) {
         readBytes += inFile.gcount();
     }
 
-    cout << "2" << endl;
     this->name[size] = '\0';
 
+    inFile.read((char*)&this->shotPower, sizeof(double));
+    inFile.read((char*)&this->lifePoints, sizeof(double));
 
-    cout << "3" << endl;
-*/
     if (inFile.good())
         std::cout << "Successfully deserialize" << std::endl;
     else
