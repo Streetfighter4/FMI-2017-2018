@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/Army.cpp" "/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/cmake-build-debug/CMakeFiles/TankSerializer.dir/Army.cpp.o"
   "/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/Tank.cpp" "/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/cmake-build-debug/CMakeFiles/TankSerializer.dir/Tank.cpp.o"
   "/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/main.cpp" "/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/cmake-build-debug/CMakeFiles/TankSerializer.dir/main.cpp.o"
   )

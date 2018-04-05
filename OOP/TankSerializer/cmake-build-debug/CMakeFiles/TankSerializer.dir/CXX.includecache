@@ -6,6 +6,18 @@
 
 #IncludeRegexTransform: 
 
+/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/Army.cpp
+string.h
+-
+iostream
+-
+Army.h
+/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/Army.h
+
+/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/Army.h
+Tank.h
+/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/Tank.h
+
 /home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/Tank.cpp
 string.h
 -
@@ -21,6 +33,10 @@ fstream
 /home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/main.cpp
 iostream
 -
+fstream
+-
 Tank.h
 /home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/Tank.h
+Army.h
+/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/Army.h
 

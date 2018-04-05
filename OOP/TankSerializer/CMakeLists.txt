@@ -3,4 +3,4 @@ project(TankSerializer)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(TankSerializer main.cpp Tank.cpp)
+add_executable(TankSerializer main.cpp Tank.cpp Army.cpp Army.h)

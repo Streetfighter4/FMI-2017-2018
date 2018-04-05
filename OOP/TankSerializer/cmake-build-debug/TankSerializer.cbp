@@ -84,6 +84,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/Army.cpp">
+			<Option target="TankSerializer"/>
+		</Unit>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/Army.h">
+			<Option target="TankSerializer"/>
+		</Unit>
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/Tank.cpp">
 			<Option target="TankSerializer"/>
 		</Unit>

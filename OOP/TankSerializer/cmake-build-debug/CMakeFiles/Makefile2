@@ -66,7 +66,7 @@ CMAKE_BINARY_DIR = /home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/cmak
 CMakeFiles/TankSerializer.dir/all:
 	$(MAKE) -f CMakeFiles/TankSerializer.dir/build.make CMakeFiles/TankSerializer.dir/depend
 	$(MAKE) -f CMakeFiles/TankSerializer.dir/build.make CMakeFiles/TankSerializer.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/cmake-build-debug/CMakeFiles --progress-num=1,2,3 "Built target TankSerializer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4 "Built target TankSerializer"
 .PHONY : CMakeFiles/TankSerializer.dir/all
 
 # Include target in all.
@@ -76,7 +76,7 @@ all: CMakeFiles/TankSerializer.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/TankSerializer.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/cmake-build-debug/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/cmake-build-debug/CMakeFiles 4
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/TankSerializer.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/yasen/Programming/FMI-2017-2018/OOP/TankSerializer/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/TankSerializer.dir/rule

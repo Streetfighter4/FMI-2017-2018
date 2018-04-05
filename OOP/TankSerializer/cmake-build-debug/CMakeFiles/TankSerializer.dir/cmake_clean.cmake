@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/TankSerializer.dir/main.cpp.o"
   "CMakeFiles/TankSerializer.dir/Tank.cpp.o"
+  "CMakeFiles/TankSerializer.dir/Army.cpp.o"
   "TankSerializer.pdb"
   "TankSerializer"
 )

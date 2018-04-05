@@ -123,6 +123,33 @@ TankSerializer/fast:
 	$(MAKE) -f CMakeFiles/TankSerializer.dir/build.make CMakeFiles/TankSerializer.dir/build
 .PHONY : TankSerializer/fast
 
+Army.o: Army.cpp.o
+
+.PHONY : Army.o
+
+# target to build an object file
+Army.cpp.o:
+	$(MAKE) -f CMakeFiles/TankSerializer.dir/build.make CMakeFiles/TankSerializer.dir/Army.cpp.o
+.PHONY : Army.cpp.o
+
+Army.i: Army.cpp.i
+
+.PHONY : Army.i
+
+# target to preprocess a source file
+Army.cpp.i:
+	$(MAKE) -f CMakeFiles/TankSerializer.dir/build.make CMakeFiles/TankSerializer.dir/Army.cpp.i
+.PHONY : Army.cpp.i
+
+Army.s: Army.cpp.s
+
+.PHONY : Army.s
+
+# target to generate assembly for a file
+Army.cpp.s:
+	$(MAKE) -f CMakeFiles/TankSerializer.dir/build.make CMakeFiles/TankSerializer.dir/Army.cpp.s
+.PHONY : Army.cpp.s
+
 Tank.o: Tank.cpp.o
 
 .PHONY : Tank.o
@@ -186,6 +213,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... TankSerializer"
+	@echo "... Army.o"
+	@echo "... Army.i"
+	@echo "... Army.s"
 	@echo "... Tank.o"
 	@echo "... Tank.i"
 	@echo "... Tank.s"
