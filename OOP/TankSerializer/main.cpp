@@ -10,10 +10,9 @@ using std::endl;
 int main() {
 
     Tank tank1("TankaNaAli", 50.0, 100.0);
-    ofstream oFile ("Tanks.bin", std::ios::binary | std::ios::app);
-    tank1.serialize(oFile);
-    oFile.close();
-
+ //   ofstream oFile ("Tanks.bin", std::ios::binary | std::ios::app);
+  //  tank1.serialize(oFile);
+   // oFile.close();
     Tank tank2("TankaNaAlii", 30.0, 100.0);
     Tank tank3("TankaNaAliii", 60.0, 100.0);
     Tank tank4("TankaNaAliiii", 55.5, 100.0);
@@ -26,11 +25,10 @@ int main() {
     alisArmy.addTank(tank4);
     alisArmy.addTank(tank5);
     ofstream outFile ("AlisArmy.bin", std::ios::binary | std::ios::app);
-    cout << "1" << endl;
+    size_t num = 5;
+    outFile.write((const char*)&num, sizeof(size_t));
     alisArmy.serializeArmy(outFile);
-    cout << "5" << endl;
-    oFile.close();
-
+    outFile.close();
     Tank tank6("TankaNaYasen", 40.0, 100.0);
     Tank tank7("TankaNaYasenn", 80.0, 100.0);
     Tank tank8("TankaNaYasennn", 12.3, 100.0);

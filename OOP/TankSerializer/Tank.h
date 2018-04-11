@@ -25,7 +25,6 @@ public:
     char* getName() const;
     double getShotPower() const;
     double getLifePoints() const;
-
     void setName(char* name);
     void setShotPower(double shotPower);
     void setLifePoints(double LifePoints);

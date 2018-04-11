@@ -11,8 +11,10 @@ using std::endl;
 Tank::Tank() : name(nullptr), shotPower(0.0), lifePoints(0.0){}
 
 Tank::Tank(const char* newName, double shotPower, double lifePoints) : shotPower(shotPower), lifePoints(lifePoints){
-    this->name = new char[strlen(newName+1)];
-    strcpy(this->name, newName);
+    size_t size = strlen(newName) + 1;
+    name = new char[size];
+    strcpy(name, newName);
+    name[size] = '\0';
 }
 
 Tank::~Tank() {
@@ -20,32 +22,25 @@ Tank::~Tank() {
 }
 
 void Tank::serialize(ofstream& outFile) {
-    cout << "serialize tank 1" << endl;
     if(!outFile.is_open()) {
         std::cout << "File is not open" << std::endl;
         return;
     }
 
-    cout << "serialize tank 2" << endl;
     size_t len = strlen(this->name);
-    cout << "serialize tank 3" << endl;
     outFile.write((const char*)&len, sizeof(size_t));
 
     outFile.write(this->name, len);
 
-    cout << "serialize tank 4" << endl;
     outFile.write((char*)&this->shotPower, sizeof(double));
 
-    cout << "serialize tank 5" << endl;
     outFile.write((char*)&this->lifePoints, sizeof(double));
 
-    cout << "serialize tank 6" << endl;
     if (outFile.good())
         std::cout << "Successfully serialize" << std::endl;
     else
         std::cout << "Serialize failed" << std::endl;
 
-    cout << "serialize tank 7" << endl;
 }
 
 void Tank::deserialize(ifstream& inFile) {
@@ -91,8 +86,10 @@ double Tank::getShotPower() const { return shotPower; }
 double Tank::getLifePoints() const { return lifePoints; }
 
 void Tank::setName(char* newName) {
-    name = new char[strlen(newName)];
-    memcpy(name, newName, strlen(newName));
+    size_t size = strlen(newName) + 1;
+    name = new char[size];
+    strcpy(name, newName);
+    name[size] = '\0';
 }
 void Tank::setShotPower(double shotPower) {
     this->shotPower = shotPower;
@@ -100,3 +97,5 @@ void Tank::setShotPower(double shotPower) {
 void Tank::setLifePoints(double lifePoints) {
     this->lifePoints = lifePoints;
 }
+
+

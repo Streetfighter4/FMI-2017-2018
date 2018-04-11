@@ -20,11 +20,16 @@ public:
     void resize(size_t);
     void addTank(const Tank&);
 
+    size_t getCurrSize() const;
+    size_t getCapacity() const;
+
+
     void serializeArmy(ofstream&);
     void deserializeArmy(ifstream&);
 
     void sortingTanks();
 
+    void remove(Tank& tank);
     void attack(Tank&);
 };
 

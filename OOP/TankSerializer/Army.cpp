@@ -7,11 +7,11 @@
 #include "Army.h"
 using std::cout;
 using std::endl;
-
+u
 
 Army::Army() : tanks(nullptr), currSize(0), capacity(0) {}
 
-Army::Army(size_t size) : currSize(size), capacity(size*2){
+Army::Army(size_t size) : currSize(0), capacity(size){
     tanks = new Tank[capacity];
 }
 
@@ -55,14 +55,9 @@ void Army::addTank(const Tank& tank) {
 }
 
 void Army::serializeArmy(ofstream& file) {
-
-    cout << "2" << endl;
     file.write((const char*)&currSize, sizeof(size_t));
 
-    cout << "3" << endl;
     for (int i = 0; i < currSize; ++i) {
-
-        cout << "4." << i << endl;
         tanks[i].serialize(file);
     }
 }
@@ -104,12 +99,26 @@ void Army::attack(Tank& tank) {
         if(tank.getLifePoints() <= 0.0) {
             std::cout << "Tank has been destroyed\nTank info:\n";
             tank.tankInfo();
+            this->remove(tank);
         }
     } else {
         std::cout << "Not enough power on army" << std::endl;
         return;
     }
 
+}
+
+size_t Army::getCurrSize() const {
+    return currSize;
+}
+
+size_t Army::getCapacity() const {
+    return capacity;
+}
+
+void Army::remove(Tank& tank) {
+    std::swap(tank, tanks[currSize]);
+    currSize--;
 }
 
 
