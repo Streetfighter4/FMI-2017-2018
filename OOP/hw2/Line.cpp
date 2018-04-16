@@ -24,13 +24,18 @@ Line::Line(size_t id, char* content) : id(id) {
         ++i;
     }
 
-    countWords = i;
-    words = new Word[i];
-    /*
+    countWords = i - 1;
+    cout << "countWords: " << countWords << endl;
+    words = new Word[countWords];
+    cout << "In Line constuctor" << endl;
+
     for (int j = 0; j < countWords; ++j) {
         words[j] = tempWords[j];
     }
-     */
+
+    cout << "In Line constuctor1" << endl;
+
+    //cout << "First word: " << words[0].getValue() << endl;
     delete[] tempWords;
 }
 

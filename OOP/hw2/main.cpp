@@ -2,27 +2,30 @@
 #include <fstream>
 #include <string.h>
 #include "File.h"
+#include "Constants.h"
 
 using std::cout;
 using std::endl;
 using std::ifstream;
-const char* extention = ".txt";
 
 int main() {
     char* fileName = new char[128];
     std::cin >> fileName;
-    cout << fileName << endl;
-    char* fullPathFile = new char[strlen(fileName) + strlen(extention) + 1];
+
+    char* fullPathFile = new char[strlen(fileName) + strlen(extentionTXT) + 1];
     strcpy(fullPathFile, fileName);
-    strcat(fullPathFile, extention);
-    std::cout << fullPathFile << std::endl;
+    strcat(fullPathFile, extentionTXT);
+
     size_t numberOfLines = 0;
-    char line[1024];
+    char line[lenghtOfLine];
     ifstream iFile (fullPathFile);
+    delete fullPathFile;
+
     while(!iFile.eof()) {
-        iFile.getline(line, 1024);
+        iFile.getline(line, lenghtOfLine);
         numberOfLines++;
     }
+
     iFile.close();
 
     File* file = new File(fileName, numberOfLines-1);
@@ -30,10 +33,9 @@ int main() {
         cout << "Can not parse the file!" << endl;
         return -1;
     }
-    cout << "After parse" << endl;
+    delete fileName;
+
     file->makeChanges();
 
-    delete fileName;
-    delete fullPathFile;
     return 0;
 }

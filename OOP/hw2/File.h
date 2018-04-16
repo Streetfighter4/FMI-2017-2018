@@ -12,10 +12,8 @@ using std::ifstream;
 
 class File {
     char* name;
-    ifstream file;
     Line** lines;
     size_t cntLines;
-    size_t countLines();
 public:
     File();
     File(const char *name, size_t countLines);

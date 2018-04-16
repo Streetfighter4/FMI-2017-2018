@@ -19,7 +19,7 @@ public:
     Word&operator=(const Word&);
     ~Word();
 
-    char* getValue() const;
+    const char * getValue() const;
     size_t getId() const;
 
     bool getIsBold() const;

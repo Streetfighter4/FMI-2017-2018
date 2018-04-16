@@ -33,9 +33,9 @@ File::~File() {
 }
 
 bool File::parser() {
-    char* fullName = new char[strlen(name) + 4 + 1];
+    char* fullName = new char[strlen(name) + strlen(extentionTXT) + 1];
     strcpy(fullName, name);
-    strcat(fullName, ".txt");
+    strcat(fullName, extentionTXT);
     name = fullName;
     ifstream file (fullName);
     cout << fullName << endl;
@@ -44,24 +44,26 @@ bool File::parser() {
         cout << "Bla bla bla" << endl;
         return false;
     }
-    char buffer[1024];
+    char buffer[lenghtOfLine];
     size_t numLine = 1;
     while(file) {
-        cout << "1";
-        file.getline(buffer, 1024);
-        cout << "2";
-        if(numLine == cntLines) break;
-        if(file) {
-            cout << "3";
-            Line* line = new (std::nothrow) Line(numLine, buffer);
+        file.getline(buffer, lenghtOfLine);
 
+        cout << "numLine: " << numLine << endl;
+        cout << "cntLines: " << cntLines << endl;
+        if(numLine == cntLines) break;
+        if(file.good()) {
+
+            cout << "One line is ready!" << endl;
+            Line* line = new (std::nothrow) Line(numLine, buffer);
+            cout << "After Line constructor" << endl;
             this->lines[numLine-1] = line;
             numLine++;
         } else {
+            cout << "File is not good!" << endl;
             file.close();
             return false;
         }
-        cout << endl;
     }
     file.close();
     return true;
@@ -69,9 +71,9 @@ bool File::parser() {
 
 void File::exit() {
     cout << "In exit()" << endl;
-    char* fullName = new char[strlen(name) + 4];
+    char* fullName = new char[strlen(name) + strlen(extentionMD) + 1];
     strcpy(fullName, name);
-    strcat(fullName, ".md");
+    strcat(fullName, extentionMD);
     ofstream file (fullName);
     bool boldScope;
     bool italicScope;
@@ -109,21 +111,6 @@ void File::exit() {
         file << endl;
     }
     file.close();
-}
-
-size_t File::countLines() {
-    size_t numLines = 0;
-    char c;
-    while(!this->file.eof()) {
-        file.get(c);
-        if(file) {
-            if(c == '\n') {
-                numLines++;
-            }
-        }
-    }
-
-    return numLines;
 }
 
 void File::addLine(char *content) {
@@ -165,7 +152,7 @@ void File::makeChanges() {
         if(!strcmp(array[0], "makeHeading")) {
             cout << "In makeChanges/makeHeading()" << endl;
             int indexOfLine = atoi(array[1]);
-            this->lines[indexOfLine]->makeHeading();
+            this->lines[indexOfLine-1]->makeHeading();
 
         } else if(!strcmp(array[0], "makeItalic")) {
             int indexOfLine = atoi(array[1]);

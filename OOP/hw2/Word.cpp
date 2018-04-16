@@ -8,7 +8,7 @@
 using std::cout;
 using std::endl;
 
-Word::Word() {}
+Word::Word():value(nullptr) {}
 
 Word::Word(size_t id, char *value) : id(id){
     this->value = new char[strlen(value)];
@@ -23,13 +23,14 @@ size_t Word::getId() const {
     return id;
 }
 
-char* Word::getValue() const {
+const char * Word::getValue() const {
     return value;
 }
 
 Word& Word::operator=(const Word& other) {
+    delete[] value;
     this->id = other.id;
-    value = new char[strlen(other.value) + 1];
+    value = new (std::nothrow) char[strlen(other.value) + 1];
     strcpy(value, other.value);
 
     return *this;
