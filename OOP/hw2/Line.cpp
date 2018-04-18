@@ -47,7 +47,7 @@ bool Line::isHeadingLine() const {
     return isHeading;
 }
 
-const Word Line::getWord(size_t index) const {
+const Word& Line::getWord(size_t index) const {
     return words[index];
 }
 
@@ -65,6 +65,7 @@ void Line::makeHeading() {
 
 void Line::makeItalic(size_t from, size_t to) {
     for (size_t i = from; i < to; ++i) {
+        cout << words[i].getValue() << endl;
         words[i].setIsBold(true);
     }
 }

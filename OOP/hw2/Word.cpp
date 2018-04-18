@@ -11,7 +11,7 @@ using std::endl;
 Word::Word():value(nullptr) {}
 
 Word::Word(size_t id, char *value) : id(id){
-    this->value = new char[strlen(value)];
+    this->value = new char[strlen(value) + 1];
     strcpy(this->value, value);
 }
 
@@ -23,7 +23,7 @@ size_t Word::getId() const {
     return id;
 }
 
-const char * Word::getValue() const {
+const char* Word::getValue() const {
     return value;
 }
 

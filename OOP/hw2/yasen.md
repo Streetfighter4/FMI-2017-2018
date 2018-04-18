@@ -1,0 +1,3 @@
+kurpa
+#kurpa
+#compalitxtstoiboilalala

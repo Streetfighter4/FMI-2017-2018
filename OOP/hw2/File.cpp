@@ -18,7 +18,7 @@ using std::string;
 File::File() {}
 
 File::File(const char *name, size_t countLines) : cntLines(countLines){
-    this->name = new char[strlen(name)];
+    this->name = new char[strlen(name) + 1];
     strcpy(this->name, name);
     this->lines = new Line*[countLines];
 }
@@ -36,7 +36,6 @@ bool File::parser() {
     char* fullName = new char[strlen(name) + strlen(extentionTXT) + 1];
     strcpy(fullName, name);
     strcat(fullName, extentionTXT);
-    name = fullName;
     ifstream file (fullName);
     cout << fullName << endl;
     delete[] fullName;
@@ -45,7 +44,7 @@ bool File::parser() {
         return false;
     }
     char buffer[lenghtOfLine];
-    size_t numLine = 1;
+    size_t numLine = 0;
     while(file) {
         file.getline(buffer, lenghtOfLine);
 
@@ -55,9 +54,9 @@ bool File::parser() {
         if(file.good()) {
 
             cout << "One line is ready!" << endl;
-            Line* line = new (std::nothrow) Line(numLine, buffer);
+            Line* line = new (std::nothrow) Line(numLine+1, buffer);
             cout << "After Line constructor" << endl;
-            this->lines[numLine-1] = line;
+            this->lines[numLine] = line;
             numLine++;
         } else {
             cout << "File is not good!" << endl;
@@ -74,6 +73,7 @@ void File::exit() {
     char* fullName = new char[strlen(name) + strlen(extentionMD) + 1];
     strcpy(fullName, name);
     strcat(fullName, extentionMD);
+    cout << "Name of file: " << fullName << endl;
     ofstream file (fullName);
     bool boldScope;
     bool italicScope;

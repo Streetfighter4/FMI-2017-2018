@@ -25,7 +25,7 @@ public:
     void makeItalic(size_t from, size_t to);
     void makeBold(size_t from, size_t to);
     void makeCombine(size_t from, size_t to);
-    const Word getWord(size_t index) const;
+    const Word& getWord(size_t index) const;
     const char* getValueWord(size_t index) const;
     void setWord(size_t index, Word& word);
     size_t getCntWords() const;
