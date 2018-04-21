@@ -8,7 +8,6 @@
 static const char* headingSymbol = "# ";
 static const char italicSymbol = '*';
 static const char* boldSymbol = "**";
-static const char* extentionTXT = ".txt";
 static const char* extentionMD = ".md";
 static const size_t lenghtOfLine = 1024;
 

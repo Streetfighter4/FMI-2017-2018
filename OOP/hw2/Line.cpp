@@ -17,9 +17,7 @@ Line::Line(size_t id, char* content) : id(id), isHeading(false) {
     size_t i = 1;
     Word* tempWords = new Word[512];
     while(token != nullptr) {
-        cout << "token: " << token << endl;
         Word* word = new Word(i, token);
-        cout << "word value: " << word->getValue() << endl;
         tempWords[i-1] = *word;
         token = strtok(nullptr, " ");
         ++i;
@@ -45,10 +43,6 @@ bool Line::isHeadingLine() const {
 
 const Word& Line::getWord(size_t index) const {
     return words[index];
-}
-
-void Line::setWord(size_t index, Word& word) {
-    words[index-1] = word;
 }
 
 const char* Line::getValueWord(size_t index) const {

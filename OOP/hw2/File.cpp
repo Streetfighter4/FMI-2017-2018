@@ -3,11 +3,9 @@
 //
 
 #include "File.h"
-#include "Line.h"
 #include "Constants.h"
-#include <string.h>
-#include <fstream>
 #include <cstring>
+#include <fstream>
 using std::ifstream;
 using std::ofstream;
 using std::cout;
@@ -33,13 +31,9 @@ File::~File() {
 }
 
 bool File::parser() {
-    char* fullName = new char[strlen(name) + strlen(extentionTXT) + 1];
-    strcpy(fullName, name);
-    strcat(fullName, extentionTXT);
-    ifstream file (fullName);
-    delete[] fullName;
+    ifstream file (name);
     if(!file.is_open()){
-        cout << "Bla bla bla" << endl;
+        cout << "Can't open a file" << endl;
         return false;
     }
     char buffer[lenghtOfLine];
@@ -62,13 +56,20 @@ bool File::parser() {
 }
 
 void File::exit() {
-    char* fullName = new char[strlen(name) + strlen(extentionMD) + 1];
+    size_t i;
+    for (i = strlen(name); i > 0; --i) {
+        if(name[i] == '.') break;
+    }
+    name[i] = '\0';
+    char* fullName = new char[i + strlen(extentionMD) + 1];
     strcpy(fullName, name);
     strcat(fullName, extentionMD);
+
     ofstream file (fullName);
+
     bool boldScope;
     bool italicScope;
-    for (size_t i = 0; i < cntLines; ++i) {
+    for (i = 0; i < cntLines; ++i) {
         boldScope = italicScope = false;
         if(lines[i]->isHeadingLine()) {
             file << headingSymbol;
@@ -100,8 +101,9 @@ void File::exit() {
         if(boldScope){
             file << boldSymbol;
         }
-        if(italicScope)
+        if(italicScope) {
             file << italicSymbol;
+        }
 
         file << endl;
     }
@@ -115,7 +117,6 @@ bool File::hasSpace(size_t i, size_t j) const {
 }
 
 void File::addLine(char* content) {
-    cout << "In addLine. content: " << content << endl;
     Line** newLines = new Line*[cntLines + 1];
     for (int i = 0; i < cntLines; ++i) {
         newLines[i] = lines[i];
@@ -135,70 +136,81 @@ void File::removeLine(size_t index) {
 }
 
 void File::makeChanges() {
-    cin.ignore();
     while(true) {
         char command[20];
         cin >> command;
-        cout << command << endl;
         if(!strcmp(command, "makeHeading")) {
-            cout << "In makeChanges/makeHeading()" << endl;
             int indexOfLine;
             cin >> indexOfLine;
+
+            if(!validInput(indexOfLine)) {
+                continue;
+            }
             this->lines[indexOfLine-1]->makeHeading();
 
         } else if(!strcmp(command, "makeItalic")) {
-            int indexOfLine;
-            size_t from, to;
+            int indexOfLine, from, to;
             cin >> indexOfLine >> from >> to;
 
-            if(from > to) {
-                cout << "Invalid scope. Try again." << endl;
+            if(!validInput(indexOfLine, from, to)) {
                 continue;
             }
-            this->lines[indexOfLine-1]->makeItalic(from-1, to-1);
+
+            this->lines[indexOfLine-1]->makeItalic((size_t)from-1, (size_t)to-1);
 
         } else if(!strcmp(command, "makeBold")) {
-            int indexOfLine;
-            size_t from, to;
+            int indexOfLine, from, to;
             cin >> indexOfLine >> from >> to;
 
-            if(from > to) {
-                cout << "Invalid scope. Try again." << endl;
+            if(!validInput(indexOfLine, from, to)) {
                 continue;
             }
 
-            this->lines[indexOfLine-1]->makeBold(from-1, to-1);
+            this->lines[indexOfLine-1]->makeBold((size_t)from-1, (size_t)to-1);
 
         } else if(!strcmp(command, "makeCombine")) {
-            int indexOfLine;
-            size_t from, to;
+            int indexOfLine, from, to;
             cin >> indexOfLine >> from >> to;
 
-            if(from > to) {
-                cout << "Invalid scope. Try again." << endl;
+            if(!validInput(indexOfLine, from, to)) {
                 continue;
             }
 
-            this->lines[indexOfLine-1]->makeCombine(from-1, to-1);
+            this->lines[indexOfLine-1]->makeCombine((size_t)from-1, (size_t)to-1);
 
         } else if(!strcmp(command, "addLine")) {
             char content[lenghtOfLine];
             cin.getline(content, lenghtOfLine);
-            cout << content << endl;
             this->addLine(content);
 
         } else if(!strcmp(command, "remove")) {
-            cout << "In makeChanges/remove()" << endl;
-            size_t indexOfLine;
+            int indexOfLine;
             cin >> indexOfLine;
-            this->removeLine(indexOfLine-1);
+            if(!validInput(indexOfLine)) {
+                continue;
+            }
+            this->removeLine((size_t)indexOfLine-1);
 
         } else if(!strcmp(command, "exit")) {
-            cout << "In makeChanges/exit()" << endl;
             this->exit();
             return;
+        } else {
+            cout << "Invalid command. Try again!" << endl;
         }
 
     }
+}
+
+bool File::validInput(int indexOfLine, int from, int to) {
+    if(indexOfLine > cntLines || indexOfLine < 1) {
+        cout << "Invalid line. Try again" << endl;
+        return false;
+    }
+    size_t wordsOnLine = lines[indexOfLine-1]->getCntWords();
+    if(from > to || from < 1 || to < 1 || (from > wordsOnLine) || (to > wordsOnLine)) {
+        cout << "Invalid scope of words. Try again." << endl;
+        return false;
+    }
+    return true;
 }
 

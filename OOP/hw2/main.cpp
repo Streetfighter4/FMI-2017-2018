@@ -8,18 +8,10 @@ using std::cout;
 using std::endl;
 using std::ifstream;
 
-int main() {
-    char* fileName = new char[128];
-    std::cin >> fileName;
-
-    char* fullPathFile = new char[strlen(fileName) + strlen(extentionTXT) + 1];
-    strcpy(fullPathFile, fileName);
-    strcat(fullPathFile, extentionTXT);
-
+int main(int argc, const char* argv[]) {
     size_t numberOfLines = 0;
     char line[lenghtOfLine];
-    ifstream iFile (fullPathFile);
-    delete fullPathFile;
+    ifstream iFile (argv[1]);
 
     while(!iFile.eof()) {
         iFile.getline(line, lenghtOfLine);
@@ -28,12 +20,11 @@ int main() {
 
     iFile.close();
 
-    File* file = new File(fileName, numberOfLines-1);
+    File* file = new File(argv[1], numberOfLines-1);
     if(!file->parser()) {
         cout << "Can not parse the file!" << endl;
         return -1;
     }
-    delete fileName;
 
     file->makeChanges();
 

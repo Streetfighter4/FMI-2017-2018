@@ -2,11 +2,8 @@
 // Created by yasen on 4/3/18.
 //
 #include <iostream>
-#include <string.h>
+#include <cstring>
 #include "Word.h"
-
-using std::cout;
-using std::endl;
 
 Word::Word():value(nullptr) {}
 
@@ -19,10 +16,6 @@ Word::~Word() {
     delete[] value;
 }
 
-size_t Word::getId() const {
-    return id;
-}
-
 const char* Word::getValue() const {
     return value;
 }
@@ -30,6 +23,8 @@ const char* Word::getValue() const {
 Word& Word::operator=(const Word& other) {
     delete[] value;
     this->id = other.id;
+    this->isBold = other.isBold;
+    this->isItalic = other.isItalic;
     value = new (std::nothrow) char[strlen(other.value) + 1];
     strcpy(value, other.value);
 

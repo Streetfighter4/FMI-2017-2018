@@ -7,8 +7,6 @@
 
 #include "Line.h"
 #include <iostream>
-#include <fstream>
-using std::ifstream;
 
 class File {
     char* name;
@@ -16,9 +14,10 @@ class File {
     size_t cntLines;
 public:
     File();
-    File(const char *name, size_t countLines);
+    File(const char* name, size_t countLines);
     ~File();
 
+    bool validInput(int, int=1, int=2);
     bool parser();
     void makeChanges();
     void addLine(char* content);

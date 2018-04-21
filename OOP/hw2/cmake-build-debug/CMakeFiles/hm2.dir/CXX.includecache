@@ -11,23 +11,17 @@
 /home/yasen/Programming/FMI-2017-2018/OOP/hw2/File.cpp
 File.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw2/File.h
-Line.h
-/home/yasen/Programming/FMI-2017-2018/OOP/hw2/Line.h
 Constants.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw2/Constants.h
-string.h
+cstring
 -
 fstream
--
-cstring
 -
 
 /home/yasen/Programming/FMI-2017-2018/OOP/hw2/File.h
 Line.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw2/Line.h
 iostream
--
-fstream
 -
 
 /home/yasen/Programming/FMI-2017-2018/OOP/hw2/Line.cpp
@@ -47,7 +41,7 @@ Word.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw2/Word.cpp
 iostream
 -
-string.h
+cstring
 -
 Word.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw2/Word.h

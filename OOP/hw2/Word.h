@@ -5,7 +5,6 @@
 #ifndef HM2_WORD_H
 #define HM2_WORD_H
 
-
 #include <iostream>
 
 class Word {
@@ -19,8 +18,7 @@ public:
     Word&operator=(const Word&);
     ~Word();
 
-    const char * getValue() const;
-    size_t getId() const;
+    const char* getValue() const;
 
     bool getIsBold() const;
     bool getIsItalic() const;
@@ -28,6 +26,5 @@ public:
     void setIsBold(bool isBold);
     void setIsItalic(bool isItalic);
 };
-
 
 #endif //HM2_WORD_H
