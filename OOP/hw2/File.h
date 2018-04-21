@@ -24,6 +24,8 @@ public:
     void addLine(char* content);
     void removeLine(size_t index);
     void exit();
+
+    bool hasSpace(size_t i, size_t j) const;
 };
 
 

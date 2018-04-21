@@ -10,7 +10,7 @@ using std::endl;
 
 Word::Word():value(nullptr) {}
 
-Word::Word(size_t id, char *value) : id(id){
+Word::Word(size_t id, char *value) : id(id), isBold(false), isItalic(false){
     this->value = new char[strlen(value) + 1];
     strcpy(this->value, value);
 }

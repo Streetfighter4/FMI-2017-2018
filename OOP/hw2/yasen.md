@@ -1,3 +1,2 @@
-kurpa
-#kurpa
-#compalitxtstoiboilalala
+kurpa 
+comp ali txt stoi boi lalala 

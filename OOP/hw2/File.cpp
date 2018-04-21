@@ -37,7 +37,6 @@ bool File::parser() {
     strcpy(fullName, name);
     strcat(fullName, extentionTXT);
     ifstream file (fullName);
-    cout << fullName << endl;
     delete[] fullName;
     if(!file.is_open()){
         cout << "Bla bla bla" << endl;
@@ -48,18 +47,12 @@ bool File::parser() {
     while(file) {
         file.getline(buffer, lenghtOfLine);
 
-        cout << "numLine: " << numLine << endl;
-        cout << "cntLines: " << cntLines << endl;
         if(numLine == cntLines) break;
         if(file.good()) {
-
-            cout << "One line is ready!" << endl;
             Line* line = new (std::nothrow) Line(numLine+1, buffer);
-            cout << "After Line constructor" << endl;
             this->lines[numLine] = line;
             numLine++;
         } else {
-            cout << "File is not good!" << endl;
             file.close();
             return false;
         }
@@ -69,15 +62,12 @@ bool File::parser() {
 }
 
 void File::exit() {
-    cout << "In exit()" << endl;
     char* fullName = new char[strlen(name) + strlen(extentionMD) + 1];
     strcpy(fullName, name);
     strcat(fullName, extentionMD);
-    cout << "Name of file: " << fullName << endl;
     ofstream file (fullName);
     bool boldScope;
     bool italicScope;
-    cout << "In exit() 1" << endl;
     for (size_t i = 0; i < cntLines; ++i) {
         boldScope = italicScope = false;
         if(lines[i]->isHeadingLine()) {
@@ -102,9 +92,14 @@ void File::exit() {
             }
 
             file << lines[i]->getValueWord(j);
+            if(hasSpace(i, j)) {
+                file << ' ';
+            }
+
         }
-        if(boldScope)
+        if(boldScope){
             file << boldSymbol;
+        }
         if(italicScope)
             file << italicSymbol;
 
@@ -113,13 +108,22 @@ void File::exit() {
     file.close();
 }
 
-void File::addLine(char *content) {
+bool File::hasSpace(size_t i, size_t j) const {
+    const Word &curr = lines[i]->getWord(j);
+    const Word &next = lines[i]->getWord(j + 1);
+    return (!curr.getIsBold() || next.getIsBold()) && (!curr.getIsItalic() || next.getIsItalic());
+}
+
+void File::addLine(char* content) {
+    cout << "In addLine. content: " << content << endl;
     Line** newLines = new Line*[cntLines + 1];
     for (int i = 0; i < cntLines; ++i) {
         newLines[i] = lines[i];
     }
     Line* newLine = new Line(cntLines+1, content);
     newLines[cntLines] = newLine;
+    delete[] lines;
+    lines = newLines;
     cntLines++;
 }
 
@@ -133,69 +137,63 @@ void File::removeLine(size_t index) {
 void File::makeChanges() {
     cin.ignore();
     while(true) {
-        char request[256];
-        cin.getline(request, 256);
-        cout << "request: " << request << endl;
-        cout << "In makeChanges" << endl;
-        char* token;
-        char* array[4];
-        token = strtok(request, " ");
-        cout << "token: " << token << endl;
-        int i = 0;
-        array[i] = token;
-        cout << "array[i]: " << array[i] << endl;
-        while (token != NULL) {
-            array[i++] = token;
-            token = strtok(NULL, " ");
-        }
-        cout << "array[0]: " << array[0] << endl;
-        if(!strcmp(array[0], "makeHeading")) {
+        char command[20];
+        cin >> command;
+        cout << command << endl;
+        if(!strcmp(command, "makeHeading")) {
             cout << "In makeChanges/makeHeading()" << endl;
-            int indexOfLine = atoi(array[1]);
+            int indexOfLine;
+            cin >> indexOfLine;
             this->lines[indexOfLine-1]->makeHeading();
 
-        } else if(!strcmp(array[0], "makeItalic")) {
-            int indexOfLine = atoi(array[1]);
-            size_t from = atoi(array[2]);
-            size_t to = atoi(array[3]);
+        } else if(!strcmp(command, "makeItalic")) {
+            int indexOfLine;
+            size_t from, to;
+            cin >> indexOfLine >> from >> to;
+
             if(from > to) {
                 cout << "Invalid scope. Try again." << endl;
                 continue;
             }
-            this->lines[indexOfLine]->makeItalic(from, to);
+            this->lines[indexOfLine-1]->makeItalic(from-1, to-1);
 
-        } else if(!strcmp(array[0], "makeBold")) {
-            int indexOfLine = atoi(array[1]);
-            size_t from = atoi(array[2]);
-            size_t to = atoi(array[3]);
-            if(from > to) {
-                cout << "Invalid scope. Try again." << endl;
-                continue;
-            }
+        } else if(!strcmp(command, "makeBold")) {
+            int indexOfLine;
+            size_t from, to;
+            cin >> indexOfLine >> from >> to;
 
-            this->lines[indexOfLine]->makeBold(from,to);
-
-        } else if(!strcmp(array[0], "makeCombine")) {
-            int indexOfLine = atoi(array[1]);
-            size_t from = atoi(array[2]);
-            size_t to = atoi(array[3]);
             if(from > to) {
                 cout << "Invalid scope. Try again." << endl;
                 continue;
             }
 
-            this->lines[indexOfLine]->makeCombine(from,to);
+            this->lines[indexOfLine-1]->makeBold(from-1, to-1);
 
-        } else if(!strcmp(array[0], "addLine")) {
+        } else if(!strcmp(command, "makeCombine")) {
+            int indexOfLine;
+            size_t from, to;
+            cin >> indexOfLine >> from >> to;
 
-            this->addLine(array[1]);
+            if(from > to) {
+                cout << "Invalid scope. Try again." << endl;
+                continue;
+            }
 
-        } else if(!strcmp(array[0], "remove")) {
+            this->lines[indexOfLine-1]->makeCombine(from-1, to-1);
+
+        } else if(!strcmp(command, "addLine")) {
+            char content[lenghtOfLine];
+            cin.getline(content, lenghtOfLine);
+            cout << content << endl;
+            this->addLine(content);
+
+        } else if(!strcmp(command, "remove")) {
             cout << "In makeChanges/remove()" << endl;
-            size_t indexOfLine = atoi(array[1]);
-            this->removeLine(indexOfLine);
+            size_t indexOfLine;
+            cin >> indexOfLine;
+            this->removeLine(indexOfLine-1);
 
-        } else if(!strcmp(array[0], "exit")) {
+        } else if(!strcmp(command, "exit")) {
             cout << "In makeChanges/exit()" << endl;
             this->exit();
             return;

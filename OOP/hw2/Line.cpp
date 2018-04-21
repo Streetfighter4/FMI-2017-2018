@@ -9,33 +9,29 @@ using std::cout;
 using std::endl;
 
 Line::Line() {
-    words = new Word[512];
 }
 
-Line::Line(size_t id, char* content) : id(id) {
+Line::Line(size_t id, char* content) : id(id), isHeading(false) {
     char* token;
     token = strtok(content, " ");
     size_t i = 1;
     Word* tempWords = new Word[512];
     while(token != nullptr) {
+        cout << "token: " << token << endl;
         Word* word = new Word(i, token);
+        cout << "word value: " << word->getValue() << endl;
         tempWords[i-1] = *word;
         token = strtok(nullptr, " ");
         ++i;
     }
 
     countWords = i - 1;
-    cout << "countWords: " << countWords << endl;
     words = new Word[countWords];
-    cout << "In Line constuctor" << endl;
 
     for (int j = 0; j < countWords; ++j) {
         words[j] = tempWords[j];
     }
 
-    cout << "In Line constuctor1" << endl;
-
-    //cout << "First word: " << words[0].getValue() << endl;
     delete[] tempWords;
 }
 
@@ -64,20 +60,19 @@ void Line::makeHeading() {
 }
 
 void Line::makeItalic(size_t from, size_t to) {
-    for (size_t i = from; i < to; ++i) {
-        cout << words[i].getValue() << endl;
-        words[i].setIsBold(true);
+    for (size_t i = from; i <= to; ++i) {
+        words[i].setIsItalic(true);
     }
 }
 
 void Line::makeBold(size_t from, size_t to) {
-    for (size_t i = from; i < to; ++i) {
+    for (size_t i = from; i <= to; ++i) {
         words[i].setIsBold(true);
     }
 }
 
 void Line::makeCombine(size_t from, size_t to) {
-    for (size_t i = from; i < to; ++i) {
+    for (size_t i = from; i <= to; ++i) {
         words[i].setIsItalic(true);
         words[i].setIsBold(true);
     }
@@ -97,7 +92,6 @@ Line& Line::operator=(const Line& other) {
 
         countWords = other.countWords;
     }
-
 
     return *this;
 }
