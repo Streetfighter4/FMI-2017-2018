@@ -93,10 +93,9 @@ void File::exit() {
             }
 
             file << lines[i]->getValueWord(j);
-            if(hasSpace(i, j)) {
+            if(hasSpace(i, j) && j < lines[i]->getCntWords()-1) {
                 file << ' ';
             }
-
         }
         if(boldScope){
             file << boldSymbol;
@@ -143,7 +142,7 @@ void File::makeChanges() {
             int indexOfLine;
             cin >> indexOfLine;
 
-            if(!validInput(indexOfLine)) {
+            if(!validInputLines(indexOfLine)) {
                 continue;
             }
             this->lines[indexOfLine-1]->makeHeading();
@@ -152,7 +151,7 @@ void File::makeChanges() {
             int indexOfLine, from, to;
             cin >> indexOfLine >> from >> to;
 
-            if(!validInput(indexOfLine, from, to)) {
+            if(!(validInputLines(indexOfLine) || validInputIndexesOfWords(indexOfLine, from, to))) {
                 continue;
             }
 
@@ -162,7 +161,7 @@ void File::makeChanges() {
             int indexOfLine, from, to;
             cin >> indexOfLine >> from >> to;
 
-            if(!validInput(indexOfLine, from, to)) {
+            if(!(validInputLines(indexOfLine) || validInputIndexesOfWords(indexOfLine, from, to))) {
                 continue;
             }
 
@@ -172,7 +171,7 @@ void File::makeChanges() {
             int indexOfLine, from, to;
             cin >> indexOfLine >> from >> to;
 
-            if(!validInput(indexOfLine, from, to)) {
+            if(!(validInputLines(indexOfLine) || validInputIndexesOfWords(indexOfLine, from, to))) {
                 continue;
             }
 
@@ -186,7 +185,8 @@ void File::makeChanges() {
         } else if(!strcmp(command, "remove")) {
             int indexOfLine;
             cin >> indexOfLine;
-            if(!validInput(indexOfLine)) {
+
+            if(!validInputLines(indexOfLine)) {
                 continue;
             }
             this->removeLine((size_t)indexOfLine-1);
@@ -201,16 +201,20 @@ void File::makeChanges() {
     }
 }
 
-bool File::validInput(int indexOfLine, int from, int to) {
+bool File::validInputLines(int indexOfLine) {
     if(indexOfLine > cntLines || indexOfLine < 1) {
         cout << "Invalid line. Try again" << endl;
-        return false;
-    }
-    size_t wordsOnLine = lines[indexOfLine-1]->getCntWords();
-    if(from > to || from < 1 || to < 1 || (from > wordsOnLine) || (to > wordsOnLine)) {
-        cout << "Invalid scope of words. Try again." << endl;
         return false;
     }
     return true;
 }
 
+bool File::validInputIndexesOfWords(int indexOfLine, int from, int to) {
+    size_t wordsOnLine = lines[indexOfLine-1]->getCntWords();
+    if(from > to || from < 1 || to < 1 || (from > wordsOnLine) || (to > wordsOnLine)) {
+        cout << "Invalid scope of words. Try again." << endl;
+        return false;
+    }
+
+    return true;
+}

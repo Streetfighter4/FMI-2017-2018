@@ -17,7 +17,8 @@ public:
     File(const char* name, size_t countLines);
     ~File();
 
-    bool validInput(int, int=1, int=2);
+    bool validInputLines(int indexOfLine);
+    bool validInputIndexesOfWords(int indexOfLine, int from, int to);
     bool parser();
     void makeChanges();
     void addLine(char* content);
