@@ -4,9 +4,9 @@
 #include "Transactions.h"
 #include "Constants.h"
 
-#include <time.h>
+#include <ctime>
 #include <fstream>
-#include <string.h>
+#include <cstring>
 
 using std::cout;
 using std::cin;
@@ -15,7 +15,7 @@ using std::ofstream;
 using std::ifstream;
 using std::atof;
 
-size_t readTransactionsFromFileDB(Transaction*& transactions) {
+size_t readTransactionsFromFileDB(Transaction *& transactions) {
 
     if (transactions != nullptr)
         delete[] transactions;
@@ -57,6 +57,7 @@ size_t readTransactionsFromFileDB(Transaction*& transactions) {
     //reading them
     fileDB.read((char*)transactions, sizeof(Transaction)*trCnt);
 
+
     if (!fileDB.good()) {
 
         std::cout << "error : while reading the database! \n";
@@ -68,8 +69,10 @@ size_t readTransactionsFromFileDB(Transaction*& transactions) {
     std::cout << "Successfully loaded the transactions!\n";
 
     fileDB.close();
+
     return trCnt;
 }
+
 
 void makeTransaction(const Transaction* newTransaction, size_t& size) {
     if (newTransaction == nullptr) {
@@ -80,7 +83,7 @@ void makeTransaction(const Transaction* newTransaction, size_t& size) {
     cout << newTransaction->receiverId << endl
          << newTransaction->senderId << endl
          << newTransaction->fmiCoins << endl
-                                      << newTransaction->time << endl;
+         << newTransaction->time << endl;
     ofstream file(TRANSACTIONS_DB, std::ios::binary | std::ios::app);
 
     if(!file.is_open()) {
@@ -96,7 +99,7 @@ void makeTransaction(const Transaction* newTransaction, size_t& size) {
     file.close();
 }
 
-void writeTransactiosInFileDB(const Transaction* transactions, size_t size) {
+void writeTransactionsInFileDB(const Transaction* transactions, size_t size) {
     if (transactions == nullptr || size == 0) {
         cout << "nothing to save..." << endl;
         return;
@@ -119,4 +122,3 @@ void writeTransactiosInFileDB(const Transaction* transactions, size_t size) {
 
     fileDB.close();
 }
-

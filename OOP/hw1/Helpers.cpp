@@ -4,7 +4,6 @@
 
 #include "Helpers.h"
 #include "Wallets.h"
-#include "Transactions.h"
 #include "Orders.h"
 #include "Constants.h"
 #include <fstream>
@@ -24,7 +23,7 @@ void start() {
     size_t sizeWal = readWalletsFromFileDB(walArr);
 
     Transaction* trArr = nullptr;
-    size_t sizeTr = readTransationsFromFileDB(trArr);
+    size_t sizeTr = readTransactionsFromFileDB(trArr);
 
     Order* ordArr = nullptr;
     size_t sizeOrd = readOrderFromFileDB(ordArr);
@@ -262,7 +261,6 @@ Transaction compactTransaction(unsigned senderId, unsigned receiverId, double fm
     Transaction tr;
     tr.time = time(0);
     tr.fmiCoins = fmiCoins;
-    cout << "fmiCoins: " << tr.fmiCoins << endl;
     tr.senderId = senderId;
     tr.receiverId = receiverId;
     return tr;

@@ -19,12 +19,10 @@ unsigned maxCurrId(Wallet*& wallets, size_t size) {
 
     unsigned maxId = 0;
     for (int i = 0; i < size; ++i) {
-        cout << "wallets[i].id: " << wallets[i].id << endl;
         if(wallets[i].id > maxId)
             maxId = wallets[i].id;
     }
     
-    cout << "maxId: " << maxId << endl;
     return maxId;
 }
 

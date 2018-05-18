@@ -9,7 +9,7 @@ static const unsigned systemWalletId = ~0;
 static const short unsigned FMICoinExchangeRates = 375;
 static const char* WALLETS_DB = "wallets.dat";
 static const char* TRANSACTIONS_DB = "transactions.dat";
-static const char* ORDER_DB = "order.dat";
+static const char* ORDER_DB = "orders.dat";
 
 
 #endif //HW1_CONSTANTS_H

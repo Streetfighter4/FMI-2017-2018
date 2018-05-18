@@ -12,6 +12,7 @@ struct Wallet {
     unsigned id;
     double fiatMoney;
 };
+
 unsigned maxCurrId(Wallet*& arrWal, size_t size);
 void addWalletInDB(Wallet*, size_t&);
 void writeWalletsInFileDB(const Wallet*, size_t);

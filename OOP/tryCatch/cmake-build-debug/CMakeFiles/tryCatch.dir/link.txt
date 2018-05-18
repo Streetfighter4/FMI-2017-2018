@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/tryCatch.dir/main.cpp.o  -o tryCatch 

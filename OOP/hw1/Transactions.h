@@ -14,8 +14,8 @@ struct Transaction {
     double fmiCoins;
 };
 
-size_t readTransationsFromFileDB(Transaction*&);
-void makeTransaction(Transaction*, size_t&);
+size_t readTransactionsFromFileDB(Transaction*&);
+void makeTransaction(const Transaction*, size_t&);
 struct Wallet;
 void writeTransactionsInFileDB(const Transaction*, size_t);
 
