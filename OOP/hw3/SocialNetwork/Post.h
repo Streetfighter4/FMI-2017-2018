@@ -16,6 +16,7 @@ public:
     unsigned long long authorId;
 
     Post();
+    virtual Post* clone() = 0;
     virtual ~Post();
 };
 

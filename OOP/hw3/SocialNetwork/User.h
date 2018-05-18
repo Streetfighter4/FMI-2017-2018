@@ -11,12 +11,12 @@
 
 class User {
     Post* createPost(const char* type);
-
+    void clear();
 public:
 
-    User(const char* nickname, unsigned short age);
+    User(const char* nickname, unsigned short age, unsigned long long id);
     User(const User&) = delete;
-    User&operator=(const User&) = delete;
+    User&operator=(const User&);
     ~User();
 
     unsigned long long id;

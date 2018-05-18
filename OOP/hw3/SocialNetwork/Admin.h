@@ -16,7 +16,7 @@ public:
     Admin(const char* nickname, unsigned short age);
 
     void addUser(User* user, User**& users, size_t& countUsers);
-    void removeUser(User*);
+    void removeUser(User* user, User**& users, size_t& countUsers);
 
     void addModerator(Moderator* moderator, Moderator**& moderators, size_t& countModerators);
     void removeModerator(Moderator* moderator);

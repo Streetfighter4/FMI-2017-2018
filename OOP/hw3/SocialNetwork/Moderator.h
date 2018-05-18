@@ -10,7 +10,7 @@
 
 class Moderator : public User {
 public:
-    Moderator(const char* nickname, unsigned short age);
+    Moderator(const char* nickname, unsigned short age, unsigned long long id);
 
 
     void blockUser(User*);

@@ -24,10 +24,15 @@ public:
     SocialNetwork& operator=(const SocialNetwork&) = delete;
     ~SocialNetwork();
 
+    unsigned long long getLargestId();
+    User* findUser(const char* nickname);
     void info();
 
     void addUser(User* user);
+    void removeUser(User* user);
+
     void addModerator(Moderator* moderator);
+    void removeModerator(Moderator* moderator);
 private:
     void clear();
 
