@@ -26,6 +26,7 @@ public:
     Post** posts;
     size_t countPost;
 
+    void changeNickName(const char* newNickName);
     void addPost(Post* post);
 };
 

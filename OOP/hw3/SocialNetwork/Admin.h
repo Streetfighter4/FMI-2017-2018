@@ -19,7 +19,7 @@ public:
     void removeUser(User* user, User**& users, size_t& countUsers);
 
     void addModerator(Moderator* moderator, Moderator**& moderators, size_t& countModerators);
-    void removeModerator(Moderator* moderator);
+    void removeModerator(Moderator* moderator, Moderator**& moderators, size_t& countModerators);
 };
 
 

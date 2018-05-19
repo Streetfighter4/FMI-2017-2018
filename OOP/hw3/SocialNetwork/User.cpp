@@ -13,19 +13,18 @@ User::User(const char* nickname, unsigned short age, unsigned long long id) :
 
 User& User::operator=(const User& other) {
     if (this != &other) {
-        std::cout << "other.id: " << other.id << std::endl;
         clear();
-        this->id = other.id;
+        id = other.id;
         age = other.age;
         isBlocked = other.isBlocked;
 
         nickName = new char[strlen(other.nickName) + 1];
         strcpy(nickName, other.nickName);
 
-        //posts = new Post* [other.countPost]; // allocating memory for all base pointers
+        posts = new Post* [other.countPost]; // allocating memory for all base pointers
 
-        //for (int i = 0; i < other.countPost; i++)
-            //posts[i] = other.posts[i]->clone();
+        for (int i = 0; i < other.countPost; i++)
+            posts[i] = other.posts[i]->clone();
 
         countPost = other.countPost;
     }
@@ -44,4 +43,10 @@ void User::clear() {
         delete posts[i];
 
     delete[] posts;
+}
+
+void User::changeNickName(const char* newNickName) {
+    delete[] nickName;
+    this->nickName = new char[strlen(newNickName) + 1];
+    strcpy(nickName, newNickName);
 }

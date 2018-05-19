@@ -25,7 +25,7 @@ public:
     ~SocialNetwork();
 
     unsigned long long getLargestId();
-    User* findUser(const char* nickname);
+    User* findUser(const char* nickname, bool& type);
     void info();
 
     void addUser(User* user);
@@ -33,7 +33,13 @@ public:
 
     void addModerator(Moderator* moderator);
     void removeModerator(Moderator* moderator);
+
+    void blockUser(User* user, bool type);
+    void unblockUser(User* user, bool type);
+
 private:
+
+    bool nickNameExist(const char* nickname);
     void clear();
 
 };

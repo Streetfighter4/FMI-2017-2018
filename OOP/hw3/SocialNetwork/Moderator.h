@@ -13,8 +13,11 @@ public:
     Moderator(const char* nickname, unsigned short age, unsigned long long id);
 
 
-    void blockUser(User*);
-    void unblockUser(User*);
+    void blockUser(User* user);
+    void unblockUser(User* user);
+
+    void blockModerator(Moderator* moderator);
+    void unblockModerator(Moderator* moderator);
 
 };
 

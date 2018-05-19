@@ -47,6 +47,8 @@ stdexcept
 -
 SocialNetwork.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/SocialNetwork.h
+User.h
+/home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/User.h
 
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/SocialNetwork.h
 iostream
@@ -89,16 +91,14 @@ Post.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/main.cpp
 iostream
 -
-string.h
--
 stdexcept
 -
 User.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/User.h
 Moderator.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/Moderator.h
-Admin.h
-/home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/Admin.h
 SocialNetwork.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/SocialNetwork.h
+typeinfo
+-
 
