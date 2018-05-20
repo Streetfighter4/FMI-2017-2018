@@ -39,9 +39,12 @@ CMakeFiles/SocialNetwork.dir/User.cpp.o: ../User.cpp
 CMakeFiles/SocialNetwork.dir/User.cpp.o: ../User.h
 
 CMakeFiles/SocialNetwork.dir/main.cpp.o: ../Admin.h
+CMakeFiles/SocialNetwork.dir/main.cpp.o: ../ImagePost.h
 CMakeFiles/SocialNetwork.dir/main.cpp.o: ../Moderator.h
 CMakeFiles/SocialNetwork.dir/main.cpp.o: ../Post.h
 CMakeFiles/SocialNetwork.dir/main.cpp.o: ../SocialNetwork.h
+CMakeFiles/SocialNetwork.dir/main.cpp.o: ../TextPost.h
+CMakeFiles/SocialNetwork.dir/main.cpp.o: ../URLPost.h
 CMakeFiles/SocialNetwork.dir/main.cpp.o: ../User.h
 CMakeFiles/SocialNetwork.dir/main.cpp.o: ../main.cpp
 

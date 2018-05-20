@@ -50,3 +50,32 @@ void User::changeNickName(const char* newNickName) {
     this->nickName = new char[strlen(newNickName) + 1];
     strcpy(nickName, newNickName);
 }
+
+void User::addPost(Post *post) {
+    Post** newPosts = new Post*[countPost+1];
+    for (int i = 0; i < countPost; ++i) {
+        newPosts[i] = posts[i]->clone();
+    }
+    delete[] posts;
+    newPosts[countPost] = post;
+    posts = newPosts;
+    ++countPost;
+}
+
+void User::deletePost(unsigned long long id) {
+    for (int i = 0; i < countPost; ++i) {
+        if(posts[i]->getId() == id) {
+            std::cout << "Swaping: " << posts[i]->getId() << " and " << posts[countPost-1]->getId() << " posts" << std::endl;
+            std::swap(posts[i], posts[countPost-1]);
+            break;
+        }
+    }
+
+    delete posts[countPost - 1];
+    --countPost;
+}
+
+void User::personalInfo() {
+     std::cout << "Name: " << nickName << ", " << age << ",id: " << id
+                << " Blocked: " << isBlocked << " CountPosts: " << countPost << std::endl;
+}

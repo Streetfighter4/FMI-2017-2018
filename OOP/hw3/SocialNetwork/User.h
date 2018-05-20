@@ -10,7 +10,6 @@
 #include "Post.h"
 
 class User {
-    Post* createPost(const char* type);
     void clear();
 public:
 
@@ -26,8 +25,10 @@ public:
     Post** posts;
     size_t countPost;
 
+    void personalInfo();
     void changeNickName(const char* newNickName);
     void addPost(Post* post);
+    void deletePost(unsigned long long id);
 };
 
 

@@ -9,7 +9,9 @@
 #include "Post.h"
 
 class TextPost : public Post {
-
+public:
+    TextPost(const char* content, unsigned long long id, unsigned long long authorId);
+    virtual Post* clone();
 
 };
 

@@ -3,7 +3,11 @@
 #include "User.h"
 #include "Moderator.h"
 #include "SocialNetwork.h"
+#include "TextPost.h"
+#include "URLPost.h"
+#include "ImagePost.h"
 #include <typeinfo>
+#include <cstring>
 
 Moderator* createModerator(const char* name, const unsigned short age, unsigned long long id) {
     return new Moderator(name, age, id);
@@ -13,21 +17,38 @@ User* createUser(const char* name, const unsigned short age, unsigned long long 
     return new User(name, age, id);
 }
 
+Post* createPost(const char* constent, int type, unsigned long long id, unsigned long long authorId) {
+    if (constent == nullptr)
+        return nullptr;
+    if (type == -1) {
+        return new TextPost(constent, id, authorId);
+    }
+
+    if (type == 0) {
+        return new URLPost(constent, id, authorId);
+    }
+
+    if (type == 1)
+        return new ImagePost(constent, id, authorId);
+
+    return nullptr;
+}
+
 int main() {
     SocialNetwork sn;
 
     try {
-        sn.addModerator(createModerator("Yasen", 20, sn.getLargestId() + 1));
-        sn.addModerator(createModerator("Toni", 20, sn.getLargestId() + 1));
-        sn.addModerator(createModerator("Niki", 19, sn.getLargestId() + 1));
+        sn.addModerator(createModerator("Yasen", 20, sn.getLargestIdOfUser() + 1));
+        sn.addModerator(createModerator("Toni", 20, sn.getLargestIdOfUser() + 1));
+        sn.addModerator(createModerator("Niki", 19, sn.getLargestIdOfUser() + 1));
     } catch (std::invalid_argument&) {
         std::cerr << "invalid input, user not added!\n";
     }
 
     try {
-        sn.addUser(createUser("Ali", 19, sn.getLargestId() + 1));
-        sn.addUser(createUser("Viktor", 19, sn.getLargestId() + 1));
-        sn.addUser(createUser("Miro", 19, sn.getLargestId() + 1));
+        sn.addUser(createUser("Ali", 19, sn.getLargestIdOfUser() + 1));
+        sn.addUser(createUser("Viktor", 19, sn.getLargestIdOfUser() + 1));
+        sn.addUser(createUser("Miro", 19, sn.getLargestIdOfUser() + 1));
     } catch (std::invalid_argument&) {
         std::cerr << "invalid input, user not added!\n";
     }
@@ -101,6 +122,41 @@ int main() {
 
     sn.info();
 
+    try{
+        bool typeUser = false;
+        User* author = sn.findUser("Ali", typeUser);
+
+        Post* post = createPost("Some text", 1, sn.getLargestIdOfPost() + 1, author->id);
+        sn.createPost(post, typeUser);
+
+        Post* post1 = createPost("Some text", 1, sn.getLargestIdOfPost() + 1, author->id);
+        sn.createPost(post1, typeUser);
+
+        Post* post2 = createPost("Some text", 1, sn.getLargestIdOfPost() + 1, author->id);
+        sn.createPost(post2, typeUser);
+    } catch (std::invalid_argument&) {
+        std::cerr << "invalid input, user not rename!\n";
+    }
+
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+
+    sn.info();
+
+    try{
+        sn.deletePost(3);
+    } catch (std::invalid_argument&) {
+        std::cerr << "invalid input, user not rename!\n";
+    }
+
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+
+    sn.info();
 
     return 0;
 }

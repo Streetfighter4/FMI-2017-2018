@@ -24,7 +24,8 @@ public:
     SocialNetwork& operator=(const SocialNetwork&) = delete;
     ~SocialNetwork();
 
-    unsigned long long getLargestId();
+    unsigned long long getLargestIdOfUser();
+    unsigned long long getLargestIdOfPost();
     User* findUser(const char* nickname, bool& type);
     void info();
 
@@ -37,6 +38,8 @@ public:
     void blockUser(User* user, bool type);
     void unblockUser(User* user, bool type);
 
+    void createPost(Post* post, bool typeUser);
+    void deletePost(unsigned long long id);
 private:
 
     bool nickNameExist(const char* nickname);

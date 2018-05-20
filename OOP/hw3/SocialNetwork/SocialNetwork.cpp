@@ -74,20 +74,20 @@ void SocialNetwork::info() {
 
     std::cout << "Users: " << std::endl;
     for (int i = 0; i < countUsers; ++i) {
-        std::cout << "Name: " << users[i]->nickName << ", " << users[i]->age << ",id: " << users[i]->id
-                << "Blocked: " << users[i]->isBlocked << std::endl;
+        users[i]->personalInfo();
     }
 
     std::cout << "Moderators: " << std::endl;
 
     for (int i = 0; i < countModerators; ++i) {
-        std::cout << "Name: " << moderators[i]->nickName << ", " << moderators[i]->age << ", id: " << moderators[i]->id
-                    << "Blocked: " << moderators[i]->isBlocked << std::endl;
+        moderators[i]->personalInfo();
     }
 
+    std::cout << "Admin: " << std::endl;
+    admin.personalInfo();
 }
 
-unsigned long long SocialNetwork::getLargestId() {
+unsigned long long SocialNetwork::getLargestIdOfUser() {
     if(countUsers == 0 && countModerators == 0)
         return 0;
 
@@ -103,6 +103,31 @@ unsigned long long SocialNetwork::getLargestId() {
             id = moderators[i]->id;
     }
 
+    return id;
+}
+
+unsigned long long SocialNetwork::getLargestIdOfPost() {
+    unsigned long long id = 0;
+
+    for (int i = 0; i < countUsers; ++i) {
+        for (int j = 0; j < users[i]->countPost; ++j) {
+            if(users[i]->posts[j]->getId() > id)
+                id = users[i]->posts[j]->getId();
+        }
+    }
+
+    for (int i = 0; i < countModerators; ++i) {
+        for (int j = 0; j < moderators[i]->countPost; ++j) {
+            if(moderators[i]->posts[j]->getId() > id)
+                id = moderators[i]->posts[j]->getId();
+        }
+    }
+
+    for (int k = 0; k < admin.countPost; ++k) {
+        if(admin.posts[k]->getId() > id)
+            id = admin.posts[k]->getId();
+    }
+    std::cout << "largest id: " << id << std::endl;
     return id;
 }
 
@@ -161,6 +186,42 @@ void SocialNetwork::unblockUser(User* user, bool type) {
     }
 }
 
+void SocialNetwork::createPost(Post* post, bool typeUser) {
+    if(typeUser) {
+        for (int i = 0; i < countModerators; ++i) {
+            if (moderators[i]->id == post->getAuthorId()) {
+                moderators[i]->addPost(post);
+            }
+        }
+    } else {
+         for (int i = 0; i < countUsers; ++i) {
+            if (users[i]->id == post->getAuthorId()) {
+                users[i]->addPost(post);
+            }
+        }
+    }
+}
+
+void SocialNetwork::deletePost(unsigned long long id) {
+    for (int i = 0; i < countUsers; ++i) {
+        for (int j = 0; j < users[i]->countPost; ++j) {
+            if(users[i]->posts[j]->getId() == id)
+                users[i]->deletePost(id);
+        }
+    }
+
+    for (int i = 0; i < countModerators; ++i) {
+        for (int j = 0; j < moderators[i]->countPost; ++j) {
+            if(moderators[i]->posts[j]->getId() == id)
+                moderators[i]->deletePost(id);
+        }
+    }
+
+    for (int k = 0; k < admin.countPost; ++k) {
+        if(admin.posts[k]->getId() == id)
+            admin.deletePost(id);
+    }
+}
 
 
 
