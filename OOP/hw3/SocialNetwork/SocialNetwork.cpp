@@ -223,5 +223,48 @@ void SocialNetwork::deletePost(unsigned long long id) {
     }
 }
 
+void SocialNetwork::viewPostById(unsigned long long id) {
+    std::ofstream ofile("name1.html");
+
+    for (int i = 0; i < countUsers; ++i) {
+        for (int j = 0; j < users[i]->countPost; ++j) {
+            if(users[i]->posts[j]->getId() == id)
+                users[i]->posts[j]->parseToHTML(ofile);
+        }
+    }
+
+    for (int i = 0; i < countModerators; ++i) {
+        for (int j = 0; j < moderators[i]->countPost; ++j) {
+            if(moderators[i]->posts[j]->getId() == id)
+                users[i]->posts[j]->parseToHTML(ofile);
+        }
+    }
+
+    for (int k = 0; k < admin.countPost; ++k) {
+        if(admin.posts[k]->getId() == id)
+            admin.posts[k]->parseToHTML(ofile);
+    }
+
+}
+
+void SocialNetwork::viewPostByNickName(const char *nickName) {
+    bool typeUser = false;
+    User* user = findUser(nickName, typeUser);
+    std::cout << "ID: " << user->id << std::endl;
+
+    char* fileName = new char[strlen(user->nickName)+12];
+    strcpy(fileName, user->nickName);
+    strcat(fileName, "_posts.html");
+
+    std::ofstream ofile(fileName, std::ios::app);
+
+    std::cout << fileName << std::endl;
+    std::cout << user->countPost << std::endl;
+    for (int i = 0; i < (user->countPost); ++i) {
+        std::cout << "i: " << i << std::endl;
+        user->posts[i]->parseToHTML(ofile);
+    }
+}
+
 
 

@@ -19,6 +19,10 @@ Moderator.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/Moderator.h
 
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/ImagePost.cpp
+cstring
+-
+iostream
+-
 ImagePost.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/ImagePost.h
 
@@ -41,6 +45,8 @@ Post.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/Post.h
 
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/Post.h
+fstream
+-
 
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/SocialNetwork.cpp
 cstring
@@ -63,6 +69,10 @@ Admin.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/Admin.h
 
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/TextPost.cpp
+cstring
+-
+iostream
+-
 TextPost.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/TextPost.h
 
@@ -71,6 +81,10 @@ Post.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/Post.h
 
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/URLPost.cpp
+cstring
+-
+iostream
+-
 URLPost.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/URLPost.h
 

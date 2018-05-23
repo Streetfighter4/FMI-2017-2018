@@ -126,13 +126,13 @@ int main() {
         bool typeUser = false;
         User* author = sn.findUser("Ali", typeUser);
 
-        Post* post = createPost("Some text", 1, sn.getLargestIdOfPost() + 1, author->id);
+        Post* post = createPost("Some text", -1, sn.getLargestIdOfPost() + 1, author->id);
         sn.createPost(post, typeUser);
 
-        Post* post1 = createPost("Some text", 1, sn.getLargestIdOfPost() + 1, author->id);
+        Post* post1 = createPost("./Selection_001.png", 1, sn.getLargestIdOfPost() + 1, author->id);
         sn.createPost(post1, typeUser);
 
-        Post* post2 = createPost("Some text", 1, sn.getLargestIdOfPost() + 1, author->id);
+        Post* post2 = createPost("https://www.w3schools.com/html/html_images.asp", 0, sn.getLargestIdOfPost() + 1, author->id);
         sn.createPost(post2, typeUser);
     } catch (std::invalid_argument&) {
         std::cerr << "invalid input, user not rename!\n";
@@ -146,7 +146,21 @@ int main() {
     sn.info();
 
     try{
-        sn.deletePost(3);
+        //sn.deletePost(2);
+    } catch (std::invalid_argument&) {
+        std::cerr << "invalid input, user not rename!\n";
+    }
+
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+
+    sn.info();
+
+
+    try{
+        sn.viewPostByNickName("Ali");
     } catch (std::invalid_argument&) {
         std::cerr << "invalid input, user not rename!\n";
     }

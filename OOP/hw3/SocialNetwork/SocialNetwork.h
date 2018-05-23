@@ -40,6 +40,9 @@ public:
 
     void createPost(Post* post, bool typeUser);
     void deletePost(unsigned long long id);
+
+    void viewPostById(unsigned long long id);
+    void viewPostByNickName(const char* nickName);
 private:
 
     bool nickNameExist(const char* nickname);
