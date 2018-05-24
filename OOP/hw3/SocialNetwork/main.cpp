@@ -47,10 +47,8 @@ int main() {
     while(true) {
         std::cin >> actor;
 
-        std::cin.ignore();
         std::cin >> action;
 
-        std::cin.ignore();
         if(strcmp(action, "add_moderator") == 0) {
             std::cin >> subject;
 
@@ -61,6 +59,7 @@ int main() {
             if(strcmp(actor, sn.getAdmin()->getNickName()) == 0) {
                 try {
                     sn.addModerator(createModerator(subject, age, sn.getLargestIdOfUser() + 1));
+                    std::cout << subject << " has been added" << std::endl;
                 } catch (std::invalid_argument&) {
                     std::cerr << "invalid input, user not added!\n";
                 }
@@ -75,6 +74,7 @@ int main() {
             if(strcmp(actor, sn.getAdmin()->getNickName()) == 0) {
                 try {
                     sn.addUser(createUser(subject, age, sn.getLargestIdOfUser() + 1));
+                    std::cout << subject << " has been added" << std::endl;
                 } catch (std::invalid_argument&) {
                     std::cerr << "invalid input, user not added!\n";
                 }
@@ -90,8 +90,10 @@ int main() {
                     User* user = sn.findUser(subject, type);
                     if(type == -1) {
                         sn.removeModerator(static_cast<Moderator*>(user));
+                        std::cout << subject << " has been removed" << std::endl;
                     } else if(type == 1){
                         sn.removeUser(user);
+                        std::cout << subject << " has been removed" << std::endl;
                     } else if(type == 0) {
                         std::cerr << "Administrator can't remove!\n";
                     }
@@ -108,6 +110,7 @@ int main() {
                     int typeUser;
                     User *user = sn.findUser(actor, typeUser);
                     user->changeNickName(subject);
+                    std::cout << "User " << actor << " is now known as " << subject << std::endl;
                 } catch (std::invalid_argument &) {
                     std::cerr << "invalid input, user not rename!\n";
                 }
@@ -123,6 +126,7 @@ int main() {
                     user = sn.findUser(subject, typeUser);
                     if(typeUser != 0) {
                         sn.blockUser(user, typeUser);
+                        std::cout << subject << " has been blocked" << std::endl;
                     } else {
                         std::cout << "You can't block/unblock this user! This is Admin\n" << std::endl;
                     }
@@ -142,6 +146,7 @@ int main() {
                     user = sn.findUser(subject, typeUser);
                     if(typeUser != 0) {
                         sn.unblockUser(user, typeUser);
+                        std::cout << subject << " has been unblocked" << std::endl;
                     } else {
                         std::cout << "You can't block/unblock this user! This is Admin\n" << std::endl;
                     }
@@ -163,16 +168,20 @@ int main() {
                         std::cin.getline(subject, 1024);
                         Post *post = createPost(subject, -1, sn.getLargestIdOfPost() + 1, author->getId());
                         sn.createPost(post, typeUser);
+                        std::cout << "Post has been created" << std::endl;
 
                     } else if (strcmp(typePost, "[url]") == 0) {
                         std::cin.getline(subject, 1024);
                         Post *post = createPost(subject, 0, sn.getLargestIdOfPost() + 1, author->getId());
                         sn.createPost(post, typeUser);
+                        std::cout << "Post has been created" << std::endl;
 
                     } else if (strcmp(typePost, "[image]") == 0) {
                         std::cin >> subject;
                         Post *post = createPost(subject, 1, sn.getLargestIdOfPost() + 1, author->getId());
                         sn.createPost(post, typeUser);
+                        std::cout << "Post has been created" << std::endl;
+
                     } else {
                         std::cout << "Not such type of post!" << std::endl;
                     }
@@ -197,6 +206,7 @@ int main() {
                                 sn.deletePost(id);
                         }
                     }
+                    std::cout << "Post has been revomed" << std::endl;
                 } else {
                     std::cout << "User is blocked" << std::endl;
                 }
@@ -209,9 +219,10 @@ int main() {
                 unsigned long long id;
                 std::cin >> id;
                 User* user = sn.findUser(actor, typeUser);
-                if(sn.nickNameExist(user->getNickName()))
+                if(sn.nickNameExist(user->getNickName())) {
                     sn.viewPostById(id);
-                else
+                    std::cout << "HTML has been generated" << std::endl;
+                } else
                     std::cout << "User not exist in system" << std::endl;
 
             } catch (std::invalid_argument&) {
@@ -223,9 +234,10 @@ int main() {
                  std::cin >> subject;
                  User* user = sn.findUser(actor, typeUser);
                  User* user1 = sn.findUser(subject, typeUser);
-                 if(sn.nickNameExist(user->getNickName()) && sn.nickNameExist(user1->getNickName()))
+                 if(sn.nickNameExist(user->getNickName()) && sn.nickNameExist(user1->getNickName())) {
                      sn.viewPostByNickName(user1->getNickName());
-                 else
+                     std::cout << "HTML has been generated" << std::endl;
+                 } else
                      std::cout << "User not exist in system" << std::endl;
 
              } catch (std::invalid_argument&) {
