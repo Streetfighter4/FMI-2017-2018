@@ -65,7 +65,6 @@ void User::addPost(Post *post) {
 void User::deletePost(unsigned long long id) {
     for (int i = 0; i < countPost; ++i) {
         if(posts[i]->getId() == id) {
-            std::cout << "Swaping: " << posts[i]->getId() << " and " << posts[countPost-1]->getId() << " posts" << std::endl;
             std::swap(posts[i], posts[countPost-1]);
             break;
         }

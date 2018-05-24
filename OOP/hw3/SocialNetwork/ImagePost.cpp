@@ -13,8 +13,6 @@ Post* ImagePost::clone() {
 }
 
 void ImagePost::parseToHTML(std::ofstream& ofile) {
-    std::cout << "In parseToHTML in ImagePost!" << std::endl;
-
     const char* str1 = "<img src=\"";
     const char* str2 = "\">\n";
     ofile << str1;

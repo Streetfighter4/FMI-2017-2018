@@ -13,9 +13,6 @@ Post* TextPost::clone() {
 }
 
 void TextPost::parseToHTML(std::ofstream& ofile) {
-
-    std::cout << "In parseToHTML in TextPost!" << std::endl;
-
     const char* str1 = "<p>";
     const char* str2 = "</p>\n";
 

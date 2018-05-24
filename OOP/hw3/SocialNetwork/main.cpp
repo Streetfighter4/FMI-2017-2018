@@ -152,20 +152,20 @@ int main() {
                 std::cerr << "invalid input, user not rename!\n";
             }
 
-        } else if (strcmp(actor, "post") == 0) {
+        } else if (strcmp(action, "post") == 0) {
             try {
                 int typeUser;
-                User *author = sn.findUser(actor, typeUser);
+                User* author = sn.findUser(actor, typeUser);
                 if (!author->getIsBloked() && (author != nullptr)) {
                     std::cin >> typePost;
 
                     if (strcmp(typePost, "[text]") == 0) {
-                        std::cin >> subject;
+                        std::cin.getline(subject, 1024);
                         Post *post = createPost(subject, -1, sn.getLargestIdOfPost() + 1, author->getId());
                         sn.createPost(post, typeUser);
 
                     } else if (strcmp(typePost, "[url]") == 0) {
-                        std::cin >> subject;
+                        std::cin.getline(subject, 1024);
                         Post *post = createPost(subject, 0, sn.getLargestIdOfPost() + 1, author->getId());
                         sn.createPost(post, typeUser);
 
@@ -182,7 +182,7 @@ int main() {
             } catch (std::invalid_argument&){
                 std::cerr << "invalid input, user not rename!\n";
             }
-        } else if(strcmp(actor, "remove_post") == 0) {
+        } else if(strcmp(action, "remove_post") == 0) {
             try {
                 int typeUser;
                 unsigned long long id;
@@ -203,21 +203,21 @@ int main() {
             } catch(std::invalid_argument&) {
                 std::cerr << "invalid input, user not rename!\n";
             }
-        } else if(strcmp(actor, "view_post") == 0) {
+        } else if(strcmp(action, "view_post") == 0) {
             try {
                 int typeUser;
                 unsigned long long id;
                 std::cin >> id;
                 User* user = sn.findUser(actor, typeUser);
                 if(sn.nickNameExist(user->getNickName()))
-                    sn.viewPostById(2);
+                    sn.viewPostById(id);
                 else
                     std::cout << "User not exist in system" << std::endl;
 
             } catch (std::invalid_argument&) {
                 std::cerr << "invalid input, user not rename!\n";
             }
-        } else if(strcmp(actor, "view_all_posts") == 0) {
+        } else if(strcmp(action, "view_all_posts") == 0) {
              try {
                  int typeUser;
                  std::cin >> subject;
