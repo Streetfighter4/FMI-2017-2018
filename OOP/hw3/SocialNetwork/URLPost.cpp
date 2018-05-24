@@ -6,24 +6,42 @@
 #include <iostream>
 #include "URLPost.h"
 
-URLPost::URLPost(const char *content, unsigned long long id, unsigned long long authorId) : Post(content, 0, id, authorId) { }
+URLPost::URLPost(const char *content, unsigned long long id, unsigned long long authorId) : Post(content, id, authorId) { }
 
 Post *URLPost::clone() {
     return new URLPost(*this);
 }
 
 void URLPost::parseToHTML(std::ofstream& ofile) {
-    if(ofile.is_open()) {
-        std::cout << "In parseToHTML in URLPost!" << std::endl;
-        const char* str1 = "<!DOCTYPE html>\n<html>\n<body>\n\n<a href=\"";
-        const char* str2 = "</a>\n\n</body>\n</html>";
-        ofile.write(str1, strlen(str1));
-        ofile.write(getContent(), strlen(getContent()));
-        ofile.write("\">", 2);
-        ofile.write(getContent(), strlen(getContent()));
-        ofile.write(str2, strlen(str2));
+    const char* str1 = "<a href=\"";
+    const char* str2 = "</a>\n";
 
-        ofile.close();
+    size_t lenght = strlen(getContent());
+    char* str = new char[lenght+1];
+    strcpy(str, getContent());
+
+    size_t i;
+    for (i = 0; i < lenght; ++i) {
+        if(str[i] == ' ')
+            break;
     }
 
+    char* str3 = new char[i+1];
+    strncpy(str3, str, i);
+
+    char* str4 = new char[lenght-i+1];
+    for (size_t j = i; j < lenght; ++j) {
+        str4[j] = str[j];
+    }
+    str4[lenght] = '\0';
+
+    ofile << str1;
+    ofile << str3;
+    ofile << "\">";
+    ofile << str4;
+    ofile << str2;
+
+    delete[] str;
+    delete[] str3;
+    delete[] str4;
 }

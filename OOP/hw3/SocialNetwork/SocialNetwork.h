@@ -26,7 +26,11 @@ public:
 
     unsigned long long getLargestIdOfUser();
     unsigned long long getLargestIdOfPost();
-    User* findUser(const char* nickname, bool& type);
+
+    User* findUser(const char* nickname, int& typeUser);
+    bool nickNameExist(const char* nickname);
+
+    Admin* getAdmin();
     void info();
 
     void addUser(User* user);
@@ -35,17 +39,16 @@ public:
     void addModerator(Moderator* moderator);
     void removeModerator(Moderator* moderator);
 
-    void blockUser(User* user, bool type);
-    void unblockUser(User* user, bool type);
+    void blockUser(User* user, int type);
+    void unblockUser(User* user, int type);
 
-    void createPost(Post* post, bool typeUser);
+    void createPost(Post* post, int typeUser);
     void deletePost(unsigned long long id);
 
     void viewPostById(unsigned long long id);
     void viewPostByNickName(const char* nickName);
 private:
 
-    bool nickNameExist(const char* nickname);
     void clear();
 
 };

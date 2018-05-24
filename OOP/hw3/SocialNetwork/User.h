@@ -11,6 +11,7 @@
 
 class User {
     void clear();
+
 public:
 
     User(const char* nickname, unsigned short age, unsigned long long id);
@@ -18,12 +19,23 @@ public:
     User&operator=(const User&);
     ~User();
 
+private:
     unsigned long long id;
     char* nickName;
     unsigned short age;
     bool isBlocked;
-    Post** posts;
     size_t countPost;
+
+public:
+    Post** posts;
+
+    unsigned long long getId() const;
+    char* getNickName() const;
+    unsigned short getAge() const;
+    bool getIsBloked() const;
+    void setIsBloked(bool isBloked);
+    size_t getCountPost() const;
+    void setCountPost(size_t countPost);
 
     void personalInfo();
     void changeNickName(const char* newNickName);

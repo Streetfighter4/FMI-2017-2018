@@ -6,25 +6,21 @@
 #include <iostream>
 #include "TextPost.h"
 
-TextPost::TextPost(const char *content, unsigned long long id, unsigned long long authorId) : Post(content, -1, id, authorId) { }
+TextPost::TextPost(const char *content, unsigned long long id, unsigned long long authorId) : Post(content, id, authorId) { }
 
 Post* TextPost::clone() {
     return new TextPost(*this);
 }
 
 void TextPost::parseToHTML(std::ofstream& ofile) {
-    if(ofile.is_open()) {
 
-        std::cout << "In parseToHTML in TextPost!" << std::endl;
-        const char* str1 = "<!DOCTYPE html>\n<html>\n<body>\n\n<p>";
-        const char* str2 = "</p>\n\n</body>\n</html>";
+    std::cout << "In parseToHTML in TextPost!" << std::endl;
 
-        ofile.write(str1, strlen(str1));
-        ofile.write(getContent(), strlen(getContent()));
-        ofile.write(str2, strlen(str2));
+    const char* str1 = "<p>";
+    const char* str2 = "</p>\n";
 
-        ofile.close();
-    }
-
+    ofile << str1;
+    ofile << getContent();
+    ofile << str2;
 }
 

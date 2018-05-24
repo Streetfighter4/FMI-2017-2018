@@ -79,3 +79,31 @@ void User::personalInfo() {
      std::cout << "Name: " << nickName << ", " << age << ",id: " << id
                 << " Blocked: " << isBlocked << " CountPosts: " << countPost << std::endl;
 }
+
+unsigned long long User::getId() const {
+    return id;
+}
+
+char* User::getNickName() const {
+    return nickName;
+}
+
+unsigned short User::getAge() const {
+    return age;
+}
+
+bool User::getIsBloked() const {
+    return isBlocked;
+}
+
+void User::setIsBloked(bool isBloked) {
+    this->isBlocked = isBloked;
+}
+
+size_t User::getCountPost() const {
+    return countPost;
+}
+
+void User::setCountPost(size_t countPost) {
+    this->countPost = countPost;
+}

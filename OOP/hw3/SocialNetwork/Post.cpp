@@ -5,7 +5,7 @@
 #include <cstring>
 #include "Post.h"
 
-Post::Post(const char* newContent, int type, unsigned long long id, unsigned long long authorId) : id(id), authorId(authorId) {
+Post::Post(const char* newContent, unsigned long long id, unsigned long long authorId) : id(id), authorId(authorId) {
     content = new char[strlen(newContent) + 1];
     strcpy(content, newContent);
 }

@@ -17,7 +17,7 @@ private:
 
 public:
 
-    Post(const char* content, int type, unsigned long long id, unsigned long long authorId);
+    Post(const char* content, unsigned long long id, unsigned long long authorId);
     virtual ~Post();
 
 public:

@@ -55,8 +55,8 @@ stdexcept
 -
 SocialNetwork.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/SocialNetwork.h
-User.h
-/home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/User.h
+stdlib.h
+-
 
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/SocialNetwork.h
 iostream
@@ -124,5 +124,7 @@ ImagePost.h
 typeinfo
 -
 cstring
+-
+iomanip
 -
 

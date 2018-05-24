@@ -9,17 +9,17 @@ Moderator::Moderator(const char* nickname, unsigned short age, unsigned long lon
 }
 
 void Moderator::blockUser(User* user) {
-    user->isBlocked = true;
+    user->setIsBloked(true);
 }
 
 void Moderator::unblockUser(User* user) {
-    user->isBlocked = false;
+    user->setIsBloked(false);
 }
 
 void Moderator::blockModerator(Moderator* moderator) {
-    moderator->isBlocked = true;
+    moderator->setIsBloked(true);
 }
 
 void Moderator::unblockModerator(Moderator* moderator) {
-    moderator->isBlocked = false;
+    moderator->setIsBloked(false);
 }

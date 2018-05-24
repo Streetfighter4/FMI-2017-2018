@@ -28,7 +28,7 @@ void Admin::addUser(User* user, User**& users, size_t& countUsers) {
 void Admin::removeUser(User* user, User**& users, size_t& countUsers) {
 
     for (int i = 0; i < countUsers; ++i) {
-        if(users[i]->id == user->id) {
+        if(users[i]->getId() == user->getId()) {
             std::swap(users[i], users[countUsers - 1]);
             break;
         }
@@ -57,7 +57,7 @@ void Admin::addModerator(Moderator *moderator, Moderator **&moderators, size_t &
 void Admin::removeModerator(Moderator *moderator, Moderator **&moderators, size_t &countModerators) {
 
     for (int i = 0; i < countModerators; ++i) {
-        if(moderators[i]->id == moderator->id) {
+        if(moderators[i]->getId() == moderator->getId()) {
             std::swap(moderators[i], moderators[countModerators - 1]);
             break;
         }
