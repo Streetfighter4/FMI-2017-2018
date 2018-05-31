@@ -5,7 +5,7 @@
 #include <cstring>
 #include <stdexcept>
 #include "SocialNetwork.h"
-#include <stdlib.h>
+#include <climits>
 
 SocialNetwork::SocialNetwork() : users(nullptr), countUsers(0), moderators(nullptr), countModerators(0) , admin("Admin", 0) {
 }
@@ -72,19 +72,46 @@ void SocialNetwork::removeModerator(Moderator* moderator) {
 void SocialNetwork::info() {
     std::cout << "There are " << countUsers << " users and " << countModerators << " moderators" << std::endl;
 
+    unsigned short oldest = 0;
+    unsigned long long idOfOldestUser = 0;
+    unsigned short youngest = USHRT_MAX;
+    unsigned long long idOfYoungestUser = 0;
+
     std::cout << "Users: " << std::endl;
     for (int i = 0; i < countUsers; ++i) {
         users[i]->personalInfo();
+        if(users[i]->getAge() > oldest) {
+            oldest = users[i]->getAge();
+            idOfOldestUser = users[i]->getId();
+        }
+        if(users[i]->getAge() < youngest) {
+            youngest = users[i]->getAge();
+            idOfYoungestUser = users[i]->getId();
+        }
     }
 
     std::cout << "Moderators: " << std::endl;
 
     for (int i = 0; i < countModerators; ++i) {
         moderators[i]->personalInfo();
+        if(moderators[i]->getAge() > oldest){
+            oldest = moderators[i]->getAge();
+            idOfOldestUser = moderators[i]->getId();
+        }
+        if(moderators[i]->getAge() < youngest) {
+            youngest = moderators[i]->getAge();
+            idOfYoungestUser = moderators[i]->getId();
+        }
     }
 
     std::cout << "Admin: " << std::endl;
     admin.personalInfo();
+
+    User* oldestUser = getUserById(idOfOldestUser);
+    User* youngestUser = getUserById(idOfYoungestUser);
+
+    std::cout << "Oldest user: " << oldestUser->getNickName() << " , Age: " << oldestUser->getAge() << std::endl;
+    std::cout << "Youngest user: " << youngestUser->getNickName() << " , Age: " << youngestUser->getAge() << std::endl;
 }
 
 unsigned long long SocialNetwork::getLargestIdOfUser() {
@@ -234,6 +261,9 @@ void SocialNetwork::deletePost(unsigned long long id) {
 }
 
 void SocialNetwork::viewPostById(unsigned long long id) {
+    if(!postExist(id)) {
+        throw std::out_of_range("Not such post with this id");
+    }
     std::string str = std::to_string(id);
     std::ofstream ofile("post_" + str + ".html");
 
@@ -275,7 +305,8 @@ void SocialNetwork::viewPostByNickName(const char *nickName) {
     std::ofstream ofile;
     const char* str1 = "<!DOCTYPE html>\n<html>\n<body>\n\n";
     const char* str2 = "\n\n</body>\n</html>";
-
+    ofile.open(fileName); //for clear old content if file already exist
+    ofile.close();
     ofile.open(fileName, std::ios::app);
     ofile << str1;
     for (int i = 0; i < (user->getCountPost()); ++i) {
@@ -288,8 +319,49 @@ void SocialNetwork::viewPostByNickName(const char *nickName) {
     delete[] fileName;
 }
 
-Admin *SocialNetwork::getAdmin() {
+Admin* SocialNetwork::getAdmin() {
     return &admin;
+}
+
+bool SocialNetwork::postExist(unsigned long long id) {
+
+    for (int i = 0; i < countUsers; ++i) {
+        for (int j = 0; j < users[i]->getCountPost(); ++j) {
+            if (users[i]->posts[j]->getId() == id)
+                return true;
+        }
+    }
+
+    for (int i = 0; i < countModerators; ++i) {
+        for (int j = 0; j < moderators[i]->getCountPost(); ++j) {
+            if (moderators[i]->posts[j]->getId() == id)
+                return true;
+        }
+    }
+
+    for (int k = 0; k < admin.getCountPost(); ++k) {
+        if(admin.posts[k]->getId() == id)
+            return true;
+    }
+
+    return false;
+}
+
+User* SocialNetwork::getUserById(unsigned long long id) {
+    for (int i = 0; i < countUsers; ++i) {
+        if(users[i]->getId() == id)
+            return users[i];
+    }
+
+    for (int j = 0; j < countModerators; ++j) {
+        if(moderators[j]->getId() == id)
+            return moderators[j];
+    }
+
+    if(admin.getId() == id)
+        return &admin;
+
+    return nullptr;
 }
 
 

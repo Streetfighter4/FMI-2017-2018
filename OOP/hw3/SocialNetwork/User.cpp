@@ -75,8 +75,8 @@ void User::deletePost(unsigned long long id) {
 }
 
 void User::personalInfo() {
-     std::cout << "Name: " << nickName << ", " << age << ",id: " << id
-                << " Blocked: " << isBlocked << " CountPosts: " << countPost << std::endl;
+     std::cout << "Name: " << nickName << ", " << "Age: "<< age << ",id: " << id
+                << ", Blocked: " << isBlocked << ", CountPosts: " << countPost << std::endl;
 }
 
 unsigned long long User::getId() const {
@@ -101,8 +101,4 @@ void User::setIsBloked(bool isBloked) {
 
 size_t User::getCountPost() const {
     return countPost;
-}
-
-void User::setCountPost(size_t countPost) {
-    this->countPost = countPost;
 }

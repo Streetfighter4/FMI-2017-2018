@@ -25,6 +25,7 @@ void URLPost::parseToHTML(std::ofstream& ofile) {
         if(str[i] == ' ')
             break;
     }
+
     char* str3 = new char[i];
     strncpy(str3, str, i);
     str3[i] = '\0';

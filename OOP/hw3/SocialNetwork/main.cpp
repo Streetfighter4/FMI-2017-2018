@@ -18,19 +18,19 @@ User* createUser(const char* name, const unsigned short age, unsigned long long 
     return new User(name, age, id);
 }
 
-Post* createPost(const char* constent, int type, unsigned long long id, unsigned long long authorId) {
-    if (constent == nullptr)
+Post* createPost(const char* content, int type, unsigned long long id, unsigned long long authorId) {
+    if (content == nullptr)
         return nullptr;
     if (type == -1) {
-        return new TextPost(constent, id, authorId);
+        return new TextPost(content, id, authorId);
     }
 
     if (type == 0) {
-        return new URLPost(constent, id, authorId);
+        return new URLPost(content, id, authorId);
     }
 
     if (type == 1)
-        return new ImagePost(constent, id, authorId);
+        return new ImagePost(content, id, authorId);
 
     return nullptr;
 }
@@ -47,6 +47,13 @@ int main() {
     while(true) {
         std::cin >> actor;
 
+        if(strcmp(actor, "info") == 0) {
+            sn.info();
+            continue;
+        } else if(strcmp(actor, "exit") == 0) {
+            break;
+        }
+
         std::cin >> action;
 
         if(strcmp(action, "add_moderator") == 0) {
@@ -60,8 +67,8 @@ int main() {
                 try {
                     sn.addModerator(createModerator(subject, age, sn.getLargestIdOfUser() + 1));
                     std::cout << subject << " has been added" << std::endl;
-                } catch (std::invalid_argument&) {
-                    std::cerr << "invalid input, user not added!\n";
+                } catch (std::exception& e) {
+                    std::cerr << e.what() << std::endl;
                 }
             } else {
                 std::cout << "This user don't have rights for this action!" << std::endl;
@@ -75,8 +82,8 @@ int main() {
                 try {
                     sn.addUser(createUser(subject, age, sn.getLargestIdOfUser() + 1));
                     std::cout << subject << " has been added" << std::endl;
-                } catch (std::invalid_argument&) {
-                    std::cerr << "invalid input, user not added!\n";
+                } catch (std::exception& e) {
+                    std::cerr << e.what() << std::endl;
                 }
             } else {
                 std::cout << "This user don't have rights for this action!" << std::endl;
@@ -97,8 +104,8 @@ int main() {
                     } else if(type == 0) {
                         std::cerr << "Administrator can't remove!\n";
                     }
-                } catch (std::invalid_argument&) {
-                    std::cerr << "invalid input, user not removed!\n";
+                } catch (std::exception& e) {
+                    std::cerr << e.what() << std::endl;
                 }
             } else {
                 std::cout << "This user don't have rights for this action!" << std::endl;
@@ -111,8 +118,8 @@ int main() {
                     User *user = sn.findUser(actor, typeUser);
                     user->changeNickName(subject);
                     std::cout << "User " << actor << " is now known as " << subject << std::endl;
-                } catch (std::invalid_argument &) {
-                    std::cerr << "invalid input, user not rename!\n";
+                } catch (std::exception& e) {
+                    std::cerr << e.what() << std::endl;
                 }
             } else {
                 std::cout << "This username already exist!" << std::endl;
@@ -133,8 +140,8 @@ int main() {
                 } else {
                     std::cout << "This user don't have rights for this action!" << std::endl;
                 }
-            } catch (std::invalid_argument&) {
-                std::cerr << "invalid input, user not rename!\n";
+            } catch (std::exception& e) {
+                std::cerr << e.what() << std::endl;
             }
 
         } else if(strcmp(action, "unblock") == 0) {
@@ -153,34 +160,37 @@ int main() {
                 } else {
                     std::cout << "This user don't have rights for this action!" << std::endl;
                 }
-            } catch (std::invalid_argument&) {
-                std::cerr << "invalid input, user not rename!\n";
+            } catch (std::exception& e) {
+                std::cerr << e.what() << std::endl;
             }
 
         } else if (strcmp(action, "post") == 0) {
             try {
                 int typeUser;
                 User* author = sn.findUser(actor, typeUser);
-                if (!author->getIsBloked() && (author != nullptr)) {
+                if (!author->getIsBloked()) {
                     std::cin >> typePost;
 
                     if (strcmp(typePost, "[text]") == 0) {
                         std::cin.getline(subject, 1024);
-                        Post *post = createPost(subject, -1, sn.getLargestIdOfPost() + 1, author->getId());
+                        unsigned long long id = sn.getLargestIdOfPost() +1;
+                        Post *post = createPost(subject, -1, id, author->getId());
                         sn.createPost(post, typeUser);
-                        std::cout << "Post has been created" << std::endl;
+                        std::cout << "Post " << id << " has been created" << std::endl;
 
                     } else if (strcmp(typePost, "[url]") == 0) {
                         std::cin.getline(subject, 1024);
-                        Post *post = createPost(subject, 0, sn.getLargestIdOfPost() + 1, author->getId());
+                        unsigned long long id = sn.getLargestIdOfPost() +1;
+                        Post *post = createPost(subject, 0, id, author->getId());
                         sn.createPost(post, typeUser);
-                        std::cout << "Post has been created" << std::endl;
+                        std::cout << "Post " << id << " has been created" << std::endl;
 
                     } else if (strcmp(typePost, "[image]") == 0) {
                         std::cin >> subject;
-                        Post *post = createPost(subject, 1, sn.getLargestIdOfPost() + 1, author->getId());
+                        unsigned long long id = sn.getLargestIdOfPost() +1;
+                        Post *post = createPost(subject, 1, id, author->getId());
                         sn.createPost(post, typeUser);
-                        std::cout << "Post has been created" << std::endl;
+                        std::cout << "Post " << id << " has been created" << std::endl;
 
                     } else {
                         std::cout << "Not such type of post!" << std::endl;
@@ -188,8 +198,8 @@ int main() {
                 } else {
                     std::cout << "This user is blocked or disn't exits" << std::endl;
                 }
-            } catch (std::invalid_argument&){
-                std::cerr << "invalid input, user not rename!\n";
+            } catch (std::exception& e){
+                std::cerr << e.what() << std::endl;
             }
         } else if(strcmp(action, "remove_post") == 0) {
             try {
@@ -210,8 +220,8 @@ int main() {
                 } else {
                     std::cout << "User is blocked" << std::endl;
                 }
-            } catch(std::invalid_argument&) {
-                std::cerr << "invalid input, user not rename!\n";
+            } catch(std::exception& e) {
+                std::cerr << e.what() << std::endl;
             }
         } else if(strcmp(action, "view_post") == 0) {
             try {
@@ -225,8 +235,8 @@ int main() {
                 } else
                     std::cout << "User not exist in system" << std::endl;
 
-            } catch (std::invalid_argument&) {
-                std::cerr << "invalid input, user not rename!\n";
+            } catch (std::exception& e) {
+                std::cerr << e.what() << std::endl;
             }
         } else if(strcmp(action, "view_all_posts") == 0) {
              try {
@@ -240,13 +250,11 @@ int main() {
                  } else
                      std::cout << "User not exist in system" << std::endl;
 
-             } catch (std::invalid_argument&) {
-                std::cerr << "invalid input, user not rename!\n";
+             } catch (std::exception& e) {
+                std::cerr << e.what() << std::endl;
              }
-        } else if(strcmp(actor, "info") == 0) {
-            sn.info();
-        } else if(strcmp(actor, "exit") == 0) {
-            break;
+        } else {
+            std::cout << "Unknown command!" << std::endl;
         }
     }
 

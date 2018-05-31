@@ -19,8 +19,6 @@ Moderator.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/Moderator.h
 
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/ImagePost.cpp
-cstring
--
 iostream
 -
 ImagePost.h
@@ -55,7 +53,7 @@ stdexcept
 -
 SocialNetwork.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/SocialNetwork.h
-stdlib.h
+climits
 -
 
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/SocialNetwork.h
@@ -69,8 +67,6 @@ Admin.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/Admin.h
 
 /home/yasen/Programming/FMI-2017-2018/OOP/hw3/SocialNetwork/TextPost.cpp
-cstring
--
 iostream
 -
 TextPost.h

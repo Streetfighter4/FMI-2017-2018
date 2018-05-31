@@ -35,7 +35,6 @@ public:
     bool getIsBloked() const;
     void setIsBloked(bool isBloked);
     size_t getCountPost() const;
-    void setCountPost(size_t countPost);
 
     void personalInfo();
     void changeNickName(const char* newNickName);

@@ -4,9 +4,7 @@
 
 #include "Moderator.h"
 
-Moderator::Moderator(const char* nickname, unsigned short age, unsigned long long id) : User(nickname, age, id){
-
-}
+Moderator::Moderator(const char* nickname, unsigned short age, unsigned long long id) : User(nickname, age, id) { }
 
 void Moderator::blockUser(User* user) {
     user->setIsBloked(true);

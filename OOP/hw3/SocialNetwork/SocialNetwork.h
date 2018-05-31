@@ -29,6 +29,7 @@ public:
 
     User* findUser(const char* nickname, int& typeUser);
     bool nickNameExist(const char* nickname);
+    bool postExist(unsigned long long id);
 
     Admin* getAdmin();
     void info();
@@ -48,7 +49,7 @@ public:
     void viewPostById(unsigned long long id);
     void viewPostByNickName(const char* nickName);
 private:
-
+    User* getUserById(unsigned long long id);
     void clear();
 
 };
