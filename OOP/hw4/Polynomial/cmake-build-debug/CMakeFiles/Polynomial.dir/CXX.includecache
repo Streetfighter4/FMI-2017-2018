@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/Polynomial.cpp
+Polynomial.h
+/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/Polynomial.h
+
+/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/Polynomial.h
+cstddef
+-
+iostream
+-
+
+/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/main.cpp
+iostream
+-
+Polynomial.h
+/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/Polynomial.h
+
