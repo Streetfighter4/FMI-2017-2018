@@ -13,7 +13,7 @@ int main() {
         std::cin >> poly2[j];
     }
 
-    std::cout << poly1 << std::endl;
+    std::cout << poly2 << std::endl;
 
     std::cout << std::endl;
     //std::cout << poly1 + poly2 << std::endl;
@@ -21,10 +21,12 @@ int main() {
 
     //Polynomial<int> poly3;
     //poly3 = poly1;
-    std::cout << poly1 << std::endl;
+    poly2--;
     std::cout << poly2 << std::endl;
+    //std::cout << poly2(2, 3) << std::endl;
     //std::cout << poly3 << std::endl;
 
+    std::cout << poly1(2) << std::endl;
     //poly1 += poly2;
     //poly3 -= poly2;
 
