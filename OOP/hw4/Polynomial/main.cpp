@@ -21,7 +21,7 @@ int main() {
 
     //Polynomial<int> poly3;
     //poly3 = poly1;
-    poly2--;
+    poly2%=poly1;
     std::cout << poly2 << std::endl;
     //std::cout << poly2(2, 3) << std::endl;
     //std::cout << poly3 << std::endl;

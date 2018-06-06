@@ -12,35 +12,64 @@
 template <typename T>
 class Polynomial {
 public:
+    template <typename T>
+    class iterator {
+    public:
+        iterator();
+        iterator(const iterator&);
+        iterator& operator=(const iterator&);
+        ~iterator();
+
+        T iterator;
+    public:
+        iterator<T>& operator++();
+        const iterator<T> operator++(int);
+
+        iterator<T>& operator--();
+        const iterator<T> operator--(int);
+
+        friend bool operator==(const iterator<T>& it1, const iterator<T>& it2);
+        friend bool operator<(const iterator<T>& it1, const iterator<T>& it2);
+
+       // inline T* iterator::operator->() { return &iterator; }
+        //inline T& operator*() { return iterator; }
+
+    };
+public:
     Polynomial();
     explicit Polynomial(size_t maxDeg);
-    Polynomial(const Polynomial& poly);
-    Polynomial& operator=(const Polynomial& other);
+    Polynomial(const Polynomial<T>&);
+    Polynomial<T>& operator=(const Polynomial<T>&);
     ~Polynomial();
 
+public:
+    iterator* begin();
+    iterator* end();
+
+public:
     const T operator[](size_t) const;
     T& operator[](size_t);
 
 
-    Polynomial& operator+=(const Polynomial&);
-    Polynomial<T> operator+(const Polynomial&) const;
+    Polynomial<T>& operator+=(const Polynomial<T>&);
+    Polynomial<T> operator+(const Polynomial<T>&) const;
 
-    Polynomial& operator-=(const Polynomial&);
-    Polynomial<T> operator-(const Polynomial&) const;
+    Polynomial<T>& operator-=(const Polynomial<T>&);
+    Polynomial<T> operator-(const Polynomial<T>&) const;
 
 
-    Polynomial& operator*=(const Polynomial&); //multiply polynomial with polynomial
-    Polynomial<T> operator*(const Polynomial&) const; //multyiply polynomial with polynomial
+    Polynomial<T>& operator*=(const Polynomial<T>&); //multiply polynomial with polynomial
+    Polynomial<T> operator*(const Polynomial<T>&) const; //multyiply polynomial with polynomial
     Polynomial<T>& operator*=(T); //multiply polynomial with T
     Polynomial<T> operator*(T) const; //multiply polynomial with T
 
-    Polynomial<T>& operator/=(const Polynomial&);
-    Polynomial<T> operator/(const Polynomial&) const;
+    Polynomial<T>& operator/=(const Polynomial<T>&);
+    Polynomial<T> operator/(const Polynomial<T>&) const;
     Polynomial<T>& operator/=(T);
     Polynomial<T> operator/(T) const;
 
-    Polynomial<T>& operator%=(const Polynomial&);
-    Polynomial<T> operator%(const Polynomial&) const;
+    Polynomial<T>& operator%=(const Polynomial<T>&);
+    Polynomial<T> operator%(const Polynomial<T>&) const;
 
     T operator()(const T&);
     T operator()(const T&, const T&);
@@ -59,7 +88,12 @@ public:
 
         return ofs;
     }
-    friend std::istream& operator>>(std::istream& is, Polynomial<T>& poly);
+    friend std::istream& operator>>(std::istream& ifs, Polynomial<T>& poly) {
+        for (int i = 0; i < poly.maxDeg; ++i) {
+            ifs >> poly.coeff[i];
+        }
+        return ifs;
+    }
 
     friend bool operator==(const Polynomial<T>& poly1, const Polynomial<T>& poly2);
     friend bool operator<(const Polynomial<T>& poly1, const Polynomial<T>& poly2);
@@ -68,7 +102,7 @@ public:
 private:
     void resize(size_t newSize);
     void copy(const Polynomial<T>&);
-
+    Polynomial<T> division(const Polynomial<T>&);
 private:
     T* coeff;
     size_t  maxDeg{};
@@ -100,6 +134,22 @@ inline bool operator<(const Polynomial<T>& lhs, const Polynomial<T>& rhs) {
 }
 
 template <typename T>
+inline bool operator>(const Polynomial<T>& lhs, const Polynomial<T>& rhs) {
+    return rhs < lhs;
+}
+
+template <typename T>
+inline bool operator<=(const Polynomial<T>& lhs, const Polynomial<T>& rhs) {
+    return !(lhs > rhs);
+}
+
+template <typename T>
+inline bool operator>=(const Polynomial<T>& lhs, const Polynomial<T>& rhs) {
+    return !(lhs < rhs);
+}
+
+
+template <typename T>
 Polynomial<T>::Polynomial(): coeff(nullptr), maxDeg(0) { }
 
 template <typename T>
@@ -109,7 +159,7 @@ Polynomial<T>::Polynomial(size_t maxDeg) {
 }
 
 template <typename T>
-void Polynomial<T>::copy(const Polynomial& other) {
+void Polynomial<T>::copy(const Polynomial<T>& other) {
 
     coeff = new T[other.maxDeg];
     maxDeg = other.maxDeg;
@@ -313,24 +363,92 @@ const Polynomial<T> Polynomial<T>::operator--(int) {
     return temp;
 }
 
+template<typename T>
+Polynomial<T> Polynomial<T>::division(const Polynomial<T>& other) {
+    size_t newMaxDeg = maxDeg - other.maxDeg;
+    size_t newSize = newMaxDeg + 1;
 
-template <typename T>
-inline bool operator>(const Polynomial<T>& lhs, const Polynomial<T>& rhs) {
-    return rhs < lhs;
+    Polynomial<T> temp(*this);
+    Polynomial<T> div(other);
+
+    size_t i = temp.maxDeg-1;
+    size_t j = div.maxDeg-1;
+
+    for (int k = 0; k < maxDeg; ++k) {
+        this->coeff[k] = 0;
+    }
+    resize(newSize);
+
+    size_t it = 0;
+    while (temp.maxDeg >= div.maxDeg) {
+        if (i == 0 || newSize == 0)
+            break;
+
+        this->coeff[newSize - 1] = temp.coeff[i] / div.coeff[j];
+        Polynomial<T> s(*this);
+        for (int t = 0; t < s.maxDeg; t++) {
+            s.coeff[t] = 0;
+        }
+        s.coeff[newSize - 1] = coeff[newSize - 1];
+        if (it > 0)
+            s.resize(s.maxDeg - it);
+
+        temp -= div * s;
+
+        --newSize;
+        --i;
+        ++it;
+    }
+    return temp;
+}
+// 7 -5 3
+// 7 9 -7 6
+
+template<typename T>
+Polynomial<T>& Polynomial<T>::operator/=(const Polynomial<T>& other) {
+    division(other);
+    return *this;
 }
 
-template <typename T>
-inline bool operator<=(const Polynomial<T>& lhs, const Polynomial<T>& rhs) {
-    return !(lhs > rhs);
+template<typename T>
+Polynomial<T> Polynomial<T>::operator/(const Polynomial<T>& other) const {
+    Polynomial<T> poly(*this);
+    poly /= other;
+
+    return poly;
 }
 
-template <typename T>
-inline bool operator>=(const Polynomial<T>& lhs, const Polynomial<T>& rhs) {
-
-    return !(lhs < rhs);
+template<typename T>
+Polynomial<T>& Polynomial<T>::operator/=(T dev) {
+    for (int i = 0; i < maxDeg; ++i) {
+        coeff[i] /= dev;
+    }
+    return *this;
 }
 
-template <typename T>
-const Polynomial<T> operator/(const Polynomial<T>& , const Polynomial<T>&);
+template<typename T>
+Polynomial<T> Polynomial<T>::operator/(T dev) const {
+    Polynomial<T> poly(*this);
+    poly /= dev;
+
+    return poly;
+}
+
+template<typename T>
+Polynomial<T>& Polynomial<T>::operator%=(const Polynomial<T>& other) {
+    Polynomial<T> poly = division(other);
+    *this = poly;
+
+    return *this;
+}
+
+template<typename T>
+Polynomial<T> Polynomial<T>::operator%(const Polynomial<T>& other) const {
+    Polynomial<T> poly(*this);
+    poly %= other;
+
+    return poly;
+}
+
 
 #endif //POLYNOMIAL_POLYNOMIAL_H
