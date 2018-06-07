@@ -15,26 +15,45 @@ public:
     template <typename T>
     class iterator {
     public:
-        iterator();
-        iterator(const iterator&);
-        iterator& operator=(const iterator&);
-        ~iterator();
+        T* it;
 
-        T iterator;
+    private:
+        explicit iterator(T* coeff) : it(coeff) {};
+
     public:
-        iterator<T>& operator++();
-        const iterator<T> operator++(int);
+        iterator<T>& operator++() {
+            ++this->it;
+            return *this;
+        }
+        const iterator<T> operator++(int) {
+            iterator it(*this);
+            this->operator++();
+            return it;
+        }
 
-        iterator<T>& operator--();
-        const iterator<T> operator--(int);
+        iterator<T>& operator--() {
+            --this->it;
+            return *this;
+        }
+        const iterator<T> operator--(int) {
+            iterator it(*this);
+            this->operator--();
+            return it;
+        }
 
-        friend bool operator==(const iterator<T>& it1, const iterator<T>& it2);
-        friend bool operator<(const iterator<T>& it1, const iterator<T>& it2);
+        inline bool operator==(const iterator<T>& other) const { return it == other.it; }
+        inline bool operator!=(const iterator<T>& other) const { return !(*this == other); }
+        inline bool operator<(const iterator<T>& other) const { return it < other.it; }
+        inline bool operator>(const iterator<T>& other) const { return *this < other; }
+        inline bool operator<=(const iterator<T>& other) const { return !(*this > other); }
+        inline bool operator>=(const iterator<T>& other) const { return !(*this < other); }
 
-       // inline T* iterator::operator->() { return &iterator; }
-        //inline T& operator*() { return iterator; }
+
+        inline const T* operator->() { return &(this->it); }
+        inline const T& operator*() { return *(this->it); }
 
     };
+
 public:
     Polynomial();
     explicit Polynomial(size_t maxDeg);
@@ -43,8 +62,8 @@ public:
     ~Polynomial();
 
 public:
-    iterator* begin();
-    iterator* end();
+    iterator begin() { return iterator(coeff); }
+    iterator end() { return iterator(coeff+maxDeg-1); }
 
 public:
     const T operator[](size_t) const;
@@ -95,9 +114,38 @@ public:
         return ifs;
     }
 
-    friend bool operator==(const Polynomial<T>& poly1, const Polynomial<T>& poly2);
-    friend bool operator<(const Polynomial<T>& poly1, const Polynomial<T>& poly2);
+    inline bool operator==(const Polynomial<T>& other) {
+        if (maxDeg != other.maxDeg)
+            return false;
+        else {
+            for (int i = 0; i < maxDeg; ++i) {
+                if(coeff[i] != other.coeff[i])
+                    return false;
+            }
+        }
+        return true;
+    }
 
+    inline bool operator!=(const Polynomial<T>& other) {
+        return !(*this == other);
+    }
+
+
+    inline bool operator<(const Polynomial<T>& other) {
+        return (maxDeg < other.maxDeg);
+    }
+
+    inline bool operator>(const Polynomial<T>& other) {
+        return *this < other;
+    }
+
+    inline bool operator<=(const Polynomial<T>& other) {
+        return !(*this > other);
+    }
+
+    inline bool operator>=(const Polynomial<T>& other) {
+        return !(*this < other);
+    }
 
 private:
     void resize(size_t newSize);
@@ -105,57 +153,18 @@ private:
     Polynomial<T> division(const Polynomial<T>&);
 private:
     T* coeff;
-    size_t  maxDeg{};
+    size_t maxDeg;
 
 };
 
-
-template <typename T>
-inline bool operator==(const Polynomial<T>& rhs, const Polynomial<T>& lhs) {
-    if (rhs.maxDeg != lhs.maxDeg)
-        return false;
-    else {
-        for (int i = 0; i < rhs.maxDeg; ++i) {
-            if(rhs.coeff[i] != lhs.coeff[i])
-                return false;
-        }
-    }
-    return true;
-}
-
-template <typename T>
-inline bool operator!=(const Polynomial<T>& rhs, const Polynomial<T>& lhs) {
-    return !(rhs == lhs);
-}
-
-template <typename T>
-inline bool operator<(const Polynomial<T>& lhs, const Polynomial<T>& rhs) {
-    return (lhs.maxDeg < rhs.maxDeg);
-}
-
-template <typename T>
-inline bool operator>(const Polynomial<T>& lhs, const Polynomial<T>& rhs) {
-    return rhs < lhs;
-}
-
-template <typename T>
-inline bool operator<=(const Polynomial<T>& lhs, const Polynomial<T>& rhs) {
-    return !(lhs > rhs);
-}
-
-template <typename T>
-inline bool operator>=(const Polynomial<T>& lhs, const Polynomial<T>& rhs) {
-    return !(lhs < rhs);
-}
 
 
 template <typename T>
 Polynomial<T>::Polynomial(): coeff(nullptr), maxDeg(0) { }
 
 template <typename T>
-Polynomial<T>::Polynomial(size_t maxDeg) {
+Polynomial<T>::Polynomial(size_t maxDeg) : maxDeg(maxDeg) {
     coeff = new T[maxDeg];
-    this->maxDeg = maxDeg;
 }
 
 template <typename T>
@@ -337,7 +346,7 @@ Polynomial<T>& Polynomial<T>::operator++() {
 
 template<typename T>
 const Polynomial<T> Polynomial<T>::operator++(int) {
-    Polynomial temp(*this); //old value
+    Polynomial<T> temp(*this); //old value
     this->operator++(); //increment our value
 
     return temp; //return the old
