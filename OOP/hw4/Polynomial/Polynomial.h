@@ -7,50 +7,51 @@
 
 #include <cstddef>
 #include <iostream>
+#include <stdexcept>
 
 
 template <typename T>
 class Polynomial {
 public:
-    template <typename T>
+    template <typename I>
     class iterator {
     public:
-        T* it;
+        I* it;
 
     private:
-        explicit iterator(T* coeff) : it(coeff) {};
+        explicit iterator(I* coeff) : it(coeff) {};
 
     public:
-        iterator<T>& operator++() {
+        iterator<I>& operator++() {
             ++this->it;
             return *this;
         }
-        const iterator<T> operator++(int) {
+        const iterator<I> operator++(int) {
             iterator it(*this);
             this->operator++();
             return it;
         }
 
-        iterator<T>& operator--() {
+        iterator<I>& operator--() {
             --this->it;
             return *this;
         }
-        const iterator<T> operator--(int) {
+        const iterator<I> operator--(int) {
             iterator it(*this);
             this->operator--();
             return it;
         }
 
-        inline bool operator==(const iterator<T>& other) const { return it == other.it; }
-        inline bool operator!=(const iterator<T>& other) const { return !(*this == other); }
-        inline bool operator<(const iterator<T>& other) const { return it < other.it; }
-        inline bool operator>(const iterator<T>& other) const { return *this < other; }
-        inline bool operator<=(const iterator<T>& other) const { return !(*this > other); }
-        inline bool operator>=(const iterator<T>& other) const { return !(*this < other); }
+        inline bool operator==(const iterator<I>& other) const { return it == other.it; }
+        inline bool operator!=(const iterator<I>& other) const { return !(*this == other); }
+        inline bool operator<(const iterator<I>& other) const { return it < other.it; }
+        inline bool operator>(const iterator<I>& other) const { return *this < other; }
+        inline bool operator<=(const iterator<I>& other) const { return !(*this > other); }
+        inline bool operator>=(const iterator<I>& other) const { return !(*this < other); }
 
 
-        inline const T* operator->() { return &(this->it); }
-        inline const T& operator*() { return *(this->it); }
+        inline const I* operator->() { return &(this->it); }
+        inline const I& operator*() { return *(this->it); }
 
     };
 
@@ -62,8 +63,8 @@ public:
     ~Polynomial();
 
 public:
-    iterator begin() { return iterator(coeff); }
-    iterator end() { return iterator(coeff+maxDeg-1); }
+    iterator<T> begin() { return iterator<T>(coeff); }
+    iterator<T> end() { return iterator<T>(coeff+maxDeg-1); }
 
 public:
     const T operator[](size_t) const;
@@ -219,7 +220,7 @@ void Polynomial<T>::resize(size_t newSize) {
 template <typename T>
 const T Polynomial<T>::operator[](size_t pos) const {
     if (pos >= maxDeg)
-        const_cast<Polynomial*>(this)->resize(pos + 1);
+        throw std::out_of_range("invalid index");
 
     return coeff[pos];
 }

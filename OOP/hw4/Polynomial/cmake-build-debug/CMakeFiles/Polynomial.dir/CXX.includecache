@@ -15,6 +15,8 @@ cstddef
 -
 iostream
 -
+stdexcept
+-
 
 /home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/main.cpp
 iostream
