@@ -150,6 +150,33 @@ Polynomial.cpp.s:
 	$(MAKE) -f CMakeFiles/Polynomial.dir/build.make CMakeFiles/Polynomial.dir/Polynomial.cpp.s
 .PHONY : Polynomial.cpp.s
 
+Rational.o: Rational.cpp.o
+
+.PHONY : Rational.o
+
+# target to build an object file
+Rational.cpp.o:
+	$(MAKE) -f CMakeFiles/Polynomial.dir/build.make CMakeFiles/Polynomial.dir/Rational.cpp.o
+.PHONY : Rational.cpp.o
+
+Rational.i: Rational.cpp.i
+
+.PHONY : Rational.i
+
+# target to preprocess a source file
+Rational.cpp.i:
+	$(MAKE) -f CMakeFiles/Polynomial.dir/build.make CMakeFiles/Polynomial.dir/Rational.cpp.i
+.PHONY : Rational.cpp.i
+
+Rational.s: Rational.cpp.s
+
+.PHONY : Rational.s
+
+# target to generate assembly for a file
+Rational.cpp.s:
+	$(MAKE) -f CMakeFiles/Polynomial.dir/build.make CMakeFiles/Polynomial.dir/Rational.cpp.s
+.PHONY : Rational.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -189,6 +216,9 @@ help:
 	@echo "... Polynomial.o"
 	@echo "... Polynomial.i"
 	@echo "... Polynomial.s"
+	@echo "... Rational.o"
+	@echo "... Rational.i"
+	@echo "... Rational.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/Polynomial.cpp" "/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/cmake-build-debug/CMakeFiles/Polynomial.dir/Polynomial.cpp.o"
+  "/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/Rational.cpp" "/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/cmake-build-debug/CMakeFiles/Polynomial.dir/Rational.cpp.o"
   "/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/main.cpp" "/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/cmake-build-debug/CMakeFiles/Polynomial.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

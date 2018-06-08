@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Polynomial.dir/main.cpp.o"
   "CMakeFiles/Polynomial.dir/Polynomial.cpp.o"
+  "CMakeFiles/Polynomial.dir/Rational.cpp.o"
   "Polynomial.pdb"
   "Polynomial"
 )

@@ -3,3 +3,5 @@ a.out
 *.xml
 *.o
 *.txt
+*.make
+*.cmake

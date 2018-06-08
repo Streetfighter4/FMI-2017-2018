@@ -62,6 +62,9 @@ public:
     Polynomial<T>& operator=(const Polynomial<T>&);
     ~Polynomial();
 
+
+public:
+    void print();
 public:
     iterator<T> begin() { return iterator<T>(coeff); }
     iterator<T> end() { return iterator<T>(coeff+maxDeg-1); }
@@ -458,6 +461,13 @@ Polynomial<T> Polynomial<T>::operator%(const Polynomial<T>& other) const {
     poly %= other;
 
     return poly;
+}
+
+template<typename T>
+void Polynomial<T>::print() {
+    for (iterator it = begin(); it < end(); ++it) {
+        std::cout << (*it) >= 0 ? ((*it) << "x^") : ("-" << (*it) << "x^") << it << ' ';
+    }
 }
 
 

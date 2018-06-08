@@ -90,6 +90,12 @@
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/Polynomial.h">
 			<Option target="Polynomial"/>
 		</Unit>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/Rational.cpp">
+			<Option target="Polynomial"/>
+		</Unit>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/Rational.h">
+			<Option target="Polynomial"/>
+		</Unit>
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/main.cpp">
 			<Option target="Polynomial"/>
 		</Unit>
