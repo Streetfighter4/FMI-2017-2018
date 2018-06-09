@@ -329,6 +329,9 @@ T Polynomial<T>::operator()(const T& elem) {
 
 template<typename T>
 T Polynomial<T>::operator()(const T& a, const T& b) {
+    if(a > b) {
+        return 0;
+    }
     return (++(*this))(b) - (*this)(a);
 }
 

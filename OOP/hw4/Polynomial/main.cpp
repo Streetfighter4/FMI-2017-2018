@@ -85,10 +85,10 @@ void run_tests() {
     poly.print();
 
     Polynomial<T> integral(4);
-    integral[0] = 2;
-    integral[1] = 4;
+    integral[0] = 23;
+    integral[1] = 41;
     integral[2] = 6;
-    integral[3] = 8;
+    integral[3] = 20;
     std::cout << "polynomial for integrate: ";
     integral.print();
 
@@ -100,8 +100,18 @@ void run_tests() {
     ++integral;
     integral.print();
 
+    std::cout << "Enter a value of point to sum the polynomial: ";
+    T a;
+    std::cin >> a;
+    std::cout << "Sum of integral in point " << a << " is: " << integral(a) << std::endl;
 
-    
+    std::cout << "Enter interval with 2 points: ";
+    T b, c;
+    std::cin >> b >> c;
+    std::cout << "Area of integral in interval (" << b << ", " << c << ")" <<" is: " << integral(b, c) << std::endl;
+
+
+
 }
 
 int main() {
