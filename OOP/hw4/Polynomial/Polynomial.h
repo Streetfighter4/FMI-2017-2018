@@ -18,7 +18,6 @@ public:
     public:
         I* it;
 
-    private:
         explicit iterator(I* coeff) : it(coeff) {};
 
     public:
@@ -64,10 +63,10 @@ public:
 
 
 public:
-    void print();
+    void print(std::ostream& = std::cout) const;
 public:
-    iterator<T> begin() { return iterator<T>(coeff); }
-    iterator<T> end() { return iterator<T>(coeff+maxDeg-1); }
+    iterator<T> begin() const { return iterator<T>(coeff); }
+    iterator<T> end() const { return iterator<T>(coeff+maxDeg); }
 
 public:
     const T operator[](size_t) const;
@@ -105,10 +104,7 @@ public:
     const Polynomial<T> operator--(int);
 
     friend std::ostream& operator<<(std::ostream& ofs, const Polynomial<T>& poly) {
-        for (int i = 0; i < poly.maxDeg; ++i) {
-            ofs << poly.coeff[i] << "x^" << i << ' ';
-        }
-
+        poly.print(ofs);
         return ofs;
     }
     friend std::istream& operator>>(std::istream& ifs, Polynomial<T>& poly) {
@@ -339,7 +335,9 @@ T Polynomial<T>::operator()(const T& a, const T& b) {
 template<typename T>
 Polynomial<T>& Polynomial<T>::operator++() {
     Polynomial<T> poly(maxDeg + 1);
-
+    for (int j = 0; j < poly.maxDeg; ++j) {
+        poly[j] = 0;
+    }
     for (int i = 0; i < poly.maxDeg-1; ++i) {
         poly.coeff[i+1] = (coeff[i]/(i+1));
     }
@@ -391,7 +389,6 @@ Polynomial<T> Polynomial<T>::division(const Polynomial<T>& other) {
         this->coeff[k] = 0;
     }
     resize(newSize);
-
     size_t it = 0;
     while (temp.maxDeg >= div.maxDeg) {
         if (i == 0 || newSize == 0)
@@ -464,10 +461,12 @@ Polynomial<T> Polynomial<T>::operator%(const Polynomial<T>& other) const {
 }
 
 template<typename T>
-void Polynomial<T>::print() {
-    for (iterator it = begin(); it < end(); ++it) {
-        std::cout << (*it) >= 0 ? ((*it) << "x^") : ("-" << (*it) << "x^") << it << ' ';
+void Polynomial<T>::print(std::ostream&) const {
+    int i = 0;
+    for (Polynomial::iterator<T> it = begin(); it < end(); ++it, ++i) {
+        std::cout << ((*it) >= 0 ? '+' : ' ') << (*it) << "x^" << i << ' ';
     }
+    std::cout << std::endl;
 }
 
 

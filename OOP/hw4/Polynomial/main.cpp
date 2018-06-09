@@ -17,11 +17,10 @@ void run_tests() {
 
     //some tests ..
     Polynomial<T> A(3);
+    std::cout << "enter three numbers of polynomial A\n";
+    std::cin >> A;
 
-    std::cout << "enter three nummbers of polynomial A\n";
-    std::cin >> A[0] >> A[1] >> A[2];
-
-    std::cout << "A : ";
+    std::cout << "A: ";
     A.print();
 
     Polynomial<T> B(A);
@@ -29,33 +28,46 @@ void run_tests() {
     B.print();
 
     B += A;
-    std::cout << "B += A // B:";
+    std::cout << "B += A // B: ";
     B.print();
 
     A = A + B;
-    std::cout << "A = A + B // A:";
+    std::cout << "A = A + B // A: ";
     A.print();
 
 
     Polynomial<T> C = A - B;
-    std::cout << "C = A - B // B:";
+    std::cout << "C = A - B // B: ";
     C.print();
 
-    std::cout << "C -= A // C:";
+    std::cout << "C -= A // C: ";
     C -= A;
     C.print();
 
     C *= -1;
-    std::cout << "C *= -1 // C:";
+    std::cout << "C *= -1 // C: ";
     C.print();
 
     C = A * 3;
-    std::cout << "C = A * 3 // C:";
+    std::cout << "C = A * 3 // C: ";
     C.print();
 
+    Polynomial<T> D;
+    D = C/A;
+    std::cout << "D = C/A // D: ";
+    D.print();
+
+    C/=A;
+    std::cout << "C/=A // C: ";
+    C.print();
+
+    Polynomial<T> F;
+    F = B%D;
+    std::cout << "F = B%D // F: ";
+    F.print();
 
     //special operators tests
-
+    std::cout << "--------------------------------------" << std::endl;
     Polynomial<T> poly(4); //1, 2, 3, 4
 
     for (int i = 0; i < 4; i++)
@@ -64,26 +76,32 @@ void run_tests() {
     std::cout << "Polynomial poly : \n";
     poly.print();
 
-    Polynomial<T> other(4);
-    other[0] = 2;
-    other[1] = 4;
-    other[2] = 6;
-    other[3] = 8;
+    std::cout << "poly first derivative: \n";
+    poly--;
+    poly.print();
 
-    std::cout <<"\nother.poly = " << other/poly << std::endl;
+    std::cout << "poly second derivative but with prefix operator: \n";
+    --poly;
+    poly.print();
 
-    other/=poly;
-    other.print();
-    std::cout << "Polynomial other : \n";
+    Polynomial<T> integral(4);
+    integral[0] = 2;
+    integral[1] = 4;
+    integral[2] = 6;
+    integral[3] = 8;
+    std::cout << "polynomial for integrate: ";
+    integral.print();
 
-    Polynomial<T> poly2(4); // a perpendicular vector to vec
-    poly2[0] = -2;
-    poly2[1] = 1;
-    poly2[2] = -4;
-    poly2[3] = 3;
+    std::cout << "integrate polynomial: \n";
+    integral++;
+    integral.print();
+
+    std::cout << "integrate polynomial but with prefix operator: \n";
+    ++integral;
+    integral.print();
 
 
-
+    
 }
 
 int main() {
@@ -93,9 +111,6 @@ int main() {
 
     std::cout << "\n\n\n-----running tests with DOUBLEs-------\n";
     run_tests<double>();
-
-    std::cout << "\n\n\n-----running tests with CHARs-------\n";
-    run_tests<char>();
 
     std::cout << "\n\n\n-----running tests with RATIONALs-------\n";
     run_tests<Rational>();

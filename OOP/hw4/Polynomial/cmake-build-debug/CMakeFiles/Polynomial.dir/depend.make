@@ -4,6 +4,10 @@
 CMakeFiles/Polynomial.dir/Polynomial.cpp.o: ../Polynomial.cpp
 CMakeFiles/Polynomial.dir/Polynomial.cpp.o: ../Polynomial.h
 
+CMakeFiles/Polynomial.dir/Rational.cpp.o: ../Rational.cpp
+CMakeFiles/Polynomial.dir/Rational.cpp.o: ../Rational.h
+
 CMakeFiles/Polynomial.dir/main.cpp.o: ../Polynomial.h
+CMakeFiles/Polynomial.dir/main.cpp.o: ../Rational.h
 CMakeFiles/Polynomial.dir/main.cpp.o: ../main.cpp
 

@@ -18,9 +18,21 @@ iostream
 stdexcept
 -
 
+/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/Rational.cpp
+Rational.h
+/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/Rational.h
+
+/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/Rational.h
+iostream
+-
+
 /home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/main.cpp
 iostream
 -
+cmath
+-
 Polynomial.h
 /home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/Polynomial.h
+Rational.h
+/home/yasen/Programming/FMI-2017-2018/OOP/hw4/Polynomial/Rational.h
 

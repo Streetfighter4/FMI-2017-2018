@@ -133,7 +133,7 @@ Rational& Rational::operator++() {
 const Rational Rational::operator++(int) {
 
     Rational temp(*this); //old value
-    this->operator++(); //increment our value
+    operator++(); //increment our value
 
     return temp; //return the old
 }
@@ -147,7 +147,7 @@ Rational& Rational::operator--() {
 const Rational Rational::operator--(int) {
 
     Rational temp(*this);
-    this->operator--();
+    operator--();
 
     return temp;
 }
