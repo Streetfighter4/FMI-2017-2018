@@ -85,10 +85,9 @@ void run_tests() {
     poly.print();
 
     Polynomial<T> integral(4);
-    integral[0] = 23;
-    integral[1] = 41;
-    integral[2] = 6;
-    integral[3] = 20;
+    for (int i = 0; i < 4; i++)
+        integral[i] = i * 10;
+
     std::cout << "polynomial for integrate: ";
     integral.print();
 
@@ -105,12 +104,17 @@ void run_tests() {
     std::cin >> a;
     std::cout << "Sum of integral in point " << a << " is: " << integral(a) << std::endl;
 
+    Polynomial<T> integral1(4);
+    for (int i = 0; i < 4; i++)
+        integral1[i] = i + 5;
+
+    std::cout << "polynomial for integrate: ";
+    integral1.print();
+
     std::cout << "Enter interval with 2 points: ";
     T b, c;
     std::cin >> b >> c;
-    std::cout << "Area of integral in interval (" << b << ", " << c << ")" <<" is: " << integral(b, c) << std::endl;
-
-
+    std::cout << "Area of integral in interval (" << b << ", " << c << ")" <<" is: " << integral1(b, c) << std::endl;
 
 }
 
@@ -123,7 +127,12 @@ int main() {
     run_tests<double>();
 
     std::cout << "\n\n\n-----running tests with RATIONALs-------\n";
-    run_tests<Rational>();
-
+    std::cout << "Enter 3 rational numbers for simplify and test operator ->\n";
+    Polynomial<Rational> poly(3);
+    std::cin >> poly;
+    for (Polynomial<Rational>::iterator<Rational> it = poly.begin(); it != poly.end(); ++it) {
+        it->simplify();
+    }
+    poly.print();
     return 0;
 }

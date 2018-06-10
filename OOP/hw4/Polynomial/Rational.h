@@ -35,9 +35,13 @@ public:
 
 //assignment operators
     Rational& operator+=(const Rational&);
+    Rational operator+(const Rational&);
     Rational& operator-=(const Rational&);
+    Rational operator-(const Rational&);
     Rational& operator*=(const Rational&);
+    Rational operator*(const Rational&);
     Rational& operator/=(const Rational&);
+    Rational operator/(const Rational&);
 
 //comparison operators :
 

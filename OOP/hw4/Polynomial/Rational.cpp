@@ -162,3 +162,27 @@ std::istream& operator>>(std::istream& ifs, Rational& r) {
 
     return ifs >> r.numerator >> r.denominator;
 }
+
+Rational Rational::operator+(const Rational& other) {
+    Rational temp(*this);
+    temp += other;
+    return temp;
+}
+
+Rational Rational::operator-(const Rational& other) {
+    Rational temp(*this);
+    temp -= other;
+    return temp;
+}
+
+Rational Rational::operator*(const Rational& other) {
+    Rational temp(*this);
+    temp *= other;
+    return temp;
+}
+
+Rational Rational::operator/(const Rational& other) {
+    Rational temp(*this);
+    temp /= other;
+    return temp;
+}

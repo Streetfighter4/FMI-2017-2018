@@ -49,8 +49,8 @@ public:
         inline bool operator>=(const iterator<I>& other) const { return !(*this < other); }
 
 
-        inline const I* operator->() { return &(this->it); }
-        inline const I& operator*() { return *(this->it); }
+        inline I* operator->() { return (this->it); }
+        inline I& operator*() { return *(this->it); }
 
     };
 
