@@ -13,7 +13,8 @@ class GraphicsApp {
     Session** sessions;
     size_t countSessions;
 public:
-    void createSession();
+    void createSession(char* files);
+    void listSessions();
 public:
     GraphicsApp();
     ~GraphicsApp();

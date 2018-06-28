@@ -2,9 +2,26 @@
 // Created by yasen on 6/26/18.
 //
 
+#include <iostream>
+#include <cstring>
 #include "Session.h"
+#include "ImagePGM.h"
+#include "ImagePBM.h"
+#include "ImagePPM.h"
 
-Session::Session(size_t id) : id(id), images(nullptr), countImages(0) {}
+Session::Session(size_t id, char* files, size_t countImages) : id(id), countImages(countImages) {
+
+    images = new Image*[countImages];
+    int j = 0;
+    char* token;
+    token = strtok (files," ");
+
+    while (token != NULL) {
+        images[j++] = createImage(token);
+        token = strtok (NULL, " ");
+    }
+
+}
 
 Session::~Session() {
     for (int i = 0; i < countImages; ++i) {
@@ -56,8 +73,8 @@ void Session::undo() {
     }
 }
 
-void Session::add(size_t id, char *filename) {
-    Image* image = new Image(id, filename);
+void Session::add(char *filename) {
+    Image* image = new Image(filename);
     Image** temp = images;
     images = new Image*[countImages+1];
 
@@ -77,10 +94,34 @@ void Session::add(size_t id, char *filename) {
 void Session::copy(const Session& other) {
     id = other.id;
     delete[] images;
-    delete images;
     images = new Image*[other.countImages];
     for (int i = 0; i < other.countImages; ++i) {
         images[i] = other.images[i];
     }
     countImages = other.countImages;
+}
+
+Image* Session::createImage(char* file) {
+    if (file == nullptr)
+        return nullptr;
+
+    size_t lenght = strlen(file);
+    size_t i;
+    for (i = lenght; i > 0 ; --i) {
+        if(file[i] == '.') break;
+    }
+    char* extention = new char[lenght - i + 1];
+    strcpy(extention, file+i+1);
+    std::cout << "extention: " << extention << std::endl;
+    if (strcmp(extention, "ppm") == 0) {
+        return new ImagePPM(file);
+    }
+    if (strcmp(extention, "pgm") == 0) {
+        return new ImagePGM(file);
+    }
+    if (strcmp(extention, "pbm") == 0) {
+        return new ImagePBM(file);
+    }
+
+    return nullptr;
 }

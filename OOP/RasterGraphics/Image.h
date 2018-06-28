@@ -9,18 +9,19 @@
 #include "CommandConteiner.h"
 
 class Image {
-    size_t id;
+protected:
     char* filename;
     size_t width;
     size_t height;
-
+    int** data;
+private:
     void copy(const Image&);
 public:
 
     CommandConteiner<COMMAND>* commands;
 public:
 
-    Image(size_t id, char* filename);
+    Image(char* filename);
     Image&operator=(const Image&);
     ~Image();
 };

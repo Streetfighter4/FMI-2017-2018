@@ -17,7 +17,7 @@ class CommandConteiner {
     void resize(size_t);
 
 public:
-    void push_back(T&);
+    void push_back(T);
     T& pop_back();
     T& pop_front();
 
@@ -40,7 +40,7 @@ void CommandConteiner<T>::resize(size_t newCap) {
 }
 
 template<typename T>
-void CommandConteiner<T>::push_back(T& command) {
+void CommandConteiner<T>::push_back(T command) {
     if(size >= capacity) {
         size_t newCap = (capacity == 0) ? 2 : capacity * 2;
         resize(newCap);
@@ -51,13 +51,10 @@ void CommandConteiner<T>::push_back(T& command) {
 template<typename T>
 T& CommandConteiner<T>::pop_back() {
     if(size > 0) {
-        T command = data[size--];
         if(size <= capacity/4) {
             resize(capacity/2);
         }
-        return command;
-    } else {
-        return nullptr;
+        return data[size--];
     }
 }
 
@@ -77,7 +74,7 @@ CommandConteiner<T>::CommandConteiner() : data(nullptr), capacity(2), size(0) {}
 template<typename T>
 CommandConteiner<T>::~CommandConteiner() {
     for (int i = 0; i < size; ++i) {
-        delete data[i];
+    //    delete data[i];
     }
     delete[] data;
 }

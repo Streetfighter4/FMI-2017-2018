@@ -123,33 +123,6 @@ RasterGraphics/fast:
 	$(MAKE) -f CMakeFiles/RasterGraphics.dir/build.make CMakeFiles/RasterGraphics.dir/build
 .PHONY : RasterGraphics/fast
 
-CommandConteiner.o: CommandConteiner.cpp.o
-
-.PHONY : CommandConteiner.o
-
-# target to build an object file
-CommandConteiner.cpp.o:
-	$(MAKE) -f CMakeFiles/RasterGraphics.dir/build.make CMakeFiles/RasterGraphics.dir/CommandConteiner.cpp.o
-.PHONY : CommandConteiner.cpp.o
-
-CommandConteiner.i: CommandConteiner.cpp.i
-
-.PHONY : CommandConteiner.i
-
-# target to preprocess a source file
-CommandConteiner.cpp.i:
-	$(MAKE) -f CMakeFiles/RasterGraphics.dir/build.make CMakeFiles/RasterGraphics.dir/CommandConteiner.cpp.i
-.PHONY : CommandConteiner.cpp.i
-
-CommandConteiner.s: CommandConteiner.cpp.s
-
-.PHONY : CommandConteiner.s
-
-# target to generate assembly for a file
-CommandConteiner.cpp.s:
-	$(MAKE) -f CMakeFiles/RasterGraphics.dir/build.make CMakeFiles/RasterGraphics.dir/CommandConteiner.cpp.s
-.PHONY : CommandConteiner.cpp.s
-
 GraphicsApp.o: GraphicsApp.cpp.o
 
 .PHONY : GraphicsApp.o
@@ -203,6 +176,87 @@ Image.s: Image.cpp.s
 Image.cpp.s:
 	$(MAKE) -f CMakeFiles/RasterGraphics.dir/build.make CMakeFiles/RasterGraphics.dir/Image.cpp.s
 .PHONY : Image.cpp.s
+
+ImagePBM.o: ImagePBM.cpp.o
+
+.PHONY : ImagePBM.o
+
+# target to build an object file
+ImagePBM.cpp.o:
+	$(MAKE) -f CMakeFiles/RasterGraphics.dir/build.make CMakeFiles/RasterGraphics.dir/ImagePBM.cpp.o
+.PHONY : ImagePBM.cpp.o
+
+ImagePBM.i: ImagePBM.cpp.i
+
+.PHONY : ImagePBM.i
+
+# target to preprocess a source file
+ImagePBM.cpp.i:
+	$(MAKE) -f CMakeFiles/RasterGraphics.dir/build.make CMakeFiles/RasterGraphics.dir/ImagePBM.cpp.i
+.PHONY : ImagePBM.cpp.i
+
+ImagePBM.s: ImagePBM.cpp.s
+
+.PHONY : ImagePBM.s
+
+# target to generate assembly for a file
+ImagePBM.cpp.s:
+	$(MAKE) -f CMakeFiles/RasterGraphics.dir/build.make CMakeFiles/RasterGraphics.dir/ImagePBM.cpp.s
+.PHONY : ImagePBM.cpp.s
+
+ImagePGM.o: ImagePGM.cpp.o
+
+.PHONY : ImagePGM.o
+
+# target to build an object file
+ImagePGM.cpp.o:
+	$(MAKE) -f CMakeFiles/RasterGraphics.dir/build.make CMakeFiles/RasterGraphics.dir/ImagePGM.cpp.o
+.PHONY : ImagePGM.cpp.o
+
+ImagePGM.i: ImagePGM.cpp.i
+
+.PHONY : ImagePGM.i
+
+# target to preprocess a source file
+ImagePGM.cpp.i:
+	$(MAKE) -f CMakeFiles/RasterGraphics.dir/build.make CMakeFiles/RasterGraphics.dir/ImagePGM.cpp.i
+.PHONY : ImagePGM.cpp.i
+
+ImagePGM.s: ImagePGM.cpp.s
+
+.PHONY : ImagePGM.s
+
+# target to generate assembly for a file
+ImagePGM.cpp.s:
+	$(MAKE) -f CMakeFiles/RasterGraphics.dir/build.make CMakeFiles/RasterGraphics.dir/ImagePGM.cpp.s
+.PHONY : ImagePGM.cpp.s
+
+ImagePPM.o: ImagePPM.cpp.o
+
+.PHONY : ImagePPM.o
+
+# target to build an object file
+ImagePPM.cpp.o:
+	$(MAKE) -f CMakeFiles/RasterGraphics.dir/build.make CMakeFiles/RasterGraphics.dir/ImagePPM.cpp.o
+.PHONY : ImagePPM.cpp.o
+
+ImagePPM.i: ImagePPM.cpp.i
+
+.PHONY : ImagePPM.i
+
+# target to preprocess a source file
+ImagePPM.cpp.i:
+	$(MAKE) -f CMakeFiles/RasterGraphics.dir/build.make CMakeFiles/RasterGraphics.dir/ImagePPM.cpp.i
+.PHONY : ImagePPM.cpp.i
+
+ImagePPM.s: ImagePPM.cpp.s
+
+.PHONY : ImagePPM.s
+
+# target to generate assembly for a file
+ImagePPM.cpp.s:
+	$(MAKE) -f CMakeFiles/RasterGraphics.dir/build.make CMakeFiles/RasterGraphics.dir/ImagePPM.cpp.s
+.PHONY : ImagePPM.cpp.s
 
 Session.o: Session.cpp.o
 
@@ -267,15 +321,21 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... RasterGraphics"
-	@echo "... CommandConteiner.o"
-	@echo "... CommandConteiner.i"
-	@echo "... CommandConteiner.s"
 	@echo "... GraphicsApp.o"
 	@echo "... GraphicsApp.i"
 	@echo "... GraphicsApp.s"
 	@echo "... Image.o"
 	@echo "... Image.i"
 	@echo "... Image.s"
+	@echo "... ImagePBM.o"
+	@echo "... ImagePBM.i"
+	@echo "... ImagePBM.s"
+	@echo "... ImagePGM.o"
+	@echo "... ImagePGM.i"
+	@echo "... ImagePGM.s"
+	@echo "... ImagePPM.o"
+	@echo "... ImagePPM.i"
+	@echo "... ImagePPM.s"
 	@echo "... Session.o"
 	@echo "... Session.i"
 	@echo "... Session.s"

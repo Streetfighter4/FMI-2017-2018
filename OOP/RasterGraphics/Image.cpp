@@ -2,15 +2,17 @@
 // Created by yasen on 6/26/18.
 //
 
-#include <string.h>
+#include <cstring>
+#include <iostream>
 #include "Image.h"
 
-Image::Image(size_t id, char* filename) : id(id), commands(nullptr), width(0), height(0) {
+Image::Image(char* filename) : commands(nullptr), width(0), height(0), data(nullptr) {
     this->filename = new char[strlen(filename) + 1];
     strcpy(this->filename, filename);
 }
 
 Image::~Image() {
+    delete[] filename;
     delete commands;
 }
 
@@ -22,7 +24,6 @@ Image& Image::operator=(const Image& other) {
 }
 
 void Image::copy(const Image& other) {
-    id = other.id;
     width = other.width;
     height = other.height;
 

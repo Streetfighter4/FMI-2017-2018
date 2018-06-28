@@ -14,6 +14,7 @@ class Session {
     size_t countImages;
 
     void copy(const Session&);
+    Image* createImage(char* file);
 public:
     void grayScale();
     void monoChrome();
@@ -21,10 +22,13 @@ public:
     void rotateLeft();
     void rotateRight();
     void undo();
-    void add(size_t id, char* filename);
+    void add(char* filename);
     void save();
+
 public:
-    Session(size_t id);
+    inline size_t getId() { return id; }
+public:
+    Session(size_t id, char* files, size_t countImages);
     Session&operator=(const Session&);
     ~Session();
 };

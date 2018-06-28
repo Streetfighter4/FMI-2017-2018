@@ -87,9 +87,6 @@
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Command.h">
 			<Option target="RasterGraphics"/>
 		</Unit>
-		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/CommandConteiner.cpp">
-			<Option target="RasterGraphics"/>
-		</Unit>
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/CommandConteiner.h">
 			<Option target="RasterGraphics"/>
 		</Unit>
@@ -103,6 +100,24 @@
 			<Option target="RasterGraphics"/>
 		</Unit>
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Image.h">
+			<Option target="RasterGraphics"/>
+		</Unit>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePBM.cpp">
+			<Option target="RasterGraphics"/>
+		</Unit>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePBM.h">
+			<Option target="RasterGraphics"/>
+		</Unit>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePGM.cpp">
+			<Option target="RasterGraphics"/>
+		</Unit>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePGM.h">
+			<Option target="RasterGraphics"/>
+		</Unit>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePPM.cpp">
+			<Option target="RasterGraphics"/>
+		</Unit>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePPM.h">
 			<Option target="RasterGraphics"/>
 		</Unit>
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Session.cpp">
