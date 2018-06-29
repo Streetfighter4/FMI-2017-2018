@@ -8,8 +8,10 @@
 
 /home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Command.h
 
-/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/CommandConteiner.h
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Conteiner.h
 stdlib.h
+-
+stdexcept
 -
 
 /home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/GraphicsApp.cpp
@@ -37,8 +39,54 @@ Image.h
 /home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Image.h
 Command.h
 /home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Command.h
-CommandConteiner.h
-/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/CommandConteiner.h
+Conteiner.h
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Conteiner.h
+
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePBM.cpp
+fstream
+-
+cstring
+-
+iostream
+-
+ImagePBM.h
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePBM.h
+
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePBM.h
+Image.h
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Image.h
+
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePGM.cpp
+cstring
+-
+fstream
+-
+iostream
+-
+stdexcept
+-
+ImagePGM.h
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePGM.h
+
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePGM.h
+Image.h
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Image.h
+
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePPM.cpp
+fstream
+-
+cstring
+-
+iostream
+-
+stdexcept
+-
+ImagePPM.h
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePPM.h
+
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePPM.h
+Image.h
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Image.h
 
 /home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Session.cpp
 iostream
@@ -47,6 +95,12 @@ cstring
 -
 Session.h
 /home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Session.h
+ImagePGM.h
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePGM.h
+ImagePBM.h
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePBM.h
+ImagePPM.h
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePPM.h
 
 /home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Session.h
 Image.h

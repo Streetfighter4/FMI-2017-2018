@@ -8,14 +8,18 @@
 
 #include "Image.h"
 
-class ImagePGM : Image {
+class ImagePGM : public Image {
 private:
     size_t maxValueOfWhite;
+    void monoChrome();
+    void negative();
 public:
-    ImagePGM(char *filename);
-
+    ImagePGM(char* filename);
+    ImagePGM(const ImagePGM&);
 public:
-
+    virtual void parse(char* filename);
+    virtual Image* clone();
+    virtual void save();
 };
 
 

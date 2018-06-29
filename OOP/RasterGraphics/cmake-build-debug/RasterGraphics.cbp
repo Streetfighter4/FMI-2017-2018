@@ -87,7 +87,7 @@
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Command.h">
 			<Option target="RasterGraphics"/>
 		</Unit>
-		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/CommandConteiner.h">
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Conteiner.h">
 			<Option target="RasterGraphics"/>
 		</Unit>
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/GraphicsApp.cpp">

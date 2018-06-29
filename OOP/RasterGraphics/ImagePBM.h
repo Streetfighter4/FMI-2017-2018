@@ -8,10 +8,15 @@
 
 #include "Image.h"
 
-class ImagePBM : Image {
+class ImagePBM : public Image {
+    void negative();
 public:
     ImagePBM(char *filename);
-
+    ImagePBM(const ImagePBM&);
+public:
+    virtual void parse(char* filename);
+    virtual Image* clone();
+    virtual void save();
 };
 
 

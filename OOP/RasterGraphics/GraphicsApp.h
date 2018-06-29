@@ -15,6 +15,7 @@ class GraphicsApp {
 public:
     void createSession(char* files);
     void listSessions();
+    Session* getCurrentSession();
 public:
     GraphicsApp();
     ~GraphicsApp();

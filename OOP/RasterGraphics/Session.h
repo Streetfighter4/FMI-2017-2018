@@ -27,6 +27,7 @@ public:
 
 public:
     inline size_t getId() { return id; }
+    void listImages();
 public:
     Session(size_t id, char* files, size_t countImages);
     Session&operator=(const Session&);

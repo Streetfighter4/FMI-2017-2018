@@ -26,7 +26,7 @@ void GraphicsApp::createSession(char* files) {
         i++;
     }
     delete[] buff;
-    std::cout << "files1: " << files << std::endl;
+    std::cout << "i: " << i << std::endl;
     Session* session = new Session(countSessions+1, files, i);
 
     std::cout << "session id: " << session->getId() << std::endl;
@@ -46,4 +46,8 @@ void GraphicsApp::listSessions() {
     for (int i = 0; i < countSessions; ++i) {
         std::cout << "list session id: " << sessions[i]->getId() << std::endl;
     }
+}
+
+Session* GraphicsApp::getCurrentSession() {
+    return sessions[countSessions-1];
 }

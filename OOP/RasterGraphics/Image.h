@@ -6,7 +6,7 @@
 #define RASTERGRAPHICS_IMAGE_H
 
 #include "Command.h"
-#include "CommandConteiner.h"
+#include "Conteiner.h"
 
 class Image {
 protected:
@@ -14,16 +14,22 @@ protected:
     size_t width;
     size_t height;
     int** data;
-private:
-    void copy(const Image&);
 public:
 
-    CommandConteiner<COMMAND>* commands;
+    Conteiner<COMMAND> commands;
 public:
 
     Image(char* filename);
-    Image&operator=(const Image&);
+    Image& operator=(const Image&) = delete;
+    Image(const Image&);
     ~Image();
+
+    inline char* getName() { return filename; }
+    void listCommands();
+    virtual void parse(char* filename) = 0;
+    virtual Image* clone() = 0;
+    virtual void save() = 0;
+//    virtual void free() = 0;
 };
 
 

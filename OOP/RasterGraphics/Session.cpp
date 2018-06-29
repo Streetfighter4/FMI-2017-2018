@@ -39,58 +39,54 @@ Session& Session::operator=(const Session& other) {
 
 void Session::grayScale() {
     for (int i = 0; i < countImages; ++i) {
-        images[i]->commands->push_back(GRAYSCALE);
+        images[i]->commands.push_back(GRAYSCALE);
     }
 }
 
 void Session::monoChrome() {
     for (int i = 0; i < countImages; ++i) {
-        images[i]->commands->push_back(MONOCHROME);
+        images[i]->commands.push_back(MONOCHROME);
     }
 }
 
 void Session::negative() {
     for (int i = 0; i < countImages; ++i) {
-        images[i]->commands->push_back(NEGATIVE);
+        images[i]->commands.push_back(NEGATIVE);
     }
 }
 
 void Session::rotateLeft() {
     for (int i = 0; i < countImages; ++i) {
-        images[i]->commands->push_back(ROTATELEFT);
+        images[i]->commands.push_back(ROTATELEFT);
     }
 }
 
 void Session::rotateRight() {
     for (int i = 0; i < countImages; ++i) {
-        images[i]->commands->push_back(ROTATERIGHT);
+        images[i]->commands.push_back(ROTATERIGHT);
     }
 }
 
 void Session::undo() {
     for (int i = 0; i < countImages; ++i) {
-        images[i]->commands->pop_back();
+        images[i]->commands.pop_back();
     }
 }
 
 void Session::add(char *filename) {
-    Image* image = new Image(filename);
-    Image** temp = images;
-    images = new Image*[countImages+1];
+    Image* image = createImage(filename);
+    Image** newImages = new Image*[countImages+1];
 
     for (size_t i = 0; i < countImages; i++) {
-        images[i] = temp[i];
+        newImages[i] = images[i]->clone();
     }
-    images[countImages] = image;
+    newImages[countImages] = image;
 
-    for (int j = 0; j < countImages; ++j) {
-        delete temp[j];
-    }
-    delete[] temp;
+    ++countImages;
+    delete[] images;
+    images = newImages;
 
-    countImages++;
 }
-
 void Session::copy(const Session& other) {
     id = other.id;
     delete[] images;
@@ -112,7 +108,6 @@ Image* Session::createImage(char* file) {
     }
     char* extention = new char[lenght - i + 1];
     strcpy(extention, file+i+1);
-    std::cout << "extention: " << extention << std::endl;
     if (strcmp(extention, "ppm") == 0) {
         return new ImagePPM(file);
     }
@@ -124,4 +119,18 @@ Image* Session::createImage(char* file) {
     }
 
     return nullptr;
+}
+
+void Session::listImages() {
+    std::cout << "List images: " << std::endl;
+    for (int i = 0; i < countImages; ++i) {
+        std::cout << images[i]->getName() << std::endl;
+        images[i]->listCommands();
+    }
+}
+
+void Session::save() {
+    for (int i = 0; i < countImages; ++i) {
+        images[i]->save();
+    }
 }
