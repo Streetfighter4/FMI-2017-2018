@@ -20,7 +20,6 @@ class Conteiner {
 public:
     void push_back(T);
     T& pop_back();
-    T& pop_front();
 
     inline size_t getSize() { return size; }
     inline bool isEmpty() { return size==0; }
@@ -62,19 +61,6 @@ T& Conteiner<T>::pop_back() {
         }
         return data[size--];
     }
-}
-
-template<typename T>
-T& Conteiner<T>::pop_front() {
-    T& command = data[0];
-    for (int i = 0; i < size-1; ++i) {
-        data[i] = data[i+1];
-    }
-    --size;
-    if(size <= capacity/4) {
-        resize(capacity/2);
-    }
-    return command;
 }
 
 template<typename T>

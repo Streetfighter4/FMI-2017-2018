@@ -13,10 +13,12 @@ class ImagePBM : public Image {
 public:
     ImagePBM(char *filename);
     ImagePBM(const ImagePBM&);
+    ~ImagePBM();
 public:
     virtual void parse(char* filename);
     virtual Image* clone();
     virtual void save();
+    virtual void free();
 };
 
 

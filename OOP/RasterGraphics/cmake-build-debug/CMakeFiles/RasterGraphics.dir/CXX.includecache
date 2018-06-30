@@ -33,6 +33,10 @@ cstring
 -
 iostream
 -
+ctime
+-
+cstdlib
+-
 Image.h
 /home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Image.h
 

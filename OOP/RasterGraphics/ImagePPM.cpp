@@ -18,18 +18,22 @@ ImagePPM::ImagePPM(char* filename) : Image(filename) {
 }
 
 ImagePPM::ImagePPM(const ImagePPM& other) : Image(other) {
-    //TODO: free alocated data
     maxValueOfPixel = other.maxValueOfPixel;
     isGrayScale = other.isGrayScale;
-    data = new int*[width*3];
-    for (int i = 0; i < width*3; ++i) {
-        data[i] = new int[height];
+    isMonoChrome = other.isMonoChrome;
+    data = new int*[height];
+    for (int i = 0; i < height; ++i) {
+        data[i] = new int[width*3];
     }
-    for (int j = 0; j < width*3; ++j) {
-        for (int k = 0; k < height; ++k) {
+    for (int j = 0; j < height; ++j) {
+        for (int k = 0; k < width*3; ++k) {
             data[j][k] = other.data[j][k];
         }
     }
+}
+
+ImagePPM::~ImagePPM() {
+    free();
 }
 
 void ImagePPM::parse(char *filename) {
@@ -63,22 +67,25 @@ void ImagePPM::parse(char *filename) {
         ifs >> word;
     }
     maxValueOfPixel = static_cast<size_t>(atoi(word));
-    data = new int*[width*3];
-    for (int i = 0; i < width*3; ++i) {
-        data[i] = new int[height];
+    data = new int*[height];
+    for (int i = 0; i < height; ++i) {
+        data[i] = new int[width*3];
     }
 
-    for (int j = 0; j < width*3; ++j) {
-        for (int k = 0; k < height; ++k) {
+    for (int j = 0; j < height; ++j) {
+        for (int k = 0; k < width*3; ++k) {
             ifs >> word;
             if (atoi(word) > maxValueOfPixel) {
-                //TODO: free allocated memory
+                free();
                 throw std::invalid_argument("Invalid value of pixel");
+            }
+            if(k%3 == 2) {
+                isGrayScale = isEqual(data[j][k-2], data[j][k-1], data[j][k]);
+                isMonoChrome = isBlackOrWhite(data[j][k-2], data[j][k-1], data[j][k]);
             }
             data[j][k] = atoi(word);
         }
     }
-    isGrayScale = false; //TODO: for now
     ifs.close();
 
 }
@@ -88,19 +95,37 @@ Image *ImagePPM::clone() {
 }
 
 void ImagePPM::save() {
-    while(!commands.isEmpty()) {
-        COMMAND command = commands.pop_front();
+    for (int k = 0; k < commands.getSize(); ++k) {
+        COMMAND command = commands[k];
         if(command == 1 && !isGrayScale) {
             grayScale();
             isGrayScale = true;
         }
-        if(command == 2) {
+        if(command == 2 && !isMonoChrome) {
             monoChrome();
+            isMonoChrome = true;
         }
         if(command == 3) {
             negative();
         }
     }
+    char* newFileName = new char[strlen(filename) + strlen(getCurrentDate()) + 2];
+    strcpy(newFileName, fileNameWithoutExtention(filename));
+    strcat(newFileName, "_");
+    strcat(newFileName, getCurrentDate());
+    strcat(newFileName, ".ppm");
+    std::ofstream ofs(newFileName);
+    ofs << "P3\n";
+    ofs << width << " " << height << "\n";
+    ofs << maxValueOfPixel << "\n";
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width*3; ++j) {
+            ofs << data[i][j] << " ";
+        }
+        ofs << "\n";
+    }
+
+    ofs.close();
 
 }
 
@@ -130,5 +155,26 @@ void ImagePPM::negative() {
             data[i][j] = maxValueOfPixel - data[i][j];
         }
     }
+}
+
+void ImagePPM::free() {
+    delete[] filename;
+    for (int i = 0; i < height; ++i) {
+        delete data[i];
+    }
+    delete[] data;
+    data = nullptr;
+    width = 0;
+    height = 0;
+    maxValueOfPixel = 0;
+    isGrayScale = false;
+}
+
+bool ImagePPM::isEqual(int a, int b, int c) {
+    return (a == b && b == c);
+}
+
+bool ImagePPM::isBlackOrWhite(int a, int b, int c) {
+    return (isEqual(a, b, c) && (a == 0 || a == maxValueOfPixel));
 }
 

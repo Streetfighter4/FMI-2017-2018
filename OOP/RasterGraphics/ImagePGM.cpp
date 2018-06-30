@@ -17,17 +17,20 @@ ImagePGM::ImagePGM(char *filename) : Image(filename) {
 }
 
 ImagePGM::ImagePGM(const ImagePGM& other) : Image(other) {
-    //TODO: free alocated data
-    data = new int*[width];
-    for (int i = 0; i < width; ++i) {
-        data[i] = new int[height];
+    isMonoChrome = other.isMonoChrome;
+    data = new int*[height];
+    for (int i = 0; i < height; ++i) {
+        data[i] = new int[width];
     }
-    for (int j = 0; j < width; ++j) {
-        for (int k = 0; k < height; ++k) {
+    for (int j = 0; j < height; ++j) {
+        for (int k = 0; k < width; ++k) {
             data[j][k] = other.data[j][k];
         }
     }
+}
 
+ImagePGM::~ImagePGM() {
+    free();
 }
 
 void ImagePGM::parse(char *filename) {
@@ -57,18 +60,20 @@ void ImagePGM::parse(char *filename) {
         ifs >> word;
     }
     maxValueOfWhite = static_cast<size_t>(atoi(word));
-    data = new int *[width];
-    for (int i = 0; i < width; ++i) {
-        data[i] = new int[height];
+    data = new int*[height];
+    for (int i = 0; i < height; ++i) {
+        data[i] = new int[width];
     }
-    for (int j = 0; j < width; ++j) {
-        for (int k = 0; k < height; ++k) {
+    for (int j = 0; j < height; ++j) {
+        for (int k = 0; k < width; ++k) {
             ifs >> word;
-            if (atoi(word) > maxValueOfWhite) {
-                //TODO: free allocated memory
+            int pixel = atoi(word);
+            if (pixel > maxValueOfWhite || pixel < 0) {
+                free();
                 throw std::invalid_argument("Invalid value of pixel");
             }
-            data[j][k] = atoi(word);
+            isMonoChrome = (pixel == 0 || pixel == maxValueOfWhite);
+            data[j][k] = pixel;
         }
     }
 
@@ -81,25 +86,40 @@ Image* ImagePGM::clone() {
 }
 
 void ImagePGM::save() {
-    while(!commands.isEmpty()) {
-        COMMAND command = commands.pop_front();
-        if(command == 2) {
+    for (int k = 0; k < commands.getSize(); ++k) {
+        COMMAND command = commands[k];
+        if(command == 2 && !isMonoChrome) {
             monoChrome();
+            isMonoChrome = true;
         }
         if(command == 3) {
             negative();
         }
     }
+    char* newFileName = new char[strlen(filename) + strlen(getCurrentDate()) + 2];
+    strcpy(newFileName, fileNameWithoutExtention(filename));
+    strcat(newFileName, "_");
+    strcat(newFileName, getCurrentDate());
+    strcat(newFileName, ".pgm");
+    std::ofstream ofs(newFileName);
+    ofs << "P2\n";
+    ofs << width << " " << height << "\n";
+    ofs << maxValueOfWhite << "\n";
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            ofs << data[i][j] << " ";
+        }
+        ofs << "\n";
+    }
+
+    ofs.close();
+
 }
 
 void ImagePGM::monoChrome() {
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
-            if(data[i][j] > maxValueOfWhite/2) {
-                data[i][j] = maxValueOfWhite;
-            } else {
-                data[i][j] = 0;
-            }
+            data[i][j] = (data[i][j] > maxValueOfWhite/2) ? maxValueOfWhite : 0;
         }
     }
 
@@ -111,6 +131,18 @@ void ImagePGM::negative() {
             data[i][j] = maxValueOfWhite - data[i][j];
         }
     }
+}
 
+void ImagePGM::free() {
+    delete[] filename;
+    for (int i = 0; i < height; ++i) {
+        delete data[i];
+    }
+    delete[] data;
+    data = nullptr;
+    width = 0;
+    height = 0;
+    maxValueOfWhite = 0;
+    isMonoChrome = false;
 }
 

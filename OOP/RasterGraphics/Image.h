@@ -14,6 +14,9 @@ protected:
     size_t width;
     size_t height;
     int** data;
+
+    char* getCurrentDate();
+    char* fileNameWithoutExtention(char* filename);
 public:
 
     Conteiner<COMMAND> commands;
@@ -29,7 +32,7 @@ public:
     virtual void parse(char* filename) = 0;
     virtual Image* clone() = 0;
     virtual void save() = 0;
-//    virtual void free() = 0;
+    virtual void free() = 0;
 };
 
 

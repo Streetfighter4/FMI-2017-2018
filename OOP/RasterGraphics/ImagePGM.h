@@ -11,15 +11,18 @@
 class ImagePGM : public Image {
 private:
     size_t maxValueOfWhite;
+    bool isMonoChrome;
     void monoChrome();
     void negative();
 public:
     ImagePGM(char* filename);
     ImagePGM(const ImagePGM&);
+    ~ImagePGM();
 public:
-    virtual void parse(char* filename);
+    void parse(char* filename);
     virtual Image* clone();
     virtual void save();
+    virtual void free();
 };
 
 
