@@ -10,6 +10,7 @@
 
 class ImagePBM : public Image {
     void negative();
+    void writeInFile(char* filename);
 public:
     ImagePBM(char *filename);
     ImagePBM(const ImagePBM&);

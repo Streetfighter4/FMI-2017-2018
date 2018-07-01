@@ -34,6 +34,8 @@ public:
     virtual void save() = 0;
     virtual void free() = 0;
     virtual void rotateLeft();
+    virtual void rotateRight();
+    virtual void makeRotations(int countRotation);
 };
 
 

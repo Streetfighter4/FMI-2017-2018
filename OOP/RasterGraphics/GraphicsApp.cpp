@@ -15,21 +15,19 @@ GraphicsApp::~GraphicsApp() {
     delete[] sessions;
 }
 
-void GraphicsApp::createSession(char* files) {
+Session* GraphicsApp::createSession(char* files) {
     char* buff = new char[strlen(files)+1];
     strcpy(buff, files);
     char* pch;
     int i = 0;
     pch = strtok (buff," ");
-    while (pch != NULL) {
-        pch = strtok (NULL, " ");
+    while (pch != nullptr) {
+        pch = strtok (nullptr, " ");
         i++;
     }
     delete[] buff;
-    std::cout << "i: " << i << std::endl;
     Session* session = new Session(countSessions+1, files, i);
 
-    std::cout << "session id: " << session->getId() << std::endl;
     Session** temp = new Session*[countSessions+1];
 
     for (size_t i = 0; i < countSessions; i++) {
@@ -40,14 +38,22 @@ void GraphicsApp::createSession(char* files) {
     ++countSessions;
     delete[] sessions;
     sessions = temp;
+    return session;
 }
 
 void GraphicsApp::listSessions() {
+    std::cout << "Sessions ids:" << std::endl;
     for (int i = 0; i < countSessions; ++i) {
-        std::cout << "list session id: " << sessions[i]->getId() << std::endl;
+        std::cout << "id: " << sessions[i]->getId() << std::endl;
     }
 }
 
-Session* GraphicsApp::getCurrentSession() {
-    return sessions[countSessions-1];
+Session* GraphicsApp::getSessionById(size_t id) {
+    for (int i = 0; i < countSessions; ++i) {
+        if(sessions[i]->getId() == id) {
+            return sessions[i];
+        }
+    }
+    return nullptr;
 }
+

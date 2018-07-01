@@ -90,8 +90,6 @@ void ImagePPM::parse(char *filename) {
         }
     }
 
-    std::cout << ((isGrayScale) ? "isGrayScale - true\n" : "isGrayScale - false\n");
-    std::cout << ((isMonoChrome) ? "isMonoChrome - true\n" : "isMonoChrome - false\n");
     ifs.close();
 
 }
@@ -101,6 +99,8 @@ Image *ImagePPM::clone() {
 }
 
 void ImagePPM::save() {
+    size_t countRightRotation = 0;
+    size_t countLeftRotation = 0;
     while(!commands.isEmpty()) {
         COMMAND command = commands.pop_front();
         if(command == 1 && !isGrayScale) {
@@ -115,30 +115,21 @@ void ImagePPM::save() {
             negative();
         }
         if(command == 4) {
-            rotateLeft();
+            countLeftRotation++;
+        }
+        if(command == 5) {
+            countRightRotation++;
         }
     }
 
-    char* newFileName = new char[strlen(filename) + strlen(getCurrentDate()) + 2];
-    strcpy(newFileName, fileNameWithoutExtention(filename));
-    strcat(newFileName, "_");
-    strcat(newFileName, getCurrentDate());
-    strcat(newFileName, ".ppm");
+    int countRotation = countRightRotation%4 - countLeftRotation%4;
+    makeRotations(countRotation);
 
-    std::ofstream ofs(newFileName);
-    ofs << "P3\n";
-    ofs << width << " " << height << "\n";
-    ofs << maxValueOfPixel << "\n";
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width*3; ++j) {
-            ofs << data[i][j] << " ";
-        }
-        ofs << "\n";
+    try {
+        writeInFile(filename);
+    } catch (std::exception e) {
+        std::cout << e.what() << std::endl;
     }
-
-    delete[] newFileName;
-    ofs.close();
-
 }
 
 void ImagePPM::grayScale() {
@@ -199,29 +190,22 @@ void ImagePPM::rotateLeft() {
     size_t newHeight = width;
     int** temp = new int*[newHeight];
     for (int i = 0; i < newHeight; ++i) {
-        data[i] = new int[newWidth];
+        temp[i] = new int[newWidth];
     }
 
-    std::cout << "new width and new height: " << newWidth << " " << newHeight << std::endl;
     for (int j = 0; j < height; ++j) {
-        std::cout << "new width and new height: " << newWidth << " " << newHeight << std::endl;
-        for (int k = 0, l = 0; l < newHeight; k+=3, ++l) {
-            std::cout << "temp[newHeight-l-1][j*3]: " << newHeight-l-1 << " " << j*3 << std::endl;
-            temp[newHeight-l-1][j*3] = data[j][k];
+        for (int k = 0, l = newHeight-1; l >= 0; k+=3, --l) {
+            temp[l][j*3] = data[j][k];
         }
 
-        std::cout << "new width and new height: " << newWidth << " " << newHeight << std::endl;
-        for (int k = 1, l = 0; l < newHeight; k+=3, ++l) {
-            temp[newHeight-l-1][j*3+1] = data[j][k];
+        for (int k = 1, l = newHeight-1; l >= 0; k+=3, --l) {
+            temp[l][j*3+1] = data[j][k];
         }
 
-        std::cout << "new width and new height: " << newWidth << " " << newHeight << std::endl;
-        for (int k = 2, l = 0; l < newHeight; k+=3, ++l) {
-            temp[newHeight-l-1][j*3+2] = data[j][k];
+        for (int k = 2, l = newHeight-1; l >= 0; k+=3, --l) {
+            temp[l][j*3+2] = data[j][k];
         }
-        std::cout << "new width and new height: " << newWidth << " " << newHeight << std::endl;
     }
-    std::cout << "new width and new height: " << newWidth << " " << newHeight << std::endl;
     for (int l = 0; l < height; ++l) {
         delete data[l];
     }
@@ -229,5 +213,63 @@ void ImagePPM::rotateLeft() {
     width = newWidth/3;
     height = newHeight;
     data = temp;
+}
+
+void ImagePPM::rotateRight() {
+    size_t newWidth = height*3;
+    size_t newHeight = width;
+    int** temp = new int*[newHeight];
+    for (int i = 0; i < newHeight; ++i) {
+        temp[i] = new int[newWidth];
+    }
+
+    for (int j = 0; j < height; ++j) {
+        for (int k = 0, l = 0; l < newHeight; k+=3, ++l) {
+            temp[l][newWidth-1-(j*3+2)] = data[j][k];
+        }
+
+        for (int k = 1, l = 0; l < newHeight; k+=3, ++l) {
+            temp[l][newWidth-1-(j*3+1)] = data[j][k];
+        }
+
+        for (int k = 2, l = 0; l < newHeight; k+=3, ++l) {
+            temp[l][newWidth-1-j*3] = data[j][k];
+        }
+    }
+    for (int l = 0; l < height; ++l) {
+        delete data[l];
+    }
+    delete[] data;
+    width = newWidth/3;
+    height = newHeight;
+    data = temp;
+
+}
+
+void ImagePPM::writeInFile(char *filename) {
+    char* fileNameWithoutExt = fileNameWithoutExtention(filename);
+    char* date = getCurrentDate();
+    char* newFileName = new char[strlen(filename) + strlen(date) + 2];
+    strcpy(newFileName, fileNameWithoutExt);
+    strcat(newFileName, "_");
+    strcat(newFileName, date);
+    strcat(newFileName, ".ppm");
+
+    std::ofstream ofs(newFileName);
+    ofs << "P3\n";
+    ofs << width << " " << height << "\n";
+    ofs << maxValueOfPixel << "\n";
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width*3; ++j) {
+            ofs << data[i][j] << " ";
+        }
+        ofs << "\n";
+    }
+
+    delete[] newFileName;
+    delete[] fileNameWithoutExt;
+    delete[] date;
+    ofs.close();
+
 }
 

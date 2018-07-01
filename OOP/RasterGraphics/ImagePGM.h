@@ -14,6 +14,7 @@ private:
     bool isMonoChrome;
     void monoChrome();
     void negative();
+    void writeInFile(char* filename);
 public:
     ImagePGM(char* filename);
     ImagePGM(const ImagePGM&);

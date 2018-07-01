@@ -16,9 +16,9 @@ Session::Session(size_t id, char* files, size_t countImages) : id(id), countImag
     char* token;
     token = strtok (files," ");
 
-    while (token != NULL) {
+    while (token != nullptr) {
         images[j++] = createImage(token);
-        token = strtok (NULL, " ");
+        token = strtok (nullptr, " ");
     }
 
 }

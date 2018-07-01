@@ -25,19 +25,30 @@ Image::~Image() {
 
 void Image::listCommands() {
     for (int i = 0; i < commands.getSize(); ++i) {
-        std::cout << commands[i] << std::endl;
+        if(commands[i] == 1)
+            std::cout << "grayscale, ";
+        if(commands[i] == 2)
+            std::cout << "monochrome, ";
+        if(commands[i] == 3)
+            std::cout << "negative, ";
+        if(commands[i] == 4)
+            std::cout << "rotate left, ";
+        if(commands[i] == 5)
+            std::cout << "rotate right, ";
+
     }
+    std::cout << std::endl;
 }
 
 char* Image::getCurrentDate() {
     std::time_t t = std::time(0);   // get time now
     std::tm* now = std::localtime(&t);
     std::string data;
-    data = std::to_string(now->tm_year+1900) + '-' +
-              std::to_string(now->tm_mon + 1) + '-' +
+    data = std::to_string(now->tm_year+1900) + '.' +
+              std::to_string(now->tm_mon + 1) + '.' +
               std::to_string(now->tm_mday) + '-' +
-              std::to_string(now->tm_hour) + '-' +
-              std::to_string(now->tm_min) + '-' +
+              std::to_string(now->tm_hour) + ':' +
+              std::to_string(now->tm_min) + ':' +
                 std::to_string(now->tm_sec);
     char* buff = new char[data.length() + 1];
     std::strcpy(buff, data.c_str());
@@ -82,4 +93,38 @@ void Image::rotateLeft() {
     height = buff;
     data = temp;
 }
+
+void Image::rotateRight() {
+    int** temp = new int*[width];
+    for (int i = 0; i < width; ++i) {
+        temp[i] = new int[height];
+    }
+
+    for (int j = 0; j < height; ++j) {
+        for (int k = 0; k < width; ++k) {
+            temp[k][height-j-1] = data[j][k];
+        }
+    }
+
+    for (int l = 0; l < height; ++l) {
+        delete data[l];
+    }
+    delete[] data;
+    size_t buff = width;
+    width = height;
+    height = buff;
+    data = temp;
+
+}
+
+void Image::makeRotations(int countRotation) {
+    for (int k = 0; k < abs(countRotation); ++k) {
+        if(countRotation < 0) {
+            rotateLeft();
+        } else {
+            rotateRight();
+        }
+    }
+}
+
 

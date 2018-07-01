@@ -6,7 +6,7 @@
 #define RASTERGRAPHICS_COMMANDCONTEINER_H
 
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <stdexcept>
 
 template <typename T>
@@ -27,7 +27,7 @@ public:
     const T operator[](size_t) const;
     T& operator[](size_t);
 public:
-    Conteiner(size_t newCap);
+    explicit Conteiner(size_t newCap);
     Conteiner&operator=(const Conteiner&);
     ~Conteiner();
 };

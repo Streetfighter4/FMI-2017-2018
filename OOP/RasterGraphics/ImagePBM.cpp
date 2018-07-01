@@ -93,22 +93,50 @@ void ImagePBM::negative() {
 }
 
 void ImagePBM::save() {
+    size_t countRightRotation = 0;
+    size_t countLeftRotation = 0;
     while(!commands.isEmpty()) {
         COMMAND command = commands.pop_front();
         if(command == 3) {
             negative();
         }
         if(command == 4) {
-            std::cout << "width and height: " << width << " " << height << std::endl;
-            rotateLeft();
+            countLeftRotation++;
+        }
+        if(command == 5) {
+            countRightRotation++;
         }
     }
 
-    char* newFileName = new char[strlen(filename) + strlen(getCurrentDate()) + 2];
-    strcpy(newFileName, fileNameWithoutExtention(filename));
+    int countRotation = countRightRotation%4 - countLeftRotation%4;
+    makeRotations(countRotation);
+
+    try {
+        writeInFile(filename);
+    } catch (std::exception e) {
+        std::cout << e.what() << std::endl;
+    }
+}
+
+void ImagePBM::free() {
+    delete[] filename;
+    for (int i = 0; i < height; ++i) {
+        delete data[i];
+    }
+    delete[] data;
+    data = nullptr;
+    width = 0;
+    height = 0;
+}
+
+void ImagePBM::writeInFile(char *filename) {
+    char* fileNameWithoutExt = fileNameWithoutExtention(filename);
+    char* date = getCurrentDate();
+    char* newFileName = new char[strlen(filename) + strlen(date) + 2];
+    strcpy(newFileName, fileNameWithoutExt);
     strcat(newFileName, "_");
-    strcat(newFileName, getCurrentDate());
-    strcat(newFileName, ".ppm");
+    strcat(newFileName, date);
+    strcat(newFileName, ".pbm");
 
     std::ofstream ofs(newFileName);
     ofs << "P1\n";
@@ -121,19 +149,9 @@ void ImagePBM::save() {
     }
 
     delete[] newFileName;
+    delete[] fileNameWithoutExt;
+    delete[] date;
     ofs.close();
-
-}
-
-void ImagePBM::free() {
-    delete[] filename;
-    for (int i = 0; i < height; ++i) {
-        delete data[i];
-    }
-    delete[] data;
-    data = nullptr;
-    width = 0;
-    height = 0;
 }
 
 

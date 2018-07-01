@@ -78,7 +78,6 @@ void ImagePGM::parse(char *filename) {
             data[j][k] = pixel;
         }
     }
-    std::cout << ((isMonoChrome) ? "isMonoChrome - true\n" : "isMonoChrome - false\n");
 
     ifs.close();
 
@@ -89,6 +88,8 @@ Image* ImagePGM::clone() {
 }
 
 void ImagePGM::save() {
+    size_t countRightRotation = 0;
+    size_t countLeftRotation = 0;
     while(!commands.isEmpty()) {
         COMMAND command = commands.pop_front();
         if(command == 2 && !isMonoChrome) {
@@ -99,28 +100,21 @@ void ImagePGM::save() {
             negative();
         }
         if(command == 4) {
-            rotateLeft();
+            countLeftRotation++;
+        }
+        if(command == 5) {
+            countRightRotation++;
         }
     }
-    char* newFileName = new char[strlen(filename) + strlen(getCurrentDate()) + 2];
-    strcpy(newFileName, fileNameWithoutExtention(filename));
-    strcat(newFileName, "_");
-    strcat(newFileName, getCurrentDate());
-    strcat(newFileName, ".pgm");
 
-    std::ofstream ofs(newFileName);
-    ofs << "P2\n";
-    ofs << width << " " << height << "\n";
-    ofs << maxValueOfWhite << "\n";
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            ofs << data[i][j] << " ";
-        }
-        ofs << "\n";
+    int countRotation = countRightRotation%4 - countLeftRotation%4;
+    makeRotations(countRotation);
+
+    try {
+        writeInFile(filename);
+    } catch (std::exception e) {
+        std::cout << e.what() << std::endl;
     }
-
-    delete[] newFileName;
-    ofs.close();
 
 }
 
@@ -152,5 +146,32 @@ void ImagePGM::free() {
     height = 0;
     maxValueOfWhite = 0;
     isMonoChrome = false;
+}
+
+void ImagePGM::writeInFile(char *filename) {
+    char* fileNameWithoutExt = fileNameWithoutExtention(filename);
+    char* date = getCurrentDate();
+    char* newFileName = new char[strlen(filename) + strlen(date) + 2];
+    strcpy(newFileName, fileNameWithoutExt);
+    strcat(newFileName, "_");
+    strcat(newFileName, getCurrentDate());
+    strcat(newFileName, ".pgm");
+
+    std::ofstream ofs(newFileName);
+    ofs << "P2\n";
+    ofs << width << " " << height << "\n";
+    ofs << maxValueOfWhite << "\n";
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            ofs << data[i][j] << " ";
+        }
+        ofs << "\n";
+    }
+
+    delete[] newFileName;
+    delete[] fileNameWithoutExt;
+    delete[] date;
+    ofs.close();
+
 }
 

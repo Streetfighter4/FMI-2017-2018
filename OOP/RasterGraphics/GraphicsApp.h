@@ -13,9 +13,9 @@ class GraphicsApp {
     Session** sessions;
     size_t countSessions;
 public:
-    void createSession(char* files);
+    Session* createSession(char* files);
     void listSessions();
-    Session* getCurrentSession();
+    Session* getSessionById(size_t id);
 public:
     GraphicsApp();
     ~GraphicsApp();

@@ -18,6 +18,7 @@ class ImagePPM : public Image {
 
     bool isEqual(int, int, int);
     bool isBlackOrWhite(int, int, int);
+    void writeInFile(char* filename);
 public:
     ImagePPM(char* filename);
     ImagePPM(const ImagePPM&);
@@ -28,6 +29,7 @@ public:
     virtual void save();
     virtual void free();
     virtual void rotateLeft() override;
+    virtual void rotateRight() override;
 };
 
 
