@@ -149,7 +149,7 @@ void ImagePGM::free() {
 }
 
 void ImagePGM::writeInFile(char *filename) {
-    char* fileNameWithoutExt = fileNameWithoutExtention(filename);
+    char* fileNameWithoutExt = fileNameWithoutExtension(filename);
     char* date = getCurrentDate();
     char* newFileName = new char[strlen(filename) + strlen(date) + 2];
     strcpy(newFileName, fileNameWithoutExt);

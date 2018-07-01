@@ -55,7 +55,7 @@ char* Image::getCurrentDate() {
     return buff;
 }
 
-char* Image::fileNameWithoutExtention(char *filename) {
+char* Image::fileNameWithoutExtension(char *filename) {
     if (filename == nullptr)
         return nullptr;
 

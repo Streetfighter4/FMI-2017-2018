@@ -64,12 +64,28 @@ int main() {
         if(strcmp(command, "switch") == 0) {
             size_t id;
             std::cin >> id;
-            if(app.getSessionById(id) != nullptr)
+            if(app.getSessionById(id) != nullptr) {
                 currentSession = app.getSessionById(id);
                 std::cout << "You switched to session with ID: " << currentSession->getId() << std::endl;
-            else {
+            } else {
                 std::cerr << "Session with this id doesn't exist" << std::endl;
                 std::cerr << "You can use command 'listSessions' for see all sessions" << std::endl;
+            }
+        }
+        if(strcmp(command, "make") == 0) {
+            std::cin >> command;
+            if(strcmp(command, "collage") == 0) {
+                std::cin >> command;
+                char file1[1024];
+                char file2[1024];
+                if(strcmp(command, "horizontal") == 0) {
+                    std::cin >> file1 >> file2;
+                    currentSession->makeHorizontalCollage(file1, file2);
+                }
+                if(strcmp(command, "vertical") == 0) {
+                    std::cin >> file1 >> file2;
+                    currentSession->makeVerticalCollage(file1, file2);
+                }
             }
         }
         if(strcmp(command, "listSessions") == 0) {

@@ -15,8 +15,6 @@ protected:
     size_t height;
     int** data;
 
-    char* getCurrentDate();
-    char* fileNameWithoutExtention(char* filename);
 public:
 
     Conteiner<COMMAND> commands;
@@ -27,6 +25,8 @@ public:
     Image(const Image&);
     ~Image();
 
+    char* getCurrentDate();
+    char* fileNameWithoutExtension(char* filename);
     inline char* getName() { return filename; }
     void listCommands();
     virtual void parse(char* filename) = 0;

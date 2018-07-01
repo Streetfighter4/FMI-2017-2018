@@ -144,9 +144,7 @@ void ImagePPM::monoChrome() {
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width*3; j+=3) {
             if(((data[i][j] + data[i][j+1] + data[i][j+2])/3) > maxValueOfPixel/2) {
-                data[i][j] = maxValueOfPixel;
-                data[i][j+1] = maxValueOfPixel;
-                data[i][j+2] = maxValueOfPixel;
+                data[i][j] = data[i][j+1] = data[i][j+2] = maxValueOfPixel;
             } else {
                 data[i][j] = 0;
                 data[i][j+1] = 0;
@@ -247,7 +245,7 @@ void ImagePPM::rotateRight() {
 }
 
 void ImagePPM::writeInFile(char *filename) {
-    char* fileNameWithoutExt = fileNameWithoutExtention(filename);
+    char* fileNameWithoutExt = fileNameWithoutExtension(filename);
     char* date = getCurrentDate();
     char* newFileName = new char[strlen(filename) + strlen(date) + 2];
     strcpy(newFileName, fileNameWithoutExt);
