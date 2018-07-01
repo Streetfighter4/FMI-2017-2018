@@ -15,7 +15,6 @@ class Session {
 
     void copy(const Session&);
     Image* createImage(char* file);
-    Image* checkImageExist(char* filename);
     char* getExtension(char* filename);
 public:
     void grayScale();
@@ -26,8 +25,6 @@ public:
     void undo();
     void add(char* filename);
     void save();
-    void makeHorizontalCollage(char* file1, char* file2);
-    void makeVerticalCollage(char* file1, char* file2);
 public:
     inline size_t getId() { return id; }
     void listImages();

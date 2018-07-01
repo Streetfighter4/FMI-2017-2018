@@ -17,8 +17,10 @@ int main() {
         if(strcmp(command, "add") == 0) {
             char file[1024];
             std::cin >> file;
-            if(currentSession != nullptr)
+            if(currentSession != nullptr) {
                 currentSession->add(file);
+                std::cout << "Image " << file << " has been added!" << std::endl;
+            }
         }
         if(strcmp(command, "session") == 0) {
             std::cin >> command;
@@ -28,32 +30,44 @@ int main() {
             }
         }
         if(strcmp(command, "grayscale") == 0) {
-            if(currentSession != nullptr)
+            if(currentSession != nullptr){
                 currentSession->grayScale();
+                std::cout << "Make grayscale!" << std::endl;
+            }
         }
         if(strcmp(command, "monochrome") == 0) {
-            if(currentSession != nullptr)
+            if(currentSession != nullptr) {
                 currentSession->monoChrome();
+                std::cout << "Make monoChrome!" << std::endl;
+            }
         }
         if(strcmp(command, "negative") == 0) {
-            if(currentSession != nullptr)
+            if(currentSession != nullptr) {
                 currentSession->negative();
+                std::cout << "Make negative!" << std::endl;
+            }
         }
         if(strcmp(command, "rotate") == 0) {
             std::cin >> command;
 
             if(strcmp(command, "left") == 0) {
-                if(currentSession != nullptr)
+                if(currentSession != nullptr) {
                     currentSession->rotateLeft();
+                    std::cout << "Make rotate left!" << std::endl;
+                }
             }
             if(strcmp(command, "right") == 0) {
-                if(currentSession != nullptr)
+                if(currentSession != nullptr) {
                     currentSession->rotateRight();
+                    std::cout << "Make rotate right!" << std::endl;
+                }
             }
         }
         if(strcmp(command, "undo") == 0) {
-            if(currentSession != nullptr)
+            if(currentSession != nullptr) {
                 currentSession->undo();
+                std::cout << "Make undo!" << std::endl;
+            }
         }
         if(strcmp(command, "save") == 0) {
             if(currentSession != nullptr) {
@@ -72,26 +86,11 @@ int main() {
                 std::cerr << "You can use command 'listSessions' for see all sessions" << std::endl;
             }
         }
-        if(strcmp(command, "make") == 0) {
-            std::cin >> command;
-            if(strcmp(command, "collage") == 0) {
-                std::cin >> command;
-                char file1[1024];
-                char file2[1024];
-                if(strcmp(command, "horizontal") == 0) {
-                    std::cin >> file1 >> file2;
-                    currentSession->makeHorizontalCollage(file1, file2);
-                }
-                if(strcmp(command, "vertical") == 0) {
-                    std::cin >> file1 >> file2;
-                    currentSession->makeVerticalCollage(file1, file2);
-                }
-            }
-        }
         if(strcmp(command, "listSessions") == 0) {
             app.listSessions();
         }
         if(strcmp(command, "exit") == 0) {
+            std::cout << "Bye bye" << std::endl;
             break;
         }
     }

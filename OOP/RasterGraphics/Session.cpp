@@ -144,39 +144,4 @@ void Session::save() {
     }
 }
 
-Image* Session::checkImageExist(char* filename) {
-    for (int i = 0; i < countImages; ++i) {
-        if(strcmp(images[i]->getName(), filename) == 0) {
-            return images[i];
-        }
-    }
-    return nullptr;
-}
-
-void Session::makeHorizontalCollage(char* file1, char* file2) {
-    Image* image1 = checkImageExist(file1);
-    Image* image2 = checkImageExist(file2);
-
-    if(image1 && image2) {
-        char* fileName1 = image1->fileNameWithoutExtension(file1);
-        char* fileName2 = image2->fileNameWithoutExtension(file1);
-
-        char* extension1 = getExtension(file1);
-        char* extension2 = getExtension(file2);
-        if(strcmp(extension1, extension2) == 0) {
-            char* newFileName = new char[strlen(fileName1) + strlen(fileName2) + strlen(extension1)+2];
-            strcpy(newFileName, fileName1);
-            strcat(newFileName, "_");
-            strcat(newFileName, fileName2);
-            strcat(newFileName, ".");
-            strcat(newFileName, extension1);
-            createImage(newFileName);
-            delete[] fileName1;
-            delete[] fileName2;
-            delete[] newFileName;
-
-        }
-    }
-}
-
 
