@@ -48,16 +48,38 @@ char* Image::fileNameWithoutExtention(char *filename) {
     if (filename == nullptr)
         return nullptr;
 
-    size_t lenght = strlen(filename);
+    size_t length = strlen(filename);
     size_t i;
-    for (i = lenght; i > 0 ; --i) {
+    for (i = length; i > 0 ; --i) {
         if(filename[i] == '.') break;
     }
     //image01.ppm
     //012345678910
     char* newFileName = new char[i];
     strncpy(newFileName, filename, i);
-
+    newFileName[i] = '\0';
     return newFileName;
+}
+
+void Image::rotateLeft() {
+    int** temp = new int*[width];
+    for (int i = 0; i < width; ++i) {
+        temp[i] = new int[height];
+    }
+
+    for (int j = 0; j < height; ++j) {
+        for (int k = 0; k < width; ++k) {
+            temp[width-k-1][j] = data[j][k];
+        }
+    }
+
+    for (int l = 0; l < height; ++l) {
+        delete data[l];
+    }
+    delete[] data;
+    size_t buff = width;
+    width = height;
+    height = buff;
+    data = temp;
 }
 

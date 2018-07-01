@@ -64,6 +64,7 @@ void ImagePGM::parse(char *filename) {
     for (int i = 0; i < height; ++i) {
         data[i] = new int[width];
     }
+    bool isMonoPixel = false;
     for (int j = 0; j < height; ++j) {
         for (int k = 0; k < width; ++k) {
             ifs >> word;
@@ -72,10 +73,12 @@ void ImagePGM::parse(char *filename) {
                 free();
                 throw std::invalid_argument("Invalid value of pixel");
             }
-            isMonoChrome = (pixel == 0 || pixel == maxValueOfWhite);
+            isMonoPixel = (pixel == 0 || pixel == maxValueOfWhite);
+            if(!isMonoPixel) isMonoChrome = false;
             data[j][k] = pixel;
         }
     }
+    std::cout << ((isMonoChrome) ? "isMonoChrome - true\n" : "isMonoChrome - false\n");
 
     ifs.close();
 
@@ -86,8 +89,8 @@ Image* ImagePGM::clone() {
 }
 
 void ImagePGM::save() {
-    for (int k = 0; k < commands.getSize(); ++k) {
-        COMMAND command = commands[k];
+    while(!commands.isEmpty()) {
+        COMMAND command = commands.pop_front();
         if(command == 2 && !isMonoChrome) {
             monoChrome();
             isMonoChrome = true;
@@ -95,12 +98,16 @@ void ImagePGM::save() {
         if(command == 3) {
             negative();
         }
+        if(command == 4) {
+            rotateLeft();
+        }
     }
     char* newFileName = new char[strlen(filename) + strlen(getCurrentDate()) + 2];
     strcpy(newFileName, fileNameWithoutExtention(filename));
     strcat(newFileName, "_");
     strcat(newFileName, getCurrentDate());
     strcat(newFileName, ".pgm");
+
     std::ofstream ofs(newFileName);
     ofs << "P2\n";
     ofs << width << " " << height << "\n";
@@ -112,6 +119,7 @@ void ImagePGM::save() {
         ofs << "\n";
     }
 
+    delete[] newFileName;
     ofs.close();
 
 }
@@ -119,7 +127,7 @@ void ImagePGM::save() {
 void ImagePGM::monoChrome() {
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
-            data[i][j] = (data[i][j] > maxValueOfWhite/2) ? maxValueOfWhite : 0;
+            data[i][j] = ((data[i][j] > maxValueOfWhite/2) ? maxValueOfWhite : 0);
         }
     }
 

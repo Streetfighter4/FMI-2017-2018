@@ -87,24 +87,28 @@ Image* ImagePBM::clone() {
 void ImagePBM::negative() {
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
-            data[i][j] ^= 1;
+            data[i][j] = 1 - data[i][j];
         }
     }
 }
 
 void ImagePBM::save() {
-    for (int k = 0; k < commands.getSize(); ++k) {
-        COMMAND command = commands[k];
+    while(!commands.isEmpty()) {
+        COMMAND command = commands.pop_front();
         if(command == 3) {
             negative();
         }
+        if(command == 4) {
+            std::cout << "width and height: " << width << " " << height << std::endl;
+            rotateLeft();
+        }
     }
-    char* newFileName = nullptr;
-    newFileName = new char[strlen(filename) + strlen(getCurrentDate()) + 2];
+
+    char* newFileName = new char[strlen(filename) + strlen(getCurrentDate()) + 2];
     strcpy(newFileName, fileNameWithoutExtention(filename));
     strcat(newFileName, "_");
     strcat(newFileName, getCurrentDate());
-    strcat(newFileName, ".pbm");
+    strcat(newFileName, ".ppm");
 
     std::ofstream ofs(newFileName);
     ofs << "P1\n";
@@ -115,6 +119,8 @@ void ImagePBM::save() {
         }
         ofs << "\n";
     }
+
+    delete[] newFileName;
     ofs.close();
 
 }

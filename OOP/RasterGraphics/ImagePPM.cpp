@@ -71,7 +71,8 @@ void ImagePPM::parse(char *filename) {
     for (int i = 0; i < height; ++i) {
         data[i] = new int[width*3];
     }
-
+    bool isGrayPixel = false;
+    bool isMonoPixel = false;
     for (int j = 0; j < height; ++j) {
         for (int k = 0; k < width*3; ++k) {
             ifs >> word;
@@ -80,12 +81,17 @@ void ImagePPM::parse(char *filename) {
                 throw std::invalid_argument("Invalid value of pixel");
             }
             if(k%3 == 2) {
-                isGrayScale = isEqual(data[j][k-2], data[j][k-1], data[j][k]);
-                isMonoChrome = isBlackOrWhite(data[j][k-2], data[j][k-1], data[j][k]);
+                isGrayPixel = isEqual(data[j][k-2], data[j][k-1], data[j][k]);
+                if(!isGrayPixel) isGrayScale = false;
+                isMonoPixel = isBlackOrWhite(data[j][k-2], data[j][k-1], data[j][k]);
+                if(!isMonoPixel) isMonoChrome = false;
             }
             data[j][k] = atoi(word);
         }
     }
+
+    std::cout << ((isGrayScale) ? "isGrayScale - true\n" : "isGrayScale - false\n");
+    std::cout << ((isMonoChrome) ? "isMonoChrome - true\n" : "isMonoChrome - false\n");
     ifs.close();
 
 }
@@ -95,8 +101,8 @@ Image *ImagePPM::clone() {
 }
 
 void ImagePPM::save() {
-    for (int k = 0; k < commands.getSize(); ++k) {
-        COMMAND command = commands[k];
+    while(!commands.isEmpty()) {
+        COMMAND command = commands.pop_front();
         if(command == 1 && !isGrayScale) {
             grayScale();
             isGrayScale = true;
@@ -108,12 +114,17 @@ void ImagePPM::save() {
         if(command == 3) {
             negative();
         }
+        if(command == 4) {
+            rotateLeft();
+        }
     }
+
     char* newFileName = new char[strlen(filename) + strlen(getCurrentDate()) + 2];
     strcpy(newFileName, fileNameWithoutExtention(filename));
     strcat(newFileName, "_");
     strcat(newFileName, getCurrentDate());
     strcat(newFileName, ".ppm");
+
     std::ofstream ofs(newFileName);
     ofs << "P3\n";
     ofs << width << " " << height << "\n";
@@ -125,6 +136,7 @@ void ImagePPM::save() {
         ofs << "\n";
     }
 
+    delete[] newFileName;
     ofs.close();
 
 }
@@ -139,11 +151,15 @@ void ImagePPM::grayScale() {
 
 void ImagePPM::monoChrome() {
     for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width*3; ++j) {
+        for (int j = 0; j < width*3; j+=3) {
             if(((data[i][j] + data[i][j+1] + data[i][j+2])/3) > maxValueOfPixel/2) {
-                data[i][j] = data[i][j+1] = data[i][j+2] = maxValueOfPixel;
+                data[i][j] = maxValueOfPixel;
+                data[i][j+1] = maxValueOfPixel;
+                data[i][j+2] = maxValueOfPixel;
             } else {
-                data[i][j] = data[i][j+1] = data[i][j+2] = 0;
+                data[i][j] = 0;
+                data[i][j+1] = 0;
+                data[i][j+2] = 0;
             }
         }
     }
@@ -176,5 +192,42 @@ bool ImagePPM::isEqual(int a, int b, int c) {
 
 bool ImagePPM::isBlackOrWhite(int a, int b, int c) {
     return (isEqual(a, b, c) && (a == 0 || a == maxValueOfPixel));
+}
+
+void ImagePPM::rotateLeft() {
+    size_t newWidth = height*3;
+    size_t newHeight = width;
+    int** temp = new int*[newHeight];
+    for (int i = 0; i < newHeight; ++i) {
+        data[i] = new int[newWidth];
+    }
+
+    std::cout << "new width and new height: " << newWidth << " " << newHeight << std::endl;
+    for (int j = 0; j < height; ++j) {
+        std::cout << "new width and new height: " << newWidth << " " << newHeight << std::endl;
+        for (int k = 0, l = 0; l < newHeight; k+=3, ++l) {
+            std::cout << "temp[newHeight-l-1][j*3]: " << newHeight-l-1 << " " << j*3 << std::endl;
+            temp[newHeight-l-1][j*3] = data[j][k];
+        }
+
+        std::cout << "new width and new height: " << newWidth << " " << newHeight << std::endl;
+        for (int k = 1, l = 0; l < newHeight; k+=3, ++l) {
+            temp[newHeight-l-1][j*3+1] = data[j][k];
+        }
+
+        std::cout << "new width and new height: " << newWidth << " " << newHeight << std::endl;
+        for (int k = 2, l = 0; l < newHeight; k+=3, ++l) {
+            temp[newHeight-l-1][j*3+2] = data[j][k];
+        }
+        std::cout << "new width and new height: " << newWidth << " " << newHeight << std::endl;
+    }
+    std::cout << "new width and new height: " << newWidth << " " << newHeight << std::endl;
+    for (int l = 0; l < height; ++l) {
+        delete data[l];
+    }
+    delete[] data;
+    width = newWidth/3;
+    height = newHeight;
+    data = temp;
 }
 

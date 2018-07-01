@@ -27,6 +27,7 @@ public:
     virtual Image* clone();
     virtual void save();
     virtual void free();
+    virtual void rotateLeft() override;
 };
 
 
