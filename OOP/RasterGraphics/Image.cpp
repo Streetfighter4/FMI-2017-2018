@@ -5,7 +5,6 @@
 #include <cstring>
 #include <iostream>
 #include <ctime>
-#include <cstdlib>
 #include "Image.h"
 
 Image::Image(char* filename) : commands(2), width(0), height(0), data(nullptr) {
@@ -20,7 +19,7 @@ Image::Image(const Image& other) : Image(other.filename) {
 }
 
 Image::~Image() {
-    delete[] filename;
+    free();
 }
 
 void Image::listCommands() {
@@ -40,81 +39,33 @@ void Image::listCommands() {
     std::cout << std::endl;
 }
 
-char* Image::getCurrentDate() {
-    std::time_t t = std::time(0);   // get time now
-    std::tm* now = std::localtime(&t);
-    std::string data;
-    data = std::to_string(now->tm_year+1900) + '.' +
-              std::to_string(now->tm_mon + 1) + '.' +
-              std::to_string(now->tm_mday) + '-' +
-              std::to_string(now->tm_hour) + ':' +
-              std::to_string(now->tm_min) + ':' +
-                std::to_string(now->tm_sec);
-    char* buff = new char[data.length() + 1];
-    std::strcpy(buff, data.c_str());
-    return buff;
-}
-
-char* Image::fileNameWithoutExtension(char *filename) {
-    if (filename == nullptr)
-        return nullptr;
-
-    size_t length = strlen(filename);
-    size_t i;
-    for (i = length; i > 0 ; --i) {
-        if(filename[i] == '.') break;
-    }
-    //image01.ppm
-    //012345678910
-    char* newFileName = new char[i];
-    strncpy(newFileName, filename, i);
-    newFileName[i] = '\0';
-    return newFileName;
-}
 
 void Image::rotateLeft() {
-    int** temp = new int*[width];
+    size_t* temp = new size_t[height*width];
+    //TODO: TEST THIS
     for (int i = 0; i < width; ++i) {
-        temp[i] = new int[height];
-    }
-
-    for (int j = 0; j < height; ++j) {
-        for (int k = 0; k < width; ++k) {
-            temp[width-k-1][j] = data[j][k];
+        for (int j = 0; j < height; ++j) {
+            temp[i*height+j] = data[(width*(j+1))-(i+1)];
         }
     }
 
-    for (int l = 0; l < height; ++l) {
-        delete data[l];
-    }
     delete[] data;
-    size_t buff = width;
-    width = height;
-    height = buff;
+    std::swap(height, width);
     data = temp;
 }
 
 void Image::rotateRight() {
-    int** temp = new int*[width];
-    for (int i = 0; i < width; ++i) {
-        temp[i] = new int[height];
-    }
-
-    for (int j = 0; j < height; ++j) {
-        for (int k = 0; k < width; ++k) {
-            temp[k][height-j-1] = data[j][k];
+    size_t* temp = new size_t[height*width];
+    //TODO: TEST THIS
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            temp[(height-i-1)*(j+1)+((i+1)*j)] = data[i*width+j];
         }
     }
 
-    for (int l = 0; l < height; ++l) {
-        delete data[l];
-    }
     delete[] data;
-    size_t buff = width;
-    width = height;
-    height = buff;
+    std::swap(height, width);
     data = temp;
-
 }
 
 void Image::makeRotations(int countRotation) {
@@ -127,4 +78,10 @@ void Image::makeRotations(int countRotation) {
     }
 }
 
-
+void Image::free() {
+    delete[] filename;
+    delete[] data;
+    data = nullptr;
+    width = 0;
+    height = 0;
+}

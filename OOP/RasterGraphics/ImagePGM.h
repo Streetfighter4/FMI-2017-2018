@@ -16,14 +16,11 @@ private:
     void negative();
     void writeInFile(char* filename);
 public:
-    ImagePGM(char* filename);
+    explicit ImagePGM(char* filename);
     ImagePGM(const ImagePGM&);
-    ~ImagePGM();
 public:
-    void parse(char* filename);
-    virtual Image* clone();
-    virtual void save();
-    virtual void free();
+    void parse(char* filename) override;
+    void save() override;
 };
 
 

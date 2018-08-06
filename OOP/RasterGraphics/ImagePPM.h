@@ -16,20 +16,15 @@ class ImagePPM : public Image {
     void monoChrome();
     void negative();
 
-    bool isEqual(int, int, int);
-    bool isBlackOrWhite(int, int, int);
-    void writeInFile(char* filename);
+    bool isEqual(const size_t&, const size_t&, const size_t&) const;
+    bool isBlackOrWhite(const size_t&, const size_t&, const size_t&) const;
+    void writeInFile(char* filename) const ;
 public:
-    ImagePPM(char* filename);
+    explicit ImagePPM(char* filename);
     ImagePPM(const ImagePPM&);
-    ~ImagePPM();
 public:
-    virtual void parse(char* filename);
-    virtual Image* clone();
-    virtual void save();
-    virtual void free();
-    virtual void rotateLeft() override;
-    virtual void rotateRight() override;
+    void parse(char* filename) override;
+    void save() override;
 };
 
 

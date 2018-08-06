@@ -13,29 +13,26 @@ protected:
     char* filename;
     size_t width;
     size_t height;
-    int** data;
+    size_t* data;
 
+    void free();
 public:
 
     Conteiner<COMMAND> commands;
 public:
 
-    Image(char* filename);
+    explicit Image(char* filename);
     Image& operator=(const Image&) = delete;
     Image(const Image&);
     ~Image();
 
-    char* getCurrentDate();
-    char* fileNameWithoutExtension(char* filename);
-    inline char* getName() { return filename; }
+    inline const char* getName() const { return filename; }
     void listCommands();
     virtual void parse(char* filename) = 0;
-    virtual Image* clone() = 0;
     virtual void save() = 0;
-    virtual void free() = 0;
-    virtual void rotateLeft();
-    virtual void rotateRight();
-    virtual void makeRotations(int countRotation);
+    void rotateLeft();
+    void rotateRight();
+    void makeRotations(int countRotation);
 };
 
 

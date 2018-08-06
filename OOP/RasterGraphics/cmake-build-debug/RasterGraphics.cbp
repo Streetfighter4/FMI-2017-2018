@@ -96,6 +96,9 @@
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/GraphicsApp.h">
 			<Option target="RasterGraphics"/>
 		</Unit>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Helper.h">
+			<Option target="RasterGraphics"/>
+		</Unit>
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Image.cpp">
 			<Option target="RasterGraphics"/>
 		</Unit>

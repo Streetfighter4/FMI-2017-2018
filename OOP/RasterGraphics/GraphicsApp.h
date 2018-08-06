@@ -10,15 +10,14 @@
 #include "Session.h"
 
 class GraphicsApp {
-    Session** sessions;
-    size_t countSessions;
+    Conteiner<Session*> sessions;
 public:
     Session* createSession(char* files);
     void listSessions();
     Session* getSessionById(size_t id);
 public:
     GraphicsApp();
-    ~GraphicsApp();
+    ~GraphicsApp() = default;
 };
 
 

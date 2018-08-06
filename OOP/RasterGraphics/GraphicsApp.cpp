@@ -6,14 +6,8 @@
 #include <cstring>
 #include "GraphicsApp.h"
 
-GraphicsApp::GraphicsApp(): sessions(nullptr), countSessions(0) {}
+GraphicsApp::GraphicsApp(): sessions(0) {}
 
-GraphicsApp::~GraphicsApp() {
-    for (int i = 0; i < countSessions; ++i) {
-        delete sessions[i];
-    }
-    delete[] sessions;
-}
 
 Session* GraphicsApp::createSession(char* files) {
     char* buff = new char[strlen(files)+1];
@@ -26,30 +20,22 @@ Session* GraphicsApp::createSession(char* files) {
         i++;
     }
     delete[] buff;
-    Session* session = new Session(countSessions+1, files, i);
+    Session* session = new Session(sessions.getSize()+1, files, i);
 
-    Session** temp = new Session*[countSessions+1];
+    sessions.push_back(session);
 
-    for (size_t i = 0; i < countSessions; i++) {
-        temp[i] = sessions[i];
-    }
-    temp[countSessions] = session;
-
-    ++countSessions;
-    delete[] sessions;
-    sessions = temp;
     return session;
 }
 
 void GraphicsApp::listSessions() {
     std::cout << "Sessions ids:" << std::endl;
-    for (int i = 0; i < countSessions; ++i) {
+    for (int i = 0; i < sessions.getSize(); ++i) {
         std::cout << "id: " << sessions[i]->getId() << std::endl;
     }
 }
 
 Session* GraphicsApp::getSessionById(size_t id) {
-    for (int i = 0; i < countSessions; ++i) {
+    for (int i = 0; i < sessions.getSize(); ++i) {
         if(sessions[i]->getId() == id) {
             return sessions[i];
         }

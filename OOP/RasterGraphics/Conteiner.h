@@ -2,8 +2,8 @@
 // Created by yasen on 6/26/18.
 //
 
-#ifndef RASTERGRAPHICS_COMMANDCONTEINER_H
-#define RASTERGRAPHICS_COMMANDCONTEINER_H
+#ifndef RASTERGRAPHICS_CONTEINER_H
+#define RASTERGRAPHICS_CONTEINER_H
 
 
 #include <cstdlib>
@@ -22,13 +22,13 @@ public:
     T& pop_back();
     T pop_front();
 
-    inline size_t getSize() { return size; }
+    inline size_t getSize() const { return size; }
     inline bool isEmpty() { return size==0; }
     const T operator[](size_t) const;
     T& operator[](size_t);
 public:
     explicit Conteiner(size_t newCap);
-    Conteiner&operator=(const Conteiner&);
+    Conteiner& operator=(const Conteiner&);
     ~Conteiner();
 };
 
@@ -46,12 +46,12 @@ void Conteiner<T>::resize(size_t newCap) {
 }
 
 template<typename T>
-void Conteiner<T>::push_back(T command) {
+void Conteiner<T>::push_back(T element) {
     if(size >= capacity) {
         size_t newCap = (capacity == 0) ? 2 : capacity * 2;
         resize(newCap);
     }
-    data[size++] = command;
+    data[size++] = element;
 }
 
 template<typename T>
@@ -66,7 +66,7 @@ T& Conteiner<T>::pop_back() {
 
 template<typename T>
 T Conteiner<T>::pop_front() {
-    T command = data[0];
+    T element = data[0];
     T* temp = new T[size-1];
     for (int i = 0; i < size-1; ++i) {
         temp[i] = data[i+1];
@@ -74,7 +74,7 @@ T Conteiner<T>::pop_front() {
     delete[] data;
     data = temp;
     --size;
-    return command;
+    return element;
 }
 
 template<typename T>
@@ -117,4 +117,4 @@ T& Conteiner<T>::operator[](size_t pos) {
     return data[pos];
 }
 
-#endif //RASTERGRAPHICS_COMMANDCONTEINER_H
+#endif //RASTERGRAPHICS_CONTEINER_H

@@ -7,6 +7,7 @@
 #include <iostream>
 #include <stdexcept>
 #include "ImagePGM.h"
+#include "Helper.h"
 
 ImagePGM::ImagePGM(char *filename) : Image(filename) {
     try{
@@ -16,24 +17,14 @@ ImagePGM::ImagePGM(char *filename) : Image(filename) {
     }
 }
 
-ImagePGM::ImagePGM(const ImagePGM& other) : Image(other) {
-    isMonoChrome = other.isMonoChrome;
-    data = new int*[height];
-    for (int i = 0; i < height; ++i) {
-        data[i] = new int[width];
-    }
+ImagePGM::ImagePGM(const ImagePGM& other) : Image(other), isMonoChrome(other.isMonoChrome) {
+    data = new size_t[height*width];
     for (int j = 0; j < height; ++j) {
-        for (int k = 0; k < width; ++k) {
-            data[j][k] = other.data[j][k];
-        }
+        data[j] = other.data[j];
     }
 }
 
-ImagePGM::~ImagePGM() {
-    free();
-}
-
-void ImagePGM::parse(char *filename) {
+void ImagePGM::parse(char* filename) {
     std::ifstream ifs(filename);
     char word[1024] = {0};
     char line[1024];
@@ -60,31 +51,22 @@ void ImagePGM::parse(char *filename) {
         ifs >> word;
     }
     maxValueOfWhite = static_cast<size_t>(atoi(word));
-    data = new int*[height];
-    for (int i = 0; i < height; ++i) {
-        data[i] = new int[width];
-    }
+    data = new size_t[height*width];
     bool isMonoPixel = false;
-    for (int j = 0; j < height; ++j) {
-        for (int k = 0; k < width; ++k) {
-            ifs >> word;
-            int pixel = atoi(word);
-            if (pixel > maxValueOfWhite || pixel < 0) {
-                free();
-                throw std::invalid_argument("Invalid value of pixel");
-            }
-            isMonoPixel = (pixel == 0 || pixel == maxValueOfWhite);
-            if(!isMonoPixel) isMonoChrome = false;
-            data[j][k] = pixel;
+    size_t pixel;
+    for (int j = 0; j < height*width; ++j) {
+        ifs >> pixel;
+        if (pixel > maxValueOfWhite || pixel < 0) {
+            free();
+            throw std::invalid_argument("Invalid value of pixel");
         }
+        isMonoPixel = (pixel == 0 || pixel == maxValueOfWhite);
+        if(!isMonoPixel) isMonoChrome = false;
+        data[j] = pixel;
     }
 
     ifs.close();
 
-}
-
-Image* ImagePGM::clone() {
-    return new ImagePGM(*this);
 }
 
 void ImagePGM::save() {
@@ -119,59 +101,37 @@ void ImagePGM::save() {
 }
 
 void ImagePGM::monoChrome() {
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            data[i][j] = ((data[i][j] > maxValueOfWhite/2) ? maxValueOfWhite : 0);
-        }
+    for (int i = 0; i < height*width; ++i) {
+        data[i] = ((data[i] > maxValueOfWhite/2) ? maxValueOfWhite : 0);
     }
 
 }
 
 void ImagePGM::negative() {
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            data[i][j] = maxValueOfWhite - data[i][j];
-        }
+    for (int i = 0; i < height*width; ++i) {
+        data[i] = maxValueOfWhite - data[i];
     }
 }
 
-void ImagePGM::free() {
-    delete[] filename;
-    for (int i = 0; i < height; ++i) {
-        delete data[i];
-    }
-    delete[] data;
-    data = nullptr;
-    width = 0;
-    height = 0;
-    maxValueOfWhite = 0;
-    isMonoChrome = false;
-}
-
-void ImagePGM::writeInFile(char *filename) {
-    char* fileNameWithoutExt = fileNameWithoutExtension(filename);
-    char* date = getCurrentDate();
+void ImagePGM::writeInFile(char* filename) {
+    char* fileNameWithoutExt = Helper::fileNameWithoutExtension(filename);
+    char* date = Helper::getCurrentDate();
     char* newFileName = new char[strlen(filename) + strlen(date) + 2];
     strcpy(newFileName, fileNameWithoutExt);
     strcat(newFileName, "_");
-    strcat(newFileName, getCurrentDate());
+    strcat(newFileName, date);
     strcat(newFileName, ".pgm");
 
     std::ofstream ofs(newFileName);
     ofs << "P2\n";
     ofs << width << " " << height << "\n";
     ofs << maxValueOfWhite << "\n";
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            ofs << data[i][j] << " ";
-        }
-        ofs << "\n";
+    for (int i = 0; i < width*height; ++i) {
+        ofs << data[i] << " ";
     }
 
     delete[] newFileName;
     delete[] fileNameWithoutExt;
     delete[] date;
     ofs.close();
-
 }
-

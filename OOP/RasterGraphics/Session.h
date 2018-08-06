@@ -10,8 +10,7 @@
 
 class Session {
     size_t id;
-    Image** images;
-    size_t countImages;
+    Conteiner<Image*> images;
 
     void copy(const Session&);
     Image* createImage(char* file);
@@ -26,12 +25,12 @@ public:
     void add(char* filename);
     void save();
 public:
-    inline size_t getId() { return id; }
-    void listImages();
+    inline size_t getId() const { return id; }
+    void listImages() const;
 public:
     Session(size_t id, char* files, size_t countImages);
     Session&operator=(const Session&);
-    ~Session();
+    ~Session() = default;
 };
 
 

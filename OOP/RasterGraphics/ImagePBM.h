@@ -12,14 +12,11 @@ class ImagePBM : public Image {
     void negative();
     void writeInFile(char* filename);
 public:
-    ImagePBM(char *filename);
+    explicit ImagePBM(char *filename);
     ImagePBM(const ImagePBM&);
-    ~ImagePBM();
 public:
-    virtual void parse(char* filename);
-    virtual Image* clone();
-    virtual void save();
-    virtual void free();
+    void parse(char* filename) override;
+    void save() override;
 };
 
 

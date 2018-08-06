@@ -6,6 +6,7 @@
 #include <cstring>
 #include <iostream>
 #include "ImagePBM.h"
+#include "Helper.h"
 
 ImagePBM::ImagePBM(char* filename) : Image(filename) {
     try{
@@ -17,23 +18,15 @@ ImagePBM::ImagePBM(char* filename) : Image(filename) {
 
 
 ImagePBM::ImagePBM(const ImagePBM& other) : Image(other) {
-    data = new int*[height];
-    for (int i = 0; i < height; ++i) {
-        data[i] = new int[width];
-    }
-    for (int j = 0; j < height; ++j) {
-        for (int k = 0; k < width; ++k) {
-            data[j][k] = other.data[j][k];
-        }
-    }
-}
+    data = new size_t[width*height];
 
-ImagePBM::~ImagePBM() {
-    free();
+    for (int j = 0; j < width*height; ++j) {
+        data[j] = other.data[j];
+    }
 }
 
 void ImagePBM::parse(char *filename) {
-std::ifstream ifs(filename);
+    std::ifstream ifs(filename);
     char word[1024] = { 0 };
     char line[1024];
 
@@ -59,36 +52,24 @@ std::ifstream ifs(filename);
         ifs >> word;
     }
 
-    data = new int*[height];
-    for (int i = 0; i < height; ++i) {
-        data[i] = new int[width];
-    }
-
-    for (int j = 0; j < height; ++j) {
-        for (int k = 0; k < width; ++k) {
-            ifs >> word;
-            int pixel = atoi(word);
-            if(pixel == 0 || pixel == 1) {
-                data[j][k] = pixel;
-            } else {
-                free();
-            }
+    data = new size_t[height*width];
+    size_t pixel;
+    for (int j = 0; j < height*width; ++j) {
+        ifs >> pixel;
+        if(pixel == 0 || pixel == 1) {
+            data[j] = pixel;
+        } else {
+            free();
         }
     }
 
     ifs.close();
-
 }
 
-Image* ImagePBM::clone() {
-    return new ImagePBM(*this);
-}
 
 void ImagePBM::negative() {
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            data[i][j] = 1 - data[i][j];
-        }
+    for (int i = 0; i < height*width; ++i) {
+        data[i] ^= 1;
     }
 }
 
@@ -118,20 +99,10 @@ void ImagePBM::save() {
     }
 }
 
-void ImagePBM::free() {
-    delete[] filename;
-    for (int i = 0; i < height; ++i) {
-        delete data[i];
-    }
-    delete[] data;
-    data = nullptr;
-    width = 0;
-    height = 0;
-}
 
 void ImagePBM::writeInFile(char *filename) {
-    char* fileNameWithoutExt = fileNameWithoutExtension(filename);
-    char* date = getCurrentDate();
+    char* fileNameWithoutExt = Helper::fileNameWithoutExtension(filename);
+    char* date = Helper::getCurrentDate();
     char* newFileName = new char[strlen(filename) + strlen(date) + 2];
     strcpy(newFileName, fileNameWithoutExt);
     strcat(newFileName, "_");
@@ -141,11 +112,8 @@ void ImagePBM::writeInFile(char *filename) {
     std::ofstream ofs(newFileName);
     ofs << "P1\n";
     ofs << width << " " << height << "\n";
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            ofs << data[i][j] << " ";
-        }
-        ofs << "\n";
+    for (int i = 0; i < height*width; ++i) {
+        ofs << data[i] << " ";
     }
 
     delete[] newFileName;

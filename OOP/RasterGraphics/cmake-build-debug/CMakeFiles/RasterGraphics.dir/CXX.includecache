@@ -28,14 +28,22 @@ stdlib.h
 Session.h
 /home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Session.h
 
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Helper.h
+cstdlib
+-
+cstring
+-
+ctime
+-
+string
+-
+
 /home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Image.cpp
 cstring
 -
 iostream
 -
 ctime
--
-cstdlib
 -
 Image.h
 /home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Image.h
@@ -55,6 +63,8 @@ iostream
 -
 ImagePBM.h
 /home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePBM.h
+Helper.h
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Helper.h
 
 /home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePBM.h
 Image.h
@@ -71,6 +81,8 @@ stdexcept
 -
 ImagePGM.h
 /home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePGM.h
+Helper.h
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Helper.h
 
 /home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePGM.h
 Image.h
@@ -87,6 +99,8 @@ stdexcept
 -
 ImagePPM.h
 /home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePPM.h
+Helper.h
+/home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/Helper.h
 
 /home/yasen/Programming/FMI-2017-2018/OOP/RasterGraphics/ImagePPM.h
 Image.h

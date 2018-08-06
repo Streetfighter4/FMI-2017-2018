@@ -7,6 +7,7 @@
 #include <iostream>
 #include <stdexcept>
 #include "ImagePPM.h"
+#include "Helper.h"
 
 ImagePPM::ImagePPM(char* filename) : Image(filename) {
     try {
@@ -17,23 +18,15 @@ ImagePPM::ImagePPM(char* filename) : Image(filename) {
 
 }
 
-ImagePPM::ImagePPM(const ImagePPM& other) : Image(other) {
-    maxValueOfPixel = other.maxValueOfPixel;
-    isGrayScale = other.isGrayScale;
-    isMonoChrome = other.isMonoChrome;
-    data = new int*[height];
-    for (int i = 0; i < height; ++i) {
-        data[i] = new int[width*3];
-    }
-    for (int j = 0; j < height; ++j) {
-        for (int k = 0; k < width*3; ++k) {
-            data[j][k] = other.data[j][k];
-        }
-    }
-}
+ImagePPM::ImagePPM(const ImagePPM& other) : Image(other),
+                                            maxValueOfPixel(other.maxValueOfPixel),
+                                            isGrayScale(other.isGrayScale),
+                                            isMonoChrome(other.isMonoChrome) {
 
-ImagePPM::~ImagePPM() {
-    free();
+    data = new size_t[height*width];
+    for (int j = 0; j < other.height*width; ++j) {
+        data[j] = other.data[j];
+    }
 }
 
 void ImagePPM::parse(char *filename) {
@@ -67,35 +60,28 @@ void ImagePPM::parse(char *filename) {
         ifs >> word;
     }
     maxValueOfPixel = static_cast<size_t>(atoi(word));
-    data = new int*[height];
-    for (int i = 0; i < height; ++i) {
-        data[i] = new int[width*3];
+    data = new size_t[height*width];
+    for (int i = 0; i < height*width; ++i) {
+        data[i] = 0;
     }
     bool isGrayPixel = false;
     bool isMonoPixel = false;
-    for (int j = 0; j < height; ++j) {
-        for (int k = 0; k < width*3; ++k) {
-            ifs >> word;
-            if (atoi(word) > maxValueOfPixel) {
-                free();
-                throw std::invalid_argument("Invalid value of pixel");
-            }
-            if(k%3 == 2) {
-                isGrayPixel = isEqual(data[j][k-2], data[j][k-1], data[j][k]);
-                if(!isGrayPixel) isGrayScale = false;
-                isMonoPixel = isBlackOrWhite(data[j][k-2], data[j][k-1], data[j][k]);
-                if(!isMonoPixel) isMonoChrome = false;
-            }
-            data[j][k] = atoi(word);
+    size_t pixel1, pixel2, pixel3;
+    for (int j = 0; j < height*width; ++j) {
+        ifs >> pixel1 >> pixel2 >> pixel3;
+        if (pixel1 > maxValueOfPixel || pixel2 > maxValueOfPixel || pixel3 > maxValueOfPixel) {
+            free();
+            throw std::invalid_argument("Invalid value of pixel");
         }
+        isGrayPixel = isEqual(pixel1, pixel2, pixel3);
+        if(!isGrayPixel) isGrayScale = false;
+        isMonoPixel = isBlackOrWhite(pixel1, pixel2, pixel3);
+        if(!isMonoPixel) isMonoChrome = false;
+        ((data[j] ^= pixel1<<16) ^= pixel2<<8) ^= pixel3;
     }
 
     ifs.close();
 
-}
-
-Image *ImagePPM::clone() {
-    return new ImagePPM(*this);
 }
 
 void ImagePPM::save() {
@@ -122,7 +108,7 @@ void ImagePPM::save() {
         }
     }
 
-    int countRotation = countRightRotation%4 - countLeftRotation%4;
+    int countRotation = static_cast<int>(countRightRotation % 4 - countLeftRotation % 4);
     makeRotations(countRotation);
 
     try {
@@ -133,120 +119,53 @@ void ImagePPM::save() {
 }
 
 void ImagePPM::grayScale() {
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width*3; j+=3) {
-            data[i][j] = data[i][j+1] = data[i][j+2] = ((data[i][j] + data[i][j+1] + data[i][j+2])/3);
-        }
+    size_t pixel1, pixel2, pixel3;
+    for (int i = 0; i < height*width; ++i) {
+        Helper::getPixelsFromNumber(pixel1, pixel2, pixel3, data[i]);
+        size_t average = ((pixel1 + pixel2 + pixel3)/3);
+        data[i] = 0;
+        ((data[i] ^= average<<16) ^= average<<8) ^= average;
     }
 }
 
 void ImagePPM::monoChrome() {
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width*3; j+=3) {
-            if(((data[i][j] + data[i][j+1] + data[i][j+2])/3) > maxValueOfPixel/2) {
-                data[i][j] = data[i][j+1] = data[i][j+2] = maxValueOfPixel;
-            } else {
-                data[i][j] = 0;
-                data[i][j+1] = 0;
-                data[i][j+2] = 0;
-            }
+    size_t pixel1, pixel2, pixel3;
+
+    for (int i = 0; i < height*width; ++i) {
+        Helper::getPixelsFromNumber(pixel1, pixel2, pixel3, data[i]);
+
+        if((pixel1+pixel2+pixel3/3) > maxValueOfPixel/2) {
+            data[i] = 0;
+            ((data[i] ^= maxValueOfPixel<<16) ^= maxValueOfPixel << 8) ^= maxValueOfPixel;
+        } else {
+            data[i] = 0;
         }
     }
 }
 
 void ImagePPM::negative() {
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width*3; ++j) {
-            data[i][j] = maxValueOfPixel - data[i][j];
-        }
+    size_t pixel1, pixel2, pixel3;
+
+    for (int i = 0; i < height*width; ++i) {
+        Helper::getPixelsFromNumber(pixel1, pixel2, pixel3, data[i]);
+        data[i] = 0;
+        data[i] ^= (maxValueOfPixel-pixel1)<<16;
+        data[i] ^= (maxValueOfPixel-pixel2)<<8;
+        data[i] ^= (maxValueOfPixel-pixel3);
     }
 }
 
-void ImagePPM::free() {
-    delete[] filename;
-    for (int i = 0; i < height; ++i) {
-        delete data[i];
-    }
-    delete[] data;
-    data = nullptr;
-    width = 0;
-    height = 0;
-    maxValueOfPixel = 0;
-    isGrayScale = false;
-}
-
-bool ImagePPM::isEqual(int a, int b, int c) {
+bool ImagePPM::isEqual(const size_t& a, const size_t& b, const size_t& c) const {
     return (a == b && b == c);
 }
 
-bool ImagePPM::isBlackOrWhite(int a, int b, int c) {
+bool ImagePPM::isBlackOrWhite(const size_t& a, const size_t& b, const size_t& c) const {
     return (isEqual(a, b, c) && (a == 0 || a == maxValueOfPixel));
 }
 
-void ImagePPM::rotateLeft() {
-    size_t newWidth = height*3;
-    size_t newHeight = width;
-    int** temp = new int*[newHeight];
-    for (int i = 0; i < newHeight; ++i) {
-        temp[i] = new int[newWidth];
-    }
-
-    for (int j = 0; j < height; ++j) {
-        for (int k = 0, l = newHeight-1; l >= 0; k+=3, --l) {
-            temp[l][j*3] = data[j][k];
-        }
-
-        for (int k = 1, l = newHeight-1; l >= 0; k+=3, --l) {
-            temp[l][j*3+1] = data[j][k];
-        }
-
-        for (int k = 2, l = newHeight-1; l >= 0; k+=3, --l) {
-            temp[l][j*3+2] = data[j][k];
-        }
-    }
-    for (int l = 0; l < height; ++l) {
-        delete data[l];
-    }
-    delete[] data;
-    width = newWidth/3;
-    height = newHeight;
-    data = temp;
-}
-
-void ImagePPM::rotateRight() {
-    size_t newWidth = height*3;
-    size_t newHeight = width;
-    int** temp = new int*[newHeight];
-    for (int i = 0; i < newHeight; ++i) {
-        temp[i] = new int[newWidth];
-    }
-
-    for (int j = 0; j < height; ++j) {
-        for (int k = 0, l = 0; l < newHeight; k+=3, ++l) {
-            temp[l][newWidth-1-(j*3+2)] = data[j][k];
-        }
-
-        for (int k = 1, l = 0; l < newHeight; k+=3, ++l) {
-            temp[l][newWidth-1-(j*3+1)] = data[j][k];
-        }
-
-        for (int k = 2, l = 0; l < newHeight; k+=3, ++l) {
-            temp[l][newWidth-1-j*3] = data[j][k];
-        }
-    }
-    for (int l = 0; l < height; ++l) {
-        delete data[l];
-    }
-    delete[] data;
-    width = newWidth/3;
-    height = newHeight;
-    data = temp;
-
-}
-
-void ImagePPM::writeInFile(char *filename) {
-    char* fileNameWithoutExt = fileNameWithoutExtension(filename);
-    char* date = getCurrentDate();
+void ImagePPM::writeInFile(char *filename) const {
+    char* fileNameWithoutExt = Helper::fileNameWithoutExtension(filename);
+    char* date = Helper::getCurrentDate();
     char* newFileName = new char[strlen(filename) + strlen(date) + 2];
     strcpy(newFileName, fileNameWithoutExt);
     strcat(newFileName, "_");
@@ -257,11 +176,11 @@ void ImagePPM::writeInFile(char *filename) {
     ofs << "P3\n";
     ofs << width << " " << height << "\n";
     ofs << maxValueOfPixel << "\n";
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width*3; ++j) {
-            ofs << data[i][j] << " ";
-        }
-        ofs << "\n";
+    size_t pixel1, pixel2, pixel3;
+    for (int i = 0; i < height*width; ++i) {
+        pixel1 = pixel2 = pixel3 = 0;
+        Helper::getPixelsFromNumber(pixel1, pixel2, pixel3, data[i]);
+        ofs << pixel1 << " " << pixel2 << " " << pixel3 << " ";
     }
 
     delete[] newFileName;
