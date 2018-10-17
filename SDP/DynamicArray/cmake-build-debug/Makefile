@@ -221,33 +221,6 @@ gtest/fast:
 	$(MAKE) -f lib/googletest-master/googlemock/gtest/CMakeFiles/gtest.dir/build.make lib/googletest-master/googlemock/gtest/CMakeFiles/gtest.dir/build
 .PHONY : gtest/fast
 
-DynamicArray.o: DynamicArray.cpp.o
-
-.PHONY : DynamicArray.o
-
-# target to build an object file
-DynamicArray.cpp.o:
-	$(MAKE) -f CMakeFiles/DynamicArray.dir/build.make CMakeFiles/DynamicArray.dir/DynamicArray.cpp.o
-.PHONY : DynamicArray.cpp.o
-
-DynamicArray.i: DynamicArray.cpp.i
-
-.PHONY : DynamicArray.i
-
-# target to preprocess a source file
-DynamicArray.cpp.i:
-	$(MAKE) -f CMakeFiles/DynamicArray.dir/build.make CMakeFiles/DynamicArray.dir/DynamicArray.cpp.i
-.PHONY : DynamicArray.cpp.i
-
-DynamicArray.s: DynamicArray.cpp.s
-
-.PHONY : DynamicArray.s
-
-# target to generate assembly for a file
-DynamicArray.cpp.s:
-	$(MAKE) -f CMakeFiles/DynamicArray.dir/build.make CMakeFiles/DynamicArray.dir/DynamicArray.cpp.s
-.PHONY : DynamicArray.cpp.s
-
 Tests/test.o: Tests/test.cpp.o
 
 .PHONY : Tests/test.o
@@ -319,9 +292,6 @@ help:
 	@echo "... gmock"
 	@echo "... gtest_main"
 	@echo "... gtest"
-	@echo "... DynamicArray.o"
-	@echo "... DynamicArray.i"
-	@echo "... DynamicArray.s"
 	@echo "... Tests/test.o"
 	@echo "... Tests/test.i"
 	@echo "... Tests/test.s"

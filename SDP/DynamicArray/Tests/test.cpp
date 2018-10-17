@@ -136,6 +136,11 @@ TEST_F(DynamicArrayTests, operator_add_equal_test) {
     ASSERT_EQ(obj.getSize(), 20);
 }
 
+TEST_F(DynamicArrayTests, operator_add_test) {
+    obj1 + obj;
+    ASSERT_EQ(obj1.getSize(), 0);
+}
+
 
 
 

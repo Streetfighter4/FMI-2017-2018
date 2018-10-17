@@ -340,9 +340,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/DynamicArray/DynamicArray.cpp">
-			<Option target="DynamicArray"/>
-		</Unit>
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/DynamicArray/DynamicArray.h">
 			<Option target="DynamicArray"/>
 		</Unit>

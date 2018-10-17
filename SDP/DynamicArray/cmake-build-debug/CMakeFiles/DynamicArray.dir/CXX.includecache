@@ -476,26 +476,6 @@ cxxabi.h
 acxx_demangle.h
 -
 
-/home/yasen/Programming/FMI-2017-2018/SDP/DynamicArray/DynamicArray.cpp
-DynamicArray.h
-/home/yasen/Programming/FMI-2017-2018/SDP/DynamicArray/DynamicArray.h
-
-/home/yasen/Programming/FMI-2017-2018/SDP/DynamicArray/DynamicArray.h
-cstdlib
--
-stdexcept
--
-iostream
--
-Helper.h
-/home/yasen/Programming/FMI-2017-2018/SDP/DynamicArray/Helper.h
-
-/home/yasen/Programming/FMI-2017-2018/SDP/DynamicArray/Helper.h
-cstdlib
--
-algorithm
--
-
 /home/yasen/Programming/FMI-2017-2018/SDP/DynamicArray/Tests/test.cpp
 gtest/gtest.h
 -
