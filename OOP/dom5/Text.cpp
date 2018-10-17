@@ -9,7 +9,7 @@
 
 Text::Text(const char* filename) {
     std::ifstream ifs(filename);
-    const LINE_LENGTH = 280;
+    const int LINE_LENGTH = 280;
     char line[LINE_LENGTH] = { 0 };
     countMessages = 0;
     while (!ifs.eof()) {
@@ -25,7 +25,7 @@ Text::Text(const char* filename) {
     ifs.clear(); //re-setting flag as EOF
     ifs.seekg(0, std::ios::beg);
 
-    messages = new Message*[countMessages+1];
+    messages = new Message*[countMessages];
     int i = 0;
     while (!ifs.eof()) {
 
@@ -141,12 +141,13 @@ Message& Text::operator[](const char* message) {
     short bestMessageId = -1;
     for (int i = 0; i < countMessages; ++i) {
         messageScore = messages[i]->countMessageScore(message);
-        //std::cout << "message[" << i << "] with score: " << messageScore << std::endl;
+        std::cout << "message[" << i << "] with score: " << messageScore << std::endl;
         if(messageScore > bestMessageScore) {
             bestMessageScore = messageScore;
             bestMessageId = i;
         }
     }
+    std::cout << "bestMessageId: " << bestMessageId << std::endl;
     return *messages[bestMessageId];
 }
 

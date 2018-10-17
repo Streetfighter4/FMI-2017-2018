@@ -12,10 +12,10 @@ int main() {
 
     char* searchedWord = const_cast<char*>("#fmiLife");
 
-    std::cout << "\n\n-- The message closest to \"#fmiLife\" is:" << std::endl;
+    std::cout << "\n\n-- The message closest to \"" << searchedWord << "\" is:" << std::endl;
     text.findMessage(searchedWord);
 
-    std::cout << "\n\n-- Messages arranged by proximity to \"#fmiLife\":" << std::endl;
+    std::cout << "\n\n-- Messages arranged by proximity to \"" << searchedWord << "\":" << std::endl;
     text.sortMessages(searchedWord);
 
     std::cout << "---------------------------------------------------" << std::endl;
@@ -37,9 +37,9 @@ int main() {
     text.listMessages();
 
     std::cout << "---------------------------------------------------" << std::endl;
-    const char* searchedMessage = "male tez #BOGSUM";
+    const char* searchedMessage = "Sgradata na #FMI e julta";
     Message messageObj = text1[searchedMessage];
-    std::cout << "Message content closed to our message is: " << messageObj.getContent() << std::endl;
+    std::cout << "Message content closed to our \"" << searchedMessage << "\" message is: " << messageObj.getContent() << std::endl;
     std::cout << "---------------------------------------------------" << std::endl;
     return 0;
 }

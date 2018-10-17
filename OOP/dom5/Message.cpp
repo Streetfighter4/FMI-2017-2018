@@ -12,35 +12,34 @@ Message::Message(const Message& other) {
 }
 
 Message::Message(const char* newContent) {
-    content = new char[strlen(newContent) + 1];
+    content = new char[strlen(newContent)+1];
     strcpy(content, newContent);
 
+    countWords = Helper::countWords(content);
+    words = new Word*[countWords];
 
-    char* buff = new char[strlen(newContent)+1];
-    strcpy(buff, newContent);
+    size_t startIndex = 0;
+    size_t endIndex = 0;
+    char* token;
+    size_t i = 0;
 
-    countWords = 0;
+    do {
+        endIndex++;
+        if(content[endIndex] == '\0' || (Helper::isSeparator(content[endIndex]) && !Helper::isSeparator(content[endIndex-1]))) {
+            size_t tokenLength = endIndex - startIndex;
+            token = new char[tokenLength];
+            strncpy(token, content+startIndex, tokenLength);
+            token[tokenLength] = '\0';
+            std::cout << "token: " << token << std::endl;
+            words[i++] = Helper::createWord(token);
+            startIndex = endIndex+1;
+        }
+        if(Helper::isSeparator(content[endIndex]) && Helper::isSeparator(content[endIndex-1])) {
+            startIndex++;
+        }
 
-    char* token = strtok (buff," ,._!?");
+    } while(content[endIndex]);
 
-    while (token != NULL) {
-        countWords++;
-        token = strtok(NULL, " ,._!?");
-    }
-    delete[] buff;
-
-    words = new Word*[countWords+1];
-
-    char* buff1 = new char[strlen(newContent)+1];
-    strcpy(buff1, newContent);
-
-    int i = 0;
-    token = strtok(buff1, " ,._!?");
-    while (token != NULL) {
-        words[i++] = Helper::createWord(token);
-        token = strtok(NULL, " ,._!?");
-    }
-    delete[] buff1;
 }
 
 Message::~Message() {

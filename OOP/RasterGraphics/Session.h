@@ -14,7 +14,6 @@ class Session {
 
     void copy(const Session&);
     Image* createImage(char* file);
-    char* getExtension(char* filename);
 public:
     void grayScale();
     void monoChrome();

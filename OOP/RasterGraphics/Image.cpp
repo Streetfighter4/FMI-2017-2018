@@ -22,7 +22,7 @@ Image::~Image() {
     free();
 }
 
-void Image::listCommands() {
+void Image::listCommands() const {
     for (int i = 0; i < commands.getSize(); ++i) {
         if(commands[i] == 1)
             std::cout << "grayscale, ";
@@ -42,7 +42,7 @@ void Image::listCommands() {
 
 void Image::rotateLeft() {
     size_t* temp = new size_t[height*width];
-    //TODO: TEST THIS
+
     for (int i = 0; i < width; ++i) {
         for (int j = 0; j < height; ++j) {
             temp[i*height+j] = data[(width*(j+1))-(i+1)];
@@ -56,7 +56,7 @@ void Image::rotateLeft() {
 
 void Image::rotateRight() {
     size_t* temp = new size_t[height*width];
-    //TODO: TEST THIS
+
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             temp[(height-i-1)*(j+1)+((i+1)*j)] = data[i*width+j];

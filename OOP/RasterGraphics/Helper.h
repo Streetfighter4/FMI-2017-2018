@@ -62,5 +62,17 @@ namespace Helper {
         pixel3 = number & mask3;
     }
 
+    inline char* getExtension(char* file) {
+        size_t lenght = strlen(file);
+        size_t i;
+        for (i = lenght; i > 0 ; --i) {
+            if(file[i] == '.') break;
+        }
+        char* extention = new char[lenght - i + 1];
+        strcpy(extention, file+i+1);
+        return extention;
+    }
+
+
 }
 #endif //RASTERGRAPHICS_HELPER_H

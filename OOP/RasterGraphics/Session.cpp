@@ -8,6 +8,7 @@
 #include "ImagePGM.h"
 #include "ImagePBM.h"
 #include "ImagePPM.h"
+#include "Helper.h"
 
 Session::Session(size_t id, char* files, size_t countImages) : id(id), images(countImages) {
     char* token;
@@ -73,22 +74,12 @@ void Session::copy(const Session& other) {
     images = other.images;
 }
 
-char* Session::getExtension(char* file) {
-    size_t lenght = strlen(file);
-    size_t i;
-    for (i = lenght; i > 0 ; --i) {
-        if(file[i] == '.') break;
-    }
-    char* extention = new char[lenght - i + 1];
-    strcpy(extention, file+i+1);
-    return extention;
-}
 
 Image* Session::createImage(char* file) {
     if (file == nullptr)
         return nullptr;
 
-    char* extension = getExtension(file);
+    char* extension = Helper::getExtension(file);
     if (strcmp(extension, "ppm") == 0) {
         delete[] extension;
         return new ImagePPM(file);

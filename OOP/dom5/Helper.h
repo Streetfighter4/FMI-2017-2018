@@ -82,4 +82,27 @@ namespace Helper {
         return abs(days1 - days2);
     }
 
+    inline bool isSeparator(const char c) {
+        return (c == ' ' || c == '\t' || c == '.' || c == ',' || c == '!' || c == '?');
+    }
+
+    inline size_t countWords(const char* content) {
+        if(content == nullptr) {
+            return 0;
+        }
+
+        bool separator = true;
+        size_t countWords = 0;
+
+        while(*content) {
+            if(isSeparator(*content)) {
+                separator = true;
+            } else if(separator) {
+                separator = false;
+                countWords++;
+            }
+            ++content;
+        }
+        return countWords;
+    }
 };

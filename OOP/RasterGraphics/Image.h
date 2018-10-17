@@ -27,7 +27,7 @@ public:
     ~Image();
 
     inline const char* getName() const { return filename; }
-    void listCommands();
+    void listCommands() const;
     virtual void parse(char* filename) = 0;
     virtual void save() = 0;
     void rotateLeft();
