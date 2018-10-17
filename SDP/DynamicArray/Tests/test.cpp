@@ -24,7 +24,6 @@ protected:
     DynamicArray<int> obj1;
 };
 
-
 TEST_F(DynamicArrayTests, sorting_test) {
     obj.sort();
     for (int j = 0; j < obj.getSize()-1; ++j) {
@@ -130,6 +129,14 @@ TEST_F(DynamicArrayTests, copy_constuctor_test) {
         ASSERT_EQ(obj[i], obj2[i]);
     }
 }
+
+TEST_F(DynamicArrayTests, operator_add_equal_test) {
+    obj1 = obj;
+    obj += obj1;
+    ASSERT_EQ(obj.getSize(), 20);
+}
+
+
 
 
 

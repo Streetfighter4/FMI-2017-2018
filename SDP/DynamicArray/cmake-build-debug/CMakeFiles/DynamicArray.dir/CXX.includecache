@@ -9,8 +9,6 @@
 ../././DynamicArray.h
 cstdlib
 -
-new
--
 stdexcept
 -
 iostream
@@ -485,8 +483,6 @@ DynamicArray.h
 /home/yasen/Programming/FMI-2017-2018/SDP/DynamicArray/DynamicArray.h
 cstdlib
 -
-new
--
 stdexcept
 -
 iostream
@@ -509,8 +505,6 @@ gmock/gmock.h
 /home/yasen/Programming/FMI-2017-2018/SDP/DynamicArray/Tests/./DynamicArray.h
 
 /home/yasen/Programming/FMI-2017-2018/SDP/DynamicArray/main.cpp
-iostream
--
 gtest/gtest.h
 -
 gmock/gmock.h
