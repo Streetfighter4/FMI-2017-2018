@@ -1,0 +1,14 @@
+//
+// Created by yasen on 10/20/18.
+//
+
+#ifndef HW1_DYNAMICARRAY_HPP
+#define HW1_DYNAMICARRAY_HPP
+
+
+class DynamicArray {
+
+};
+
+
+#endif //HW1_DYNAMICARRAY_HPP

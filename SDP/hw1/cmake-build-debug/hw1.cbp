@@ -44,7 +44,6 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/include"/>
 					<Add directory="/usr/include/c++/4.9"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
 					<Add directory="/usr/include/c++/4.9/backward"/>
@@ -68,7 +67,6 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/include"/>
 					<Add directory="/usr/include/c++/4.9"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
 					<Add directory="/usr/include/c++/4.9/backward"/>
@@ -86,6 +84,21 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/hw1/DynamicArray.hpp">
+			<Option target="hw1"/>
+		</Unit>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/hw1/Helper.h">
+			<Option target="hw1"/>
+		</Unit>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/hw1/LinkedList.hpp">
+			<Option target="hw1"/>
+		</Unit>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/hw1/Student.cpp">
+			<Option target="hw1"/>
+		</Unit>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/hw1/Student.h">
+			<Option target="hw1"/>
+		</Unit>
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/hw1/main.cpp">
 			<Option target="hw1"/>
 		</Unit>
