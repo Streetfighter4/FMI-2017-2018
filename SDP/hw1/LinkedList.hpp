@@ -3,12 +3,12 @@
 //
 
 
+#ifndef HW1_LINKEDLIST_HPP
+#define HW1_LINKEDLIST_HPP
+
 #include <cstdlib>
 #include <iostream>
 #include <stdexcept>
-
-#ifndef HW1_LINKEDLIST_HPP
-#define HW1_LINKEDLIST_HPP
 
 template <class T>
 class LinkedList {
@@ -27,7 +27,7 @@ class LinkedList {
     Node* head;
     Node* tail;
 
-    size_t size;
+    size_t size{};
 public:
     LinkedList();
     LinkedList(const LinkedList<T>&);
@@ -69,8 +69,9 @@ public:
         return size == 0;
     }
 
-    int search(const T) const;
+    int search(T) const;
 
+    LinkedList<T>* splitBy(size_t index);
 
     friend std::ostream& operator<<(std::ostream &os, const LinkedList& obj) {
         Node* ptr = obj.head;
@@ -290,6 +291,22 @@ int LinkedList<T>::search(const T obj) const {
     }
 
     return -1;
+}
+
+template<class T>
+LinkedList<T> *LinkedList<T>::splitBy(size_t index) {
+    LinkedList<T>* newQ = new LinkedList<T>;
+    Node* temp = head;
+    for (int i = 0; i < index - 1; ++i) {
+        temp = temp->pNext;
+    }
+    newQ->head = temp->pNext->pNext;
+    delete temp->pNext;
+    temp->pNext = nullptr;
+    newQ->tail = tail;
+    tail = temp;
+
+    return newQ;
 }
 
 

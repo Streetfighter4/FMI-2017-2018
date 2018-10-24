@@ -61,7 +61,7 @@ public:
 
     void sort();
     void printContent() const;
-
+    void shrinkToFit();
 };
 /*
 template <class T>
@@ -259,6 +259,11 @@ void DynamicArray<T>::setAt(size_t index, T elem) {
         throw std::out_of_range("Out of range\n");
     }
     data[index] = elem;
+}
+
+template<class T>
+void DynamicArray<T>::shrinkToFit() {
+    resize(size);
 }
 
 

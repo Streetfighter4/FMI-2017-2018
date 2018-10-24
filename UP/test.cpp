@@ -1,16 +1,19 @@
 #include <iostream>
 
-void function(int array[]) {
-	std::cout << &array << std::endl;
+void function(char* array, int size) {
+	int j = 0;
+	for(int i = 'a'; i <= 'z'; ++i) {
+		array[j++] = i;
+	}
+	array[size] = '\0';
 }
 
 int main() {
-	int a = 10;
-	int* pa = &a;
-	
-	std::cout << a << std::endl;
-	std::cout << *(&a) << std::endl;
-	
-	//function(array);
+	char* array = new char[27];
+	if(array != NULL) {	
+		function(array, 26);
+		std::cout << array;
+		delete[] array;
+	}
 	return 0;
 }

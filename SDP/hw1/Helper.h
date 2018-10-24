@@ -8,7 +8,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <cstring>
-
+#include "Student.h"
 
 namespace Helper {
 
@@ -52,22 +52,6 @@ namespace Helper {
         }
         return -1;
     }
-
-    bool isCompatible(const char* uni1, const char* uni2) {
-        if(strcmp(uni1, uni2) == 0) {
-            return true;
-        }
-        if(strcmp(uni2, "fmi") == 0) {
-            return strcmp(uni1, "tu") == 0;
-        }
-        if(strcmp(uni2, "tu") == 0) {
-            return strcmp(uni1, "unss") == 0;
-        }
-        if(strcmp(uni2, "unss") == 0) {
-            return strcmp(uni1, "fmi") == 0;
-        }
-    }
-
 }
 
 

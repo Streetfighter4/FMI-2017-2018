@@ -84,6 +84,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/hw1/DataManagement.hpp">
+			<Option target="hw1"/>
+		</Unit>
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/hw1/DynamicArray.hpp">
 			<Option target="hw1"/>
 		</Unit>

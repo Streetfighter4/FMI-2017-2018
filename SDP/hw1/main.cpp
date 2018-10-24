@@ -3,9 +3,13 @@
 #include "LinkedList.hpp"
 #include "DynamicArray.hpp"
 #include "Student.h"
+#include "DataManagement.hpp"
 
-int main() {
+int main(int argc, char* argv[]) {
     DynamicArray<LinkedList<Student*>*> collection;
+    // If you wont to set fake data
+    setData(collection, argv[1]);
+
     char command[16];
     char name[128];
     char uni[8];
@@ -22,18 +26,7 @@ int main() {
             std::cin >> name;
             std::cin >> uni;
             std::cin >> indexQ1;
-            Student* newStudent = new Student(name, uni);
-            if(indexQ1 >= collection.getSize()) {
-                LinkedList<Student*>* newQ = new LinkedList<Student*>;
-                newQ->push_back(newStudent);
-                collection.push_back(newQ);
-            } else {
-                if(Helper::isCompatible(collection[indexQ1]->back()->uni, newStudent->uni)) {
-                    collection[indexQ1]->push_back(newStudent);
-                } else {
-                    std::cout << "Incompatible people!\n" << std::endl;
-                }
-            }
+            append(indexQ1, name, uni, collection);
             continue;
         }
         if(strcmp(command, "removeLast") == 0) {
@@ -74,14 +67,8 @@ int main() {
                 collection[indexQ1]->pop_back();
                 continue;
             }
-            LinkedList<Student*>* newQ = new LinkedList<Student*>;
-            *newQ = *collection[indexQ1];
-            for (int i = 0; i < collection[indexQ1]->getSize()-index+1; ++i) {
-                collection[indexQ1]->pop_back();
-            }
-            for (int j = 0; j < index+1; ++j) {
-                newQ->pop_front();
-            }
+            LinkedList<Student*>* newQ = collection[indexQ1]->splitBy(index);
+
             collection.push_back(newQ);
         }
         if(strcmp(command, "merge") == 0) {
@@ -90,7 +77,7 @@ int main() {
                 std::cout << "Invalid index of queue!\n" << std::endl;
                 continue;
             }
-            if(!Helper::isCompatible(collection[indexQ1]->back()->uni, collection[indexQ2]->front()->uni)) {
+            if(!isCompatible(collection[indexQ1]->back()->uni, collection[indexQ2]->front()->uni)) {
                 std::cout << "Incompatible people!\n" << std::endl;
                 continue;
             }

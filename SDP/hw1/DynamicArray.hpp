@@ -2,13 +2,14 @@
 // Created by yasen on 10/20/18.
 //
 
+#ifndef HW1_DYNAMICARRAY_HPP
+#define HW1_DYNAMICARRAY_HPP
+
+
 #include <cstdlib>
 #include <stdexcept>
 #include <iostream>
 #include "Helper.h"
-
-#ifndef HW1_DYNAMICARRAY_HPP
-#define HW1_DYNAMICARRAY_HPP
 
 template <class T>
 class DynamicArray {

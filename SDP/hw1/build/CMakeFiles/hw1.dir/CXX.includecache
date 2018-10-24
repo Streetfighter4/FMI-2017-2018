@@ -1,20 +1,10 @@
-#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
 
 #IncludeRegexScan: ^.*$
 
 #IncludeRegexComplain: ^$
 
 #IncludeRegexTransform: 
-
-/home/yasen/Programming/FMI-2017-2018/SDP/hw1/DataManagement.hpp
-Student.h
-/home/yasen/Programming/FMI-2017-2018/SDP/hw1/Student.h
-LinkedList.hpp
-/home/yasen/Programming/FMI-2017-2018/SDP/hw1/LinkedList.hpp
-DynamicArray.hpp
-/home/yasen/Programming/FMI-2017-2018/SDP/hw1/DynamicArray.hpp
-fstream
--
 
 /home/yasen/Programming/FMI-2017-2018/SDP/hw1/DynamicArray.hpp
 cstdlib
@@ -33,8 +23,6 @@ algorithm
 -
 cstring
 -
-Student.h
-/home/yasen/Programming/FMI-2017-2018/SDP/hw1/Student.h
 
 /home/yasen/Programming/FMI-2017-2018/SDP/hw1/LinkedList.hpp
 cstdlib
@@ -67,6 +55,4 @@ DynamicArray.hpp
 /home/yasen/Programming/FMI-2017-2018/SDP/hw1/DynamicArray.hpp
 Student.h
 /home/yasen/Programming/FMI-2017-2018/SDP/hw1/Student.h
-DataManagement.hpp
-/home/yasen/Programming/FMI-2017-2018/SDP/hw1/DataManagement.hpp
 
