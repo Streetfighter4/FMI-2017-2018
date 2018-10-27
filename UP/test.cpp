@@ -1,19 +1,21 @@
 #include <iostream>
-
-void function(char* array, int size) {
-	int j = 0;
-	for(int i = 'a'; i <= 'z'; ++i) {
-		array[j++] = i;
-	}
-	array[size] = '\0';
-}
+#include <iomanip>
 
 int main() {
-	char* array = new char[27];
-	if(array != NULL) {	
-		function(array, 26);
-		std::cout << array;
-		delete[] array;
+	int n = 30;
+	int count = n;
+	for(char c = 'A'; c < 'A' + n; ++c) {	
+		std::cout << std::setw(count);	
+		--count;
+		for(char d = 'A'; d < c; ++d) {
+			std::cout << d;	
+		}
+		for(char d = c; d >= 'A'; --d) {
+			std::cout << d;
+		}
+		std::cout << std::endl;
 	}
+	
+	
 	return 0;
 }

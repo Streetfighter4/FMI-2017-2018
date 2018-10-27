@@ -26,9 +26,11 @@ class LinkedList {
     size_t size;
 public:
     LinkedList();
+    ~LinkedList();
+
+private:
     LinkedList(const LinkedList<T>&);
     LinkedList<T>& operator=(const LinkedList<T>&);
-    ~LinkedList();
 
 private:
     void copy(const LinkedList<T>&);
@@ -69,7 +71,8 @@ public:
     }
 
     void print();
-
+    void removeDuplicate();
+    void revomeRepeatedElements();
 };
 
 template<class T>
@@ -270,6 +273,44 @@ void LinkedList<T>::reverse() {
         tail = head;
         head = head->pNext;
         return;
+    }
+
+}
+
+template<class T>
+void LinkedList<T>::removeDuplicate() {
+    if(size == 1 || size == 0) {
+        return;
+    }
+    Node* ptr = head;
+    while (ptr->pNext != nullptr) {
+        if(ptr->data == ptr->pNext->data) {
+            Node* temp = ptr->pNext;
+            ptr->pNext = temp->pNext;
+            delete temp;
+            --size;
+        } else {
+            ptr = ptr->pNext;
+        }
+    }
+}
+
+template<class T>
+void LinkedList<T>::revomeRepeatedElements() {
+    if(size == 1 || size == 0) {
+        return;
+    }
+    Node* ptr1 = head;
+    Node* ptr2 = head;
+    Node* ptr3 = head;
+    while (ptr1->pNext != nullptr) {
+        while(ptr2->data == ptr2->pNext->data) {
+            ptr3 = ptr2;
+            ptr2 = ptr2->pNext;
+            delete ptr3;
+        }
+        ptr2 = ptr2->pNext;
+        ptr1 = ptr3 = ptr2;
     }
 
 }
