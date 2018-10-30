@@ -23,7 +23,7 @@ public:
     public:
         DynamicArrayElementProxy(DynamicArray<T>*, size_t);
         DynamicArrayElementProxy<T>& operator=(T);
-        operator T() const;
+        T operator T() const;
     };
 
 
@@ -87,13 +87,13 @@ DynamicArray<T>::DynamicArrayElementProxy<T>::DynamicArrayElementProxy(DynamicAr
 {}
 
 template<class T>
-DynamicArrayElementProxy<T>& DynamicArray<T>::DynamicArrayElementProxy<T>::operator=(T value) {
+DynamicArray<T>::DynamicArrayElementProxy<T>& DynamicArray<T>::DynamicArrayElementProxy<T>::operator=(T value) {
     pOwner->setAt(indexOfOwner, value);
     return *this;
 }
 
 template<class T>
-DynamicArray<T>::DynamicArrayElementProxy<T>::operator T() const {
+T DynamicArray<T>::DynamicArrayElementProxy<T>::operator T() const {
     return pOwner->getAt(indexOfOwner);
 }
 
