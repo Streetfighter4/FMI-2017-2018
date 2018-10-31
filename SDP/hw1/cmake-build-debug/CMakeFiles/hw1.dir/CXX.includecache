@@ -23,18 +23,6 @@ stdexcept
 -
 iostream
 -
-Helper.h
-/home/yasen/Programming/FMI-2017-2018/SDP/hw1/Helper.h
-
-/home/yasen/Programming/FMI-2017-2018/SDP/hw1/Helper.h
-cstdlib
--
-algorithm
--
-cstring
--
-Student.h
-/home/yasen/Programming/FMI-2017-2018/SDP/hw1/Student.h
 
 /home/yasen/Programming/FMI-2017-2018/SDP/hw1/LinkedList.hpp
 cstdlib
@@ -65,8 +53,6 @@ LinkedList.hpp
 /home/yasen/Programming/FMI-2017-2018/SDP/hw1/LinkedList.hpp
 DynamicArray.hpp
 /home/yasen/Programming/FMI-2017-2018/SDP/hw1/DynamicArray.hpp
-Student.h
-/home/yasen/Programming/FMI-2017-2018/SDP/hw1/Student.h
 DataManagement.hpp
 /home/yasen/Programming/FMI-2017-2018/SDP/hw1/DataManagement.hpp
 

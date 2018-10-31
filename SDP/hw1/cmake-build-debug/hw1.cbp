@@ -90,9 +90,6 @@
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/hw1/DynamicArray.hpp">
 			<Option target="hw1"/>
 		</Unit>
-		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/hw1/Helper.h">
-			<Option target="hw1"/>
-		</Unit>
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/hw1/LinkedList.hpp">
 			<Option target="hw1"/>
 		</Unit>

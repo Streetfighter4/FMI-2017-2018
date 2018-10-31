@@ -47,6 +47,8 @@ public:
     void insertAt(size_t, const T&);
     void removeAt(size_t);
 
+    void mergeWith(LinkedList<T>&);
+
 public:
     inline T& front() {
         return head->data;
@@ -84,9 +86,6 @@ public:
 
         return os;
     }
-
-    void print();
-
 };
 
 template<class T>
@@ -151,17 +150,6 @@ void LinkedList<T>::clean() {
     head = nullptr;
     tail = nullptr;
     size = 0;
-}
-
-template<class T>
-void LinkedList<T>::print() {
-    Node* ptr = head;
-    while(ptr->pNext != nullptr) {
-        std::cout << ptr->data << ' ';
-        ptr = ptr->pNext;
-    }
-    std::cout << ptr->data;
-    std::cout << std::endl;
 }
 
 template<class T>
@@ -307,6 +295,15 @@ LinkedList<T> *LinkedList<T>::splitBy(size_t index) {
     tail = temp;
 
     return newQ;
+}
+
+template<class T>
+void LinkedList<T>::mergeWith(LinkedList<T>& rhs) {
+    tail->pNext = rhs.head;
+    tail = rhs.tail;
+    size+=rhs.size;
+    rhs.head = rhs.tail = nullptr;
+    rhs.size = 0;
 }
 
 
