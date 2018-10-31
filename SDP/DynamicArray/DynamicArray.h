@@ -12,21 +12,6 @@
 
 template <class T>
 class DynamicArray {
-public:
-
-    template <class T>
-    class DynamicArrayElementProxy {
-    private:
-        DynamicArray<T>* pOwner;
-        size_t indexOfOwner;
-
-    public:
-        DynamicArrayElementProxy(DynamicArray<T>*, size_t);
-        DynamicArrayElementProxy<T>& operator=(T);
-        T operator T() const;
-    };
-
-
 
     T* data;
     size_t size;
@@ -79,23 +64,6 @@ public:
     void printContent() const;
     void shrinkToFit();
 };
-
-template<class T>
-DynamicArray<T>::DynamicArrayElementProxy<T>::DynamicArrayElementProxy(DynamicArray<T>* pDynamicArray, size_t index) :
-        pOwner(pDynamicArray),
-        indexOfOwner(index)
-{}
-
-template<class T>
-DynamicArray<T>::DynamicArrayElementProxy<T>& DynamicArray<T>::DynamicArrayElementProxy<T>::operator=(T value) {
-    pOwner->setAt(indexOfOwner, value);
-    return *this;
-}
-
-template<class T>
-T DynamicArray<T>::DynamicArrayElementProxy<T>::operator T() const {
-    return pOwner->getAt(indexOfOwner);
-}
 
 template<class T>
 DynamicArray<T>::DynamicArray() : data(new T[16]), size(0), capacity(16), isSorted(false) {}
@@ -191,8 +159,7 @@ const T& DynamicArray<T>::operator[](size_t pos) const {
     if(pos >= size) {
         throw std::out_of_range("Out of range\n");
     }
-    return DynamicArrayElementProxy<T>(const_cast<DynamicArray*>(this), pos);
-    //return data[pos];
+    return data[pos];
 }
 
 template<class T>
@@ -200,8 +167,7 @@ T& DynamicArray<T>::operator[](size_t pos) {
     if(pos >= size) {
         throw std::out_of_range("Out of range\n");
     }
-    //return data[pos];
-    return DynamicArrayElementProxy<T>(this, pos);
+    return data[pos];
 }
 
 template<class T>
