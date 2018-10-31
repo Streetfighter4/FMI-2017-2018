@@ -1,13 +1,13 @@
 #include <iostream>
 #include <cstring>
-#include "LinkedList.hpp"
-#include "DynamicArray.hpp"
-#include "DataManagement.hpp"
+#include "LinkedList.h"
+#include "DynamicArray.h"
+#include "DataManagement.cpp"
 
 int main(int argc, char* argv[]) {
     DynamicArray<LinkedList<Student*>*> collection;
     // If you wont to set fake data
-    setData(collection, argv[1]);
+    //setData(collection, argv[1]);
 
     char command[16];
     char name[128];

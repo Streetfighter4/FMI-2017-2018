@@ -7,8 +7,8 @@
 
 
 #include "Student.h"
-#include "LinkedList.hpp"
-#include "DynamicArray.hpp"
+#include "LinkedList.h"
+#include "DynamicArray.h"
 #include <fstream>
 
 bool isCompatible(const char* uni1, const char* uni2) {
