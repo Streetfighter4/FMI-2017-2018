@@ -6,3 +6,4 @@ a.out
 *.make
 *.cmake
 */cmake-build-debug/*
+*/lib/*
