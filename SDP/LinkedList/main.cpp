@@ -14,7 +14,5 @@ int main() {
     list.print();
     list.revomeRepeatedElements();
     list.print();
-    std::cout << list.front() << std::endl;
-    std::cout << list.back() << std::endl;
     return 0;
 }

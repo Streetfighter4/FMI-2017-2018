@@ -301,17 +301,18 @@ void LinkedList<T>::revomeRepeatedElements() {
         return;
     }
     Node* ptr1 = head;
-    Node* ptr2 = head;
-    Node* ptr3 = head;
-    while (ptr1->pNext != nullptr) {
-        while(ptr2->data == ptr2->pNext->data) {
-            ptr3 = ptr2;
+    Node* ptr2 = head->pNext;
+    if(ptr1->data == ptr2->data) {
+        while (ptr1->data == ptr2->data) {
+            delete ptr1;
+            ptr1 = ptr2;
             ptr2 = ptr2->pNext;
-            delete ptr3;
         }
-        ptr2 = ptr2->pNext;
-        ptr1 = ptr3 = ptr2;
+        head = ptr2;
     }
+    Node* ptr3 = ptr2;
+    while (ptr3)
+
 
 }
 
