@@ -14,9 +14,18 @@ bool inArray(int x, int y, int size) {
 	return ((x >= 0) && (x < size) && (y >= 0) && (y < size));
 }
 
+void printMatrix() {
+	for(int i = 0; i < TABLE_SIZE; i++) {
+		for(int j = 0; j < TABLE_SIZE; j++) {
+			cout << "|" << ((table[i][j]) ? "*" : " ");
+		}
+		cout << endl;
+	}
+}
+
 void horseMovement(int horsePos_x, int horsePos_y, int size) {
 	table[horsePos_x][horsePos_y] = true;
-
+	printMatrix();	
 	for (int i = 0; i < size && !hasSolution; i++) {
 		for (int j = 0; j < size; j++) {
 			if (table[i][j])
