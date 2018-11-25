@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/yasen/Programming/FMI-2017-2018/SDP/BinaryTree/BinaryTree.h
+
+/home/yasen/Programming/FMI-2017-2018/SDP/BinaryTree/MaxHeap.hpp
+cstdlib
+-
+algorithm
+-
+iostream
+-
+
+/home/yasen/Programming/FMI-2017-2018/SDP/BinaryTree/main.cpp
+iostream
+-
+BinaryTree.h
+/home/yasen/Programming/FMI-2017-2018/SDP/BinaryTree/BinaryTree.h
+MaxHeap.hpp
+/home/yasen/Programming/FMI-2017-2018/SDP/BinaryTree/MaxHeap.hpp
+
