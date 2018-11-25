@@ -1,20 +1,36 @@
 #include <iostream>
 #include <cstring>
-#include "LinkedList.h"
-#include "DynamicArray.h"
-#include "DataManagement.cpp"
+#include "LinkedList.hpp"
+#include "DynamicArray.hpp"
+#include "DataManagement.hpp"
+
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 int main(int argc, char* argv[]) {
+
     DynamicArray<LinkedList<Student*>*> collection;
+    LinkedList<Student*>* fisrtQ = new LinkedList<Student*>;
+    Student* integralcho = new Student("integralcho", "fmi");
+    fisrtQ->push_back(integralcho);
+    collection.push_back(fisrtQ);
     // If you wont to set fake data
     //setData(collection, argv[1]);
 
+/*
     char command[16];
     char name[128];
     char uni[8];
     unsigned short indexQ1, indexQ2;
 
     while (true) {
+        if(collection.isEmpty()) {
+            std::cout << "No conga queues on the party. Please exit!" << std::endl;
+            do {
+                std::cin >> command;
+            } while(strcmp(command, "exit"));
+            break;
+        }
         std::cin >> command;
         if(strcmp(command, "print") == 0) {
             collection.printContent();
@@ -53,7 +69,8 @@ int main(int argc, char* argv[]) {
             break;
         }
     }
+*/
+    testing::InitGoogleTest(&argc, argv);
 
-
-    return 0;
+    return RUN_ALL_TESTS();
 }

@@ -17,7 +17,6 @@ Student::Student(const char* newName, const char* newUni) {
 
 Student& Student::operator=(const Student& other) {
     if(this != &other) {
-        clear();
         copy(other);
     }
     return *this;
@@ -35,9 +34,11 @@ std::ostream &operator<<(std::ostream &os, const Student &obj) {
 void Student::clear() {
     delete[] name;
     delete[] uni;
+    name = uni = nullptr;
 }
 
 void Student::copy(const Student& other) {
+    clear();
     name = new char[strlen(other.name) + 1];
     strcpy(name, other.name);
     uni = new char[strlen(other.uni) + 1];

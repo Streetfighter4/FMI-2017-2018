@@ -56,6 +56,30 @@ CMAKE_BINARY_DIR = /home/yasen/Programming/FMI-2017-2018/SDP/hw1/cmake-build-deb
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/home/yasen/Installs/clion-2017.3.3/bin/cmake/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/home/yasen/Installs/clion-2017.3.3/bin/cmake/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/home/yasen/Installs/clion-2017.3.3/bin/cmake/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/home/yasen/Installs/clion-2017.3.3/bin/cmake/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -77,6 +101,28 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/home/yasen/Installs/clion-2017.3.3/bin/cmake/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/home/yasen/Installs/clion-2017.3.3/bin/cmake/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -123,6 +169,58 @@ hw1/fast:
 	$(MAKE) -f CMakeFiles/hw1.dir/build.make CMakeFiles/hw1.dir/build
 .PHONY : hw1/fast
 
+#=============================================================================
+# Target rules for targets named gmock_main
+
+# Build rule for target.
+gmock_main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gmock_main
+.PHONY : gmock_main
+
+# fast build rule for target.
+gmock_main/fast:
+	$(MAKE) -f lib/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build.make lib/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build
+.PHONY : gmock_main/fast
+
+#=============================================================================
+# Target rules for targets named gmock
+
+# Build rule for target.
+gmock: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gmock
+.PHONY : gmock
+
+# fast build rule for target.
+gmock/fast:
+	$(MAKE) -f lib/googletest-master/googlemock/CMakeFiles/gmock.dir/build.make lib/googletest-master/googlemock/CMakeFiles/gmock.dir/build
+.PHONY : gmock/fast
+
+#=============================================================================
+# Target rules for targets named gtest_main
+
+# Build rule for target.
+gtest_main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gtest_main
+.PHONY : gtest_main
+
+# fast build rule for target.
+gtest_main/fast:
+	$(MAKE) -f lib/googletest-master/googlemock/gtest/CMakeFiles/gtest_main.dir/build.make lib/googletest-master/googlemock/gtest/CMakeFiles/gtest_main.dir/build
+.PHONY : gtest_main/fast
+
+#=============================================================================
+# Target rules for targets named gtest
+
+# Build rule for target.
+gtest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gtest
+.PHONY : gtest
+
+# fast build rule for target.
+gtest/fast:
+	$(MAKE) -f lib/googletest-master/googlemock/gtest/CMakeFiles/gtest.dir/build.make lib/googletest-master/googlemock/gtest/CMakeFiles/gtest.dir/build
+.PHONY : gtest/fast
+
 Student.o: Student.cpp.o
 
 .PHONY : Student.o
@@ -149,6 +247,87 @@ Student.s: Student.cpp.s
 Student.cpp.s:
 	$(MAKE) -f CMakeFiles/hw1.dir/build.make CMakeFiles/hw1.dir/Student.cpp.s
 .PHONY : Student.cpp.s
+
+Tests/CollectionTests.o: Tests/CollectionTests.cpp.o
+
+.PHONY : Tests/CollectionTests.o
+
+# target to build an object file
+Tests/CollectionTests.cpp.o:
+	$(MAKE) -f CMakeFiles/hw1.dir/build.make CMakeFiles/hw1.dir/Tests/CollectionTests.cpp.o
+.PHONY : Tests/CollectionTests.cpp.o
+
+Tests/CollectionTests.i: Tests/CollectionTests.cpp.i
+
+.PHONY : Tests/CollectionTests.i
+
+# target to preprocess a source file
+Tests/CollectionTests.cpp.i:
+	$(MAKE) -f CMakeFiles/hw1.dir/build.make CMakeFiles/hw1.dir/Tests/CollectionTests.cpp.i
+.PHONY : Tests/CollectionTests.cpp.i
+
+Tests/CollectionTests.s: Tests/CollectionTests.cpp.s
+
+.PHONY : Tests/CollectionTests.s
+
+# target to generate assembly for a file
+Tests/CollectionTests.cpp.s:
+	$(MAKE) -f CMakeFiles/hw1.dir/build.make CMakeFiles/hw1.dir/Tests/CollectionTests.cpp.s
+.PHONY : Tests/CollectionTests.cpp.s
+
+Tests/CongaQueuesTests.o: Tests/CongaQueuesTests.cpp.o
+
+.PHONY : Tests/CongaQueuesTests.o
+
+# target to build an object file
+Tests/CongaQueuesTests.cpp.o:
+	$(MAKE) -f CMakeFiles/hw1.dir/build.make CMakeFiles/hw1.dir/Tests/CongaQueuesTests.cpp.o
+.PHONY : Tests/CongaQueuesTests.cpp.o
+
+Tests/CongaQueuesTests.i: Tests/CongaQueuesTests.cpp.i
+
+.PHONY : Tests/CongaQueuesTests.i
+
+# target to preprocess a source file
+Tests/CongaQueuesTests.cpp.i:
+	$(MAKE) -f CMakeFiles/hw1.dir/build.make CMakeFiles/hw1.dir/Tests/CongaQueuesTests.cpp.i
+.PHONY : Tests/CongaQueuesTests.cpp.i
+
+Tests/CongaQueuesTests.s: Tests/CongaQueuesTests.cpp.s
+
+.PHONY : Tests/CongaQueuesTests.s
+
+# target to generate assembly for a file
+Tests/CongaQueuesTests.cpp.s:
+	$(MAKE) -f CMakeFiles/hw1.dir/build.make CMakeFiles/hw1.dir/Tests/CongaQueuesTests.cpp.s
+.PHONY : Tests/CongaQueuesTests.cpp.s
+
+Tests/StudentTests.o: Tests/StudentTests.cpp.o
+
+.PHONY : Tests/StudentTests.o
+
+# target to build an object file
+Tests/StudentTests.cpp.o:
+	$(MAKE) -f CMakeFiles/hw1.dir/build.make CMakeFiles/hw1.dir/Tests/StudentTests.cpp.o
+.PHONY : Tests/StudentTests.cpp.o
+
+Tests/StudentTests.i: Tests/StudentTests.cpp.i
+
+.PHONY : Tests/StudentTests.i
+
+# target to preprocess a source file
+Tests/StudentTests.cpp.i:
+	$(MAKE) -f CMakeFiles/hw1.dir/build.make CMakeFiles/hw1.dir/Tests/StudentTests.cpp.i
+.PHONY : Tests/StudentTests.cpp.i
+
+Tests/StudentTests.s: Tests/StudentTests.cpp.s
+
+.PHONY : Tests/StudentTests.s
+
+# target to generate assembly for a file
+Tests/StudentTests.cpp.s:
+	$(MAKE) -f CMakeFiles/hw1.dir/build.make CMakeFiles/hw1.dir/Tests/StudentTests.cpp.s
+.PHONY : Tests/StudentTests.cpp.s
 
 main.o: main.cpp.o
 
@@ -183,12 +362,29 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... install/strip"
+	@echo "... install/local"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... install"
+	@echo "... list_install_components"
 	@echo "... hw1"
+	@echo "... gmock_main"
+	@echo "... gmock"
+	@echo "... gtest_main"
+	@echo "... gtest"
 	@echo "... Student.o"
 	@echo "... Student.i"
 	@echo "... Student.s"
+	@echo "... Tests/CollectionTests.o"
+	@echo "... Tests/CollectionTests.i"
+	@echo "... Tests/CollectionTests.s"
+	@echo "... Tests/CongaQueuesTests.o"
+	@echo "... Tests/CongaQueuesTests.i"
+	@echo "... Tests/CongaQueuesTests.s"
+	@echo "... Tests/StudentTests.o"
+	@echo "... Tests/StudentTests.i"
+	@echo "... Tests/StudentTests.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

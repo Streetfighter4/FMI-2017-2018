@@ -538,3 +538,17 @@ make[1]: Leaving directory '/home/yasen/Programming/FMI-2017-2018/SDP/hw1/cmake-
     Feature record: CXX_FEATURE:0cxx_variable_templates
     Feature record: CXX_FEATURE:0cxx_variadic_macros
     Feature record: CXX_FEATURE:0cxx_variadic_templates
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/yasen/Programming/FMI-2017-2018/SDP/hw1/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_9dc00/fast"
+/usr/bin/make -f CMakeFiles/cmTC_9dc00.dir/build.make CMakeFiles/cmTC_9dc00.dir/build
+make[1]: Entering directory '/home/yasen/Programming/FMI-2017-2018/SDP/hw1/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_9dc00.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_9dc00.dir/CheckIncludeFile.c.o   -c /home/yasen/Programming/FMI-2017-2018/SDP/hw1/cmake-build-debug/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_9dc00
+/home/yasen/Installs/clion-2017.3.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9dc00.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_9dc00.dir/CheckIncludeFile.c.o  -o cmTC_9dc00 
+make[1]: Leaving directory '/home/yasen/Programming/FMI-2017-2018/SDP/hw1/cmake-build-debug/CMakeFiles/CMakeTmp'
+
+

@@ -1,0 +1,35 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/yasen/Programming/FMI-2017-2018/SDP/hw1/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_e9295/fast"
+/usr/bin/make -f CMakeFiles/cmTC_e9295.dir/build.make CMakeFiles/cmTC_e9295.dir/build
+make[1]: Entering directory '/home/yasen/Programming/FMI-2017-2018/SDP/hw1/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_e9295.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_e9295.dir/CheckSymbolExists.c.o   -c /home/yasen/Programming/FMI-2017-2018/SDP/hw1/cmake-build-debug/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_e9295
+/home/yasen/Installs/clion-2017.3.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e9295.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_e9295.dir/CheckSymbolExists.c.o  -o cmTC_e9295 
+CMakeFiles/cmTC_e9295.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_e9295.dir/build.make:97: recipe for target 'cmTC_e9295' failed
+make[1]: *** [cmTC_e9295] Error 1
+make[1]: Leaving directory '/home/yasen/Programming/FMI-2017-2018/SDP/hw1/cmake-build-debug/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_e9295/fast' failed
+make: *** [cmTC_e9295/fast] Error 2
+
+File /home/yasen/Programming/FMI-2017-2018/SDP/hw1/cmake-build-debug/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
