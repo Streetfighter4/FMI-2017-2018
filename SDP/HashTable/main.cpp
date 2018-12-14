@@ -48,33 +48,47 @@ void fillFile(HashTable& table, const std::string& fileName) {
 
 int main(int argc, char* argv[]) {
     HashTable table;
-    std::string fileName = argv[1];
 
-    fillFile(table, fileName);
+    fillFile(table, argv[1]);
 
     std::string command, str1, str2, str3, choice;
-
     while(true) {
         std::cin >> command;
         if(command == "RELEASE") {
             std::cin >> str1 >> choice;
+            std::replace(str1.begin(), str1.end(), '_', ' ');
+
             table.release(str1, choice);
         } else if(command == "GRAB") {
             std::cin >> str1 >> choice;
+            std::replace(str1.begin(), str1.end(), '_', ' ');
+
             table.grab(str1, choice);
         } else if(command == "INFO") {
             std::cin >> str1;
+            std::replace(str1.begin(), str1.end(), '_', ' ');
+
             table.info(str1);
         } else if(command == "ADD") {
             std::cin >> str1 >> str2 >> str3;
+
+            std::replace(str1.begin(), str1.end(), '_', ' ');
+            std::replace(str2.begin(), str2.end(), '_', ' ');
+            std::replace(str3.begin(), str3.end(), '_', ' ');
+
             table.addBetween(str1, str2, str3);
         } else if(command == "REMOVE") {
             std::cin >> str1;
+            std::replace(str1.begin(), str1.end(), '_', ' ');
+
             if(table.remove(str1)) { // end of dance
                 break;
             }
         } else if(command == "SWAP") {
             std::cin >> str2 >> str3;
+
+            std::replace(str2.begin(), str2.end(), '_', ' ');
+            std::replace(str3.begin(), str3.end(), '_', ' ');
             table.swap(str2, str3);
         } else if(command == "PRINT") {
             table.print();
