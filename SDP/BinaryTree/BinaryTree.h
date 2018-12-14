@@ -25,6 +25,7 @@ public:
 
 
 public:
+    /*
     class Iterator {
     private:
         const BinaryTree<T>* pTree;
@@ -37,20 +38,24 @@ public:
         Iterator*operator++();
         T&operator*();
     };
+     */
 public:
-    Iterator* begin() const;
-    Iterator* end() const;
-
-
     void insert(const T&);
     void print();
     void remove(const T&);
+    void sortArray(T*& array, size_t size);
+    void makebalanceTreeFromSortedArray(const T*& array, size_t);
+
 private:
     void insertRecursive(Node*& node, const T& elem);
     void printRecursive(Node*& node) const;
+
     Node* removeRecursive(Node*& node, const T& elem);
     Node* minValueNode(Node*& node) const;
     Node* copyRecursive(Node* node);
+
+    void feelsortedArray(T*& array, size_t&, Node* node);
+    void makebalanceTreeFromSortedArrayRecursive(const T*& array, size_t, size_t, Node*);
 
     void copy(const BinaryTree&);
     void clear(Node*);
@@ -197,13 +202,51 @@ BinaryTree<T>& BinaryTree<T>::operator=(const BinaryTree& other) {
 }
 
 template<class T>
-BinaryTree::Iterator* BinaryTree<T>::begin() const {
-    return Iterator(nullptr, root);
+void BinaryTree<T>::sortArray(T*& array, size_t size) {
+    clear(root);
+    for (size_t i = 0; i < size; ++i) {
+        insert(array[i]);
+    }
+    size_t index = 0;
+    feelsortedArray(array, index, root);
 }
 
 template<class T>
-BinaryTree::Iterator *BinaryTree<T>::end() const {
+void BinaryTree<T>::feelsortedArray(T*& array, size_t& index,  Node* node) {
+    if(node->left != nullptr) {
+        feelsortedArray(array, index, node->left);
+    }
+    array[index++] = node->data;
+    if(node->right != nullptr) {
+        feelsortedArray(array, index, node->right);
+    }
+}
 
+template<class T>
+void BinaryTree<T>::makebalanceTreeFromSortedArray(const T*& array, size_t size) {
+    clear(root);
+    size_t begin = 0;
+    size_t end = size-1;
+    makebalanceTreeFromSortedArrayRecursive(array, begin, end, root);
+    // 1 2 3 4 5 6 7 8 9 10
+    //       6
+    //    3     6
+    //  1  3  5   7
+}
+
+template<class T>
+void BinaryTree<T>::makebalanceTreeFromSortedArrayRecursive(const T*& array, size_t begin, size_t end, Node* node) {
+    if(end < begin) {
+        return;
+    }
+    insert(array[(end + begin) /2]);
+    if((end+begin) % 2 == 0) {
+        makebalanceTreeFromSortedArrayRecursive(array, begin, (begin+end)/2 - 1, node->left);
+        makebalanceTreeFromSortedArrayRecursive(array, (begin+end)/2 + 1, end, node->right);
+    } else {
+        makebalanceTreeFromSortedArrayRecursive(array, begin, (begin+end)/2, node->left);
+        makebalanceTreeFromSortedArrayRecursive(array, (begin+end)/2 + 1, end, node->right);
+    }
 }
 
 

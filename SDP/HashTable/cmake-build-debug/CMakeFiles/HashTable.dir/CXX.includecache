@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/yasen/Programming/FMI-2017-2018/SDP/HashTable/HashTable.cpp
+stdexcept
+-
+iostream
+-
+HashTable.h
+/home/yasen/Programming/FMI-2017-2018/SDP/HashTable/HashTable.h
+
+/home/yasen/Programming/FMI-2017-2018/SDP/HashTable/HashTable.h
+string
+-
+utility
+-
+vector
+-
+list
+-
+
+/home/yasen/Programming/FMI-2017-2018/SDP/HashTable/main.cpp
+iostream
+-
+fstream
+-
+cstring
+-
+algorithm
+-
+HashTable.h
+/home/yasen/Programming/FMI-2017-2018/SDP/HashTable/HashTable.h
+
