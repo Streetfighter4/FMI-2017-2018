@@ -27,7 +27,9 @@ int main(int argc, char* argv[]) {
     std::cout << "Tarly: " << ((m_graph.vertex("Tarly")->hasVisited()) ? "True" : "False") << std::endl;
     std::cout << "House_Martell: " << ((m_graph.vertex("House_Martell")->hasVisited()) ? "True" : "False") << std::endl;
     std::cout << "House_Baratheon: " << ((m_graph.vertex("House_Baratheon")->hasVisited()) ? "True" : "False") << std::endl;
-    //std::cout << "" << ((m_graph.vertex("")->hasVisited()) ? "True" : "False") << std::endl;
+
+    Helper::
+
 
     return 0;
 }

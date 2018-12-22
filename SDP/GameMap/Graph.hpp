@@ -32,7 +32,7 @@ public:
         friend class Graph;
 
         Value zone_name;
-        Value key_name;
+        std::vector<Key> keysArray;
 
         bool visited;
 
@@ -41,8 +41,6 @@ public:
         explicit Vertex(const Value& new_zone_name = Value(), const bool& visited = false);
 
     public:
-        Value& getZoneName();
-        Value& getKeyName();
         bool& hasVisited();
 
         void setKeyName(const Key& keyName);
@@ -98,8 +96,6 @@ void Graph::add_edge(const Key& from, const Key& to, const Weight& m_weight) {
         }
         from_iter->second.adjacency.insert(std::make_pair(to, Edge(m_weight)));
     }
-
-
 }
 
 bool Graph::has_edge(const Key &from, const Key &to) const {
@@ -166,9 +162,11 @@ void Graph::BFS(const Value& startVertex, Key& toDoAnalyzeVertex) {
 
         Vertex& current_vert = all_vertices.find(currentVertexName)->second; //get pointer to vertex
 
-        if(!current_vert.getKeyName().empty()) { //get key from zone
-            key_storage.insert(current_vert.getKeyName());
-            current_vert.setKeyName("");
+        if(!current_vert.keysArray.empty()) { //get keys from zone
+            for(auto& key : current_vert.keysArray) {
+                key_storage.insert(key);
+            }
+            current_vert.keysArray.clear();
         }
 
         Key keyName;
@@ -214,20 +212,16 @@ void Graph::AnalyzeGraph(const Value& startVertex) {
         BFS(currentStartVertex, toDoAnalyzeVertex);
         visited.insert(currentStartVertex);
     }
+    std::cout << "Keys storage: " << std::endl;
+    for(auto& key : key_storage) {
+        std::cout << key << std::endl;
+    }
 }
 
 Graph::Vertex::Vertex(const Value& new_zone_name, const bool& new_visited) : zone_name(new_zone_name), visited(new_visited) {}
 
-inline Value& Graph::Vertex::getZoneName() {
-    return zone_name;
-}
-
-inline Value& Graph::Vertex::getKeyName() {
-    return key_name;
-}
-
 inline void Graph::Vertex::setKeyName(const Key &keyName) {
-    key_name = keyName;
+    keysArray.push_back(keyName);
 }
 
 inline bool& Graph::Vertex::hasVisited() {
