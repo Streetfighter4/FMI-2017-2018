@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/yasen/Programming/FMI-2017-2018/SDP/GameMap/Graph.hpp
+string
+-
+unordered_map
+-
+set
+-
+unordered_set
+-
+queue
+-
+
+/home/yasen/Programming/FMI-2017-2018/SDP/GameMap/Helper.hpp
+fstream
+-
+cstring
+-
+iostream
+-
+Graph.hpp
+/home/yasen/Programming/FMI-2017-2018/SDP/GameMap/Graph.hpp
+
+/home/yasen/Programming/FMI-2017-2018/SDP/GameMap/main.cpp
+iostream
+-
+Helper.hpp
+/home/yasen/Programming/FMI-2017-2018/SDP/GameMap/Helper.hpp
+

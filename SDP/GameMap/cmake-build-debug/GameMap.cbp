@@ -87,6 +87,9 @@
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/GameMap/Graph.hpp">
 			<Option target="GameMap"/>
 		</Unit>
+		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/GameMap/Helper.hpp">
+			<Option target="GameMap"/>
+		</Unit>
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/GameMap/main.cpp">
 			<Option target="GameMap"/>
 		</Unit>
