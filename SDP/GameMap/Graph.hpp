@@ -10,6 +10,7 @@
 #include <set>
 #include <unordered_set>
 #include <queue>
+#include <utility>
 
 typedef std::string Weight;
 typedef std::string Key;
@@ -22,7 +23,7 @@ public:
 
         Weight m_weight;
 
-        explicit Edge(const Weight& weight = Weight());
+        explicit Edge(Weight weight = Weight());
 
     public:
         const Weight& getWeight() const;
@@ -35,8 +36,7 @@ public:
 
         bool visited;
 
-
-        explicit Vertex(const Value& new_zone_name = Value(), const bool& visited = false);
+        explicit Vertex(Value new_zone_name = Value(), const bool& new_visited = false);
 
     public:
         std::unordered_map<Key, Edge> adjacency;
@@ -48,7 +48,7 @@ public:
         void setVisited(const bool& isVisited);
     };
 
-    void BFS(const Value& startVertex, Key& analyze_vertex);
+    void BFS(const Value& startVertex, Key& toDoAnalyzeVertex);
     void AnalyzeGraph(const Value& startVertex);
 private:
     std::unordered_set<Key> key_storage;
@@ -62,16 +62,8 @@ public:
 
     void add_edge(const Key& from, const Key& to, const Weight& m_weight = Weight());
 
-    bool has_edge(const Key& from, const Key& to) const;
-    bool has_vertex(const Key& key) const;
-
 
     Vertex* vertex(const Key& key);
-
-    Edge* edge(const Key& from, const Key& to);
-
-    std::size_t size_vertex() const;
-
 
 public:
     ~Graph() {
@@ -100,25 +92,6 @@ void Graph::add_edge(const Key& from, const Key& to, const Weight& m_weight) {
     }
 }
 
-bool Graph::has_edge(const Key &from, const Key &to) const {
-    auto from_iter = all_vertices.find(from);
-
-    if (from_iter != all_vertices.end())
-    {
-        return from_iter->second.adjacency.find(to) != from_iter->second.adjacency.end();
-    }
-
-    return false;
-
-}
-
-inline bool Graph::has_vertex(const Key &key) const {
-    return all_vertices.find(key) != all_vertices.end();
-}
-
-inline std::size_t Graph::size_vertex() const {
-    return all_vertices.size();
-}
 
 inline void Graph::clear() {
     all_vertices.clear();
@@ -134,19 +107,6 @@ Graph::Vertex* Graph::vertex(const Key &key) {
     return nullptr;
 }
 
-Graph::Edge* Graph::edge(const Key& from, const Key& to) {
-    auto from_it = all_vertices.find(from);
-
-    if(from_it != all_vertices.end()) {
-        auto to_it = from_it->second.adjacency.find(to);
-
-        if(to_it != from_it->second.adjacency.end()) {
-            return &to_it->second;
-        }
-    }
-
-    return nullptr;
-}
 
 void Graph::BFS(const Value& startVertex, Key& toDoAnalyzeVertex) {
     if(all_vertices.find(startVertex) == all_vertices.end()) {
@@ -199,6 +159,7 @@ void Graph::BFS(const Value& startVertex, Key& toDoAnalyzeVertex) {
 
 void Graph::AnalyzeGraph(const Value& startVertex) {
     if(all_vertices.find(startVertex) == all_vertices.end()) {
+        std::cout << "Start zone don't exist. Sorry :/" << std::endl;
         return;
     }
     std::unordered_set<Key> visited;
@@ -209,19 +170,14 @@ void Graph::AnalyzeGraph(const Value& startVertex) {
         if(visited.find(currentStartVertex) != visited.end()) {
             break;
         }
-        //std::cout << "BFS with vertex: " << currentStartVertex << std::endl;
+        // BFS from every not visited and potential vertex.
+        // toDoAnalyzeVertex is that vertex which is marked as last in BFS
         BFS(currentStartVertex, toDoAnalyzeVertex);
         visited.insert(currentStartVertex);
     }
-    /*
-    std::cout << "Keys storage: " << std::endl;
-    for(auto& key : key_storage) {
-        std::cout << key << std::endl;
-    }
-     */
 }
 
-Graph::Vertex::Vertex(const Value& new_zone_name, const bool& new_visited) : zone_name(new_zone_name), visited(new_visited) {}
+Graph::Vertex::Vertex(Value new_zone_name, const bool& new_visited) : zone_name(std::move(new_zone_name)), visited(new_visited) {}
 
 inline void Graph::Vertex::setKeyName(const Key &keyName) {
     keysArray.push_back(keyName);
@@ -236,7 +192,7 @@ void Graph::Vertex::setVisited(const bool& isVisited) {
 }
 
 
-Graph::Edge::Edge(const Weight &weight) : m_weight(weight) {}
+Graph::Edge::Edge(Weight weight) : m_weight(std::move(weight)) {}
 
 inline const Weight& Graph::Edge::getWeight() const {
     return m_weight;

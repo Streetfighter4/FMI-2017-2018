@@ -24,7 +24,7 @@ namespace Helper {
 
         std::string lineBuffer;
         std::string zone1, zone2, key;
-        size_t spaceIndex, bracket1, bracket2;
+        size_t arrowIndex, bracket1, bracket2;
         while (lineBuffer != "[keys]") {
             ifs.getline(line, MAX_LINE_SIZE);
             lineBuffer = line;
@@ -34,22 +34,23 @@ namespace Helper {
             }
             memset(line, 0, MAX_LINE_SIZE);
 
-            spaceIndex = lineBuffer.find(' ');
-            zone1 = lineBuffer.substr(0, spaceIndex);
+            arrowIndex = lineBuffer.find('-');
+            zone1 = lineBuffer.substr(0, arrowIndex-1);
 
             bracket1 = lineBuffer.find('[');
             if(bracket1 != -1) {
-                zone2 = lineBuffer.substr(spaceIndex+4, bracket1 - (spaceIndex+5));
+                zone2 = lineBuffer.substr(arrowIndex+3, bracket1 - (arrowIndex+4));
                 bracket2 = lineBuffer.find(']');
                 key = lineBuffer.substr(bracket1+1, bracket2-bracket1-1);
             } else {
-                zone2 = lineBuffer.substr(spaceIndex+4);
+                zone2 = lineBuffer.substr(arrowIndex+3);
+                zone2.pop_back();
             }
 
             graph.add_vertex(zone1);
             graph.add_vertex(zone2);
             graph.add_edge(zone1, zone2, key);
-            key = "";
+            zone1 = zone2 = key = "";
         }
         ifs.getline(line, MAX_LINE_SIZE);
         while(!ifs.eof()) {
@@ -61,10 +62,13 @@ namespace Helper {
             }
             memset(line, 0, MAX_LINE_SIZE);
 
-            spaceIndex = lineBuffer.find('-');
-            key = lineBuffer.substr(0, spaceIndex-1);
-            zone1 = lineBuffer.substr(spaceIndex+3);
+            arrowIndex = lineBuffer.find('-');
+            key = lineBuffer.substr(0, arrowIndex-1);
+            zone1 = lineBuffer.substr(arrowIndex+3);
+            zone1.pop_back();
+
             graph.vertex(zone1)->setKeyName(key);
+            zone1 = key = "";
         }
 
         ifs.close();
@@ -72,7 +76,7 @@ namespace Helper {
 
 
     std::string createEdge(const std::string& from, const std::string& to, const std::string& label) {
-        std::string line = "\t" + from + " -> " + to;
+        std::string line = "\t\"" + from + "\" -> \"" + to + "\"";
         if(!label.empty()) {
             line += "[label=\"";
             line += label;
@@ -84,7 +88,7 @@ namespace Helper {
     }
 
     std::string createVertex(const std::string& name, const std::vector<std::string>& keysArray, const bool& hasVisited) {
-        std::string line = "\t" + name + "[";
+        std::string line = "\t\"" + name + "\"[";
         if(hasVisited) {
             if(keysArray.empty()) {
                 return "";

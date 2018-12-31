@@ -42,7 +42,7 @@ int main() {
 			}
 		}
 	} else {
-		clean(matrix, 0);
+		return -1;	
 	}
 
 	fillMatrixRand(matrix, columns, rows);

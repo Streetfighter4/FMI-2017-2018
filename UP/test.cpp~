@@ -1,6 +1,6 @@
 #include <iostream>
-#include <string.h>
-const char* grammar[] = {"aSa", "aSb" , "bSa", "bSb", ""};
+
+const char* grammar = {"aSa", "aSb" , "bSa", "bSb", ""};
 const char letter = 'S';
 
 void deleteLetter(char *&str, char a1){
@@ -31,30 +31,7 @@ void deleteLetter(char *&str, char a1){
 	}
 }
 
-
-void changeLetter(char *&str, char a1, char a2){
-	if (str == NULL){
-		return;
-	}
-	unsigned int len = strlen(str);
-	char* buff = new(std::nothrow)char[len + 1];
-	if(buff != NULL){
-		for (int i = 0; i < len; i++){
-			if (str[i] == a1){
-				buff[i] = a2;
-			}
-			else{
-				buff[i] = str[i];
-			}
-		}
-		buff[len] = '\0';
-		delete[] str;
-		str = buff;
-		buff = NULL;
-	}
-}
-
-void changeLetterWithString(char *&str, char a1, const char* removeStr){
+void changeLetterWithString(char *&str, char a1, const char *removeStr){
 	if (str == NULL){
 		return;
 	}
@@ -96,8 +73,7 @@ void changeLetterWithString(char *&str, char a1, const char* removeStr){
 
 
 
-
-void generateStrings(char*& str, size_t k) {
+void generateStrings(char* str, size_t k) {
 	if(k == 0) {
 		deleteLetter(str, letter);
 		std::cout << str << std::endl;
@@ -111,6 +87,36 @@ void generateStrings(char*& str, size_t k) {
 }
 
 
+void changeLetter(char *&str, char a1, char a2)
+{
+	if (str == nullptr)
+	{
+		return;
+	}
+	unsigned int len = strlen(str);
+	char* buff = new(nothrow)char[len + 1];
+	if(buff != nullptr)
+	{
+		for (int i = 0; i < len; i++)
+		{
+			if (str[i] == a1)
+			{
+				buff[i] = a2;
+			}
+			else
+			{
+				buff[i] = str[i];
+			}
+		}
+		buff[len] = '\0';
+		delete[] str;
+		str = buff;
+		buff = nullptr;
+	}
+}
+
+
+
 int main() {
 	size_t k = 4;
 	char* startString = new char[1];
@@ -118,4 +124,4 @@ int main() {
 	generateStrings(startString, k);
 
 	return 0;
-}
+(

@@ -1,41 +1,42 @@
 digraph Westeros {
-	Tarly -> House_Tyrell
-	House_Martell -> House_Baratheon
-	Tarth -> Tarth
-	House_Tyrell -> House_Lannister[label="gold"]
-	House_Tyrell -> Tarly
-	Kings_Landing -> Tarly
-	Kings_Landing -> House_Targaryen[label="dragon"]
-	House_Lannister -> House_Martell[label="The Mountain"]
-	House_Lannister -> Kings_Landing[label="incest"]
-	Mormont -> Castle_black
-	House_Tully -> House_Lannister[label="dragon glass"]
-	House_Tully -> Frey
-	House_Baratheon -> Kings_Landing
-	Karstark -> House_Stark
-	House_Targaryen -> House_Lannister[label="unsullied"]
-	House_Targaryen -> House_Tully
-	House_Stark -> Frey[label="no one"]
-	House_Stark -> House_Greyjoy[label="no balls"]
-	House_Stark -> Bolton
-	House_Stark -> House_Targaryen
-	House_Stark -> Karstark
-	House_Stark -> Mormont[label="bear"]
-	Bolton -> Karstark
-	Frey -> House_Arryn
-	Frey -> House_Stark
-	House_Arryn -> Frey
+	"House Tyrell" -> "House Lannister"[label="gold"]
+	"House Tyrell" -> "Tarly"
+	"House Martell" -> "House Baratheon"
+	"Kings Landing" -> "Tarly"
+	"Kings Landing" -> "House Targaryen"[label="dragon"]
+	"House Baratheon" -> "Kings Landing"
+	"House Lannister" -> "House Martell"[label="The Mountain"]
+	"House Lannister" -> "Kings Landing"[label="incest"]
+	"Mormont" -> "Castle black"
+	"Tarly" -> "House Tyrell"
+	"House Stark" -> "House Targaryen"
+	"House Stark" -> "Frey"[label="no one"]
+	"House Stark" -> "Bolton"
+	"House Stark" -> "House Greyjoy"[label="no balls"]
+	"House Stark" -> "Karstark"
+	"House Stark" -> "Mormont"[label="bear"]
+	"Bolton" -> "Karstark"
+	"Karstark" -> "House Stark"
+	"Tarth" -> "Tarth"
+	"Frey" -> "House Arryn"
+	"Frey" -> "House Stark"
+	"House Targaryen" -> "House Lannister"[label="unsullied"]
+	"House Targaryen" -> "House Tully"
+	"House Arryn" -> "Frey"
+	"House Tully" -> "House Lannister"[label="dragon glass"]
+	"House Tully" -> "Frey"
 
-	Tarly[label="Tarly\lThe Mountain"]
-	Tarth[color=red,style=filled,fillcolor="#ffefef"]
-	House_Tyrell[label="House_Tyrell\lunsullied"]
-	Kings_Landing[label="Kings_Landing\lgold"]
-	House_Lannister[label="House_Lannister\lincest"]
-	Mormont[color=red,style=filled,fillcolor="#ffefef"]
-	Castle_black[label="Castle_black\lbear", color=red,style=filled,fillcolor="#ffefef"]
-	House_Targaryen[label="House_Targaryen\ldragon glass"]
-	House_Stark[label="House_Stark\lHodor\ldirewolf"]
-	Bolton[label="Bolton\lno balls"]
-	House_Arryn[label="House_Arryn\lgold"]
+	"House Tyrell"[label="House Tyrell\lunsullied"]
+	"Kings Landing"[label="Kings Landing\lgold"]
+	"House Lannister"[label="House Lannister\lincest"]
+	"Mormont"[color=red,style=filled,fillcolor="#ffefef"]
+	"Tarly"[label="Tarly\lThe Mountain"]
+	"House Stark"[label="House Stark\lHodor\ldirewolf"]
+	"Bolton"[label="Bolton\lno balls"]
+	"Castle black"[label="Castle black\lbear", color=red,style=filled,fillcolor="#ffefef"]
+	"Tarth"[color=red,style=filled,fillcolor="#ffefef"]
+	"House Greyjoy"[color=red,style=filled,fillcolor="#ffefef"]
+	"House Targaryen"[label="House Targaryen\ldragon glass"]
+	"House Arryn"[label="House Arryn\lgold"]
 
 }
