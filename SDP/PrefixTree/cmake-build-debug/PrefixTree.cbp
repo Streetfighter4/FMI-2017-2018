@@ -87,9 +87,6 @@
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/PrefixTree/Graph.hpp">
 			<Option target="PrefixTree"/>
 		</Unit>
-		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/PrefixTree/SpecializationVertex.hpp">
-			<Option target="PrefixTree"/>
-		</Unit>
 		<Unit filename="/home/yasen/Programming/FMI-2017-2018/SDP/PrefixTree/main.cpp">
 			<Option target="PrefixTree"/>
 		</Unit>

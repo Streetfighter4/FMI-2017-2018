@@ -17,6 +17,8 @@ public:
         friend class Graph;
         bool isFinal;
 
+        std::unordered_map<char, Vertex*> adjacency;
+
         explicit Vertex(const bool& new_isFinal = false) : isFinal(new_isFinal) {};
     };
 
@@ -25,7 +27,7 @@ public:
     typedef std::vector<std::vector<Vertex*>> EquivalentClasses;
 private:
     Vertex* m_root;
-    std::unordered_map<Vertex*, std::unordered_map<char, Vertex*>> all_vertices;
+    std::vector<Vertex*> all_vertices;
 
 private:
     void add_word_recursive(const char* word, Vertex* ver);
@@ -43,65 +45,41 @@ public:
 };
 
 Graph::Graph() : m_root(new Vertex) {
-    std::unordered_map<char, Vertex*> adjacency;
-    all_vertices.insert(std::make_pair(m_root, adjacency));
+    all_vertices.push_back(m_root);
 }
 
 void Graph::add_word(const char* word) {
 
-    std::cout << "add_word()" << std::endl;
     add_word_recursive(word, m_root);
 }
 
 void Graph::add_word_recursive(const char* word, Graph::Vertex* ver) {
-
-    std::cout << "add_word_recursive1()" << std::endl;
     if(!word) {
         return;
     }
+    auto it = ver->adjacency.find(*word);
 
-    std::cout << "add_word_recursive2()" << std::endl;
-    auto it = all_vertices.find(ver);
-
-    if (it->first != nullptr) {
-
-        std::cout << "add_word_recursive3()" << std::endl;
-        auto it2 = it->second.find(*word);
-        if(it2->first != '\0') {
-
-            std::cout << "add_word_recursive4()" << std::endl;
-            add_word_recursive(++word, it2->second);
-            return;
-        }
+    if (it != ver->adjacency.end()) {
+        add_word_recursive(++word, it->second);
+        return;
     }
 
-    std::cout << "add_word_recursive5()" << std::endl;
-    std::unordered_map<char, Vertex*> adjacency;
     if (*word == '\0') {
         ver->isFinal = true;
 
-        std::cout << "add_word_recursive6()" << std::endl;
-        if(it->first != all_vertices.end()->first) {
-            return;
-        }
-
-        all_vertices.insert(std::make_pair(ver, adjacency));
     } else {
         Vertex* new_vertex = new Vertex;
-
-        it->second.insert(std::make_pair(*word, new_vertex));
-        all_vertices.insert(std::make_pair(ver, adjacency));
+        ver->adjacency.insert(std::make_pair(*word, new_vertex));
+        all_vertices.push_back(new_vertex);
 
         add_word_recursive(++word, new_vertex);
     }
-
-
 }
 
 void Graph::print() const {
     std::cout << "sizeof prefix tree: " << sizeof(*this) << " bytes" << std::endl;
     std::cout << "Number of vertices: " << all_vertices.size() << std::endl;
-  /*
+    /*
     int i = 0;
     for(auto& ver : all_vertices) {
         std::cout << i++ << ": ";
@@ -117,13 +95,13 @@ void Graph::minimized() {
     EquivalentClasses equivalent_classes(2);
 
     for(auto& ver : all_vertices) {
-        if(ver.first->isFinal) {
-            equivalent_classes[1].push_back(ver.first);
+        if(ver->isFinal) {
+            equivalent_classes[1].push_back(ver);
         } else {
-            equivalent_classes[0].push_back(ver.first);
+            equivalent_classes[0].push_back(ver);
         }
     }
-
+    all_vertices.clear();
     minimized_recursive(equivalent_classes);
 
     redirectVertices(equivalent_classes);
@@ -143,7 +121,7 @@ int Graph::find(const Graph::Vertex* adj, const EquivalentClasses& equivalent_cl
 }
 
 void Graph::minimized_recursive(EquivalentClasses& equivalent_classes) {
-    std::cout << "Equivalent classes size: " << equivalent_classes.size() << std::endl;
+    //std::cout << "Equivalent classes size: " << equivalent_classes.size() << std::endl;
     size_t sizeOfEquivalentClasses = equivalent_classes.size();
     EquivalentClasses new_equivalent_classes;
     for(auto& single_class : equivalent_classes) {
@@ -154,10 +132,11 @@ void Graph::minimized_recursive(EquivalentClasses& equivalent_classes) {
         std::vector<VectorDeltaTransitions> singleClassVectorTransitions;
 
         for(auto& ver : single_class) {
+
             VectorDeltaTransitions array;
             array.first = ver;
-            auto it = all_vertices.find(ver);
-            for(auto& letter : it->second) {
+            for(auto& letter : ver->adjacency) {
+
                 int indexOfEquivalentClass = find(letter.second, equivalent_classes);
                 DeltaTransition DT = std::make_pair(letter.first, indexOfEquivalentClass);
                 array.second.push_back(DT);
@@ -165,6 +144,7 @@ void Graph::minimized_recursive(EquivalentClasses& equivalent_classes) {
 
             singleClassVectorTransitions.push_back(array);
         }
+
         while(!singleClassVectorTransitions.empty()) {
 
             std::vector<Vertex*> new_equivalent_class = collectFullClass(singleClassVectorTransitions);
@@ -172,6 +152,8 @@ void Graph::minimized_recursive(EquivalentClasses& equivalent_classes) {
         }
 
     }
+
+
     if(sizeOfEquivalentClasses != new_equivalent_classes.size()) {
         equivalent_classes = new_equivalent_classes;
         minimized_recursive(equivalent_classes);
@@ -179,18 +161,22 @@ void Graph::minimized_recursive(EquivalentClasses& equivalent_classes) {
 }
 
 std::vector<Graph::Vertex*> Graph::collectFullClass(std::vector<Graph::VectorDeltaTransitions>& singleClassVectorTransitions) {
+
     std::vector<Graph::Vertex*> new_equivalent_class;
     VectorDeltaTransitions firstClass = singleClassVectorTransitions[0];
     new_equivalent_class.push_back(firstClass.first);
     singleClassVectorTransitions.erase(singleClassVectorTransitions.begin());
 
     for(auto it = singleClassVectorTransitions.begin(); it != singleClassVectorTransitions.end(); ++it) {
+
         if(it->second == firstClass.second) {
+
             new_equivalent_class.push_back(it->first);
             singleClassVectorTransitions.erase(it);
             --it;
         }
     }
+
     return new_equivalent_class;
 }
 
@@ -199,12 +185,16 @@ void Graph::redirectVertices(Graph::EquivalentClasses &equivalent_classes) {
 
     for(auto& single_class : equivalent_classes) {
         for(auto& ver : single_class) {
-            auto it = all_vertices.find(ver);
-            for(auto& adj : it->second) {
+            for(auto& adj : ver->adjacency) {
                 index = find(adj.second, equivalent_classes);
                 adj.second = equivalent_classes[index][0];
             }
         }
+    }
+    all_vertices.clear();
+    for(auto& single_class : equivalent_classes) {
+
+        all_vertices.push_back(single_class[0]);
     }
 
     for(auto& single_class : equivalent_classes) {
@@ -218,16 +208,12 @@ void Graph::redirectVertices(Graph::EquivalentClasses &equivalent_classes) {
 }
 
 void Graph::mergerWith(Graph& other) {
-    auto it1 = all_vertices.find(m_root);
-    auto it2 = other.all_vertices.find(other.m_root);
-    for(auto& ver : it2->second) {
-        it1->second.insert(ver);
+
+    for(auto& ver : other.m_root->adjacency) {
+        m_root->adjacency.insert(ver);
     }
-    for(auto& ver : other.all_vertices) {
-        if(ver.first == other.m_root) {
-            continue;
-        }
-        all_vertices.insert(ver);
+    for(auto& ver = ++other.all_vertices.begin(); ver != other.all_vertices.end(); ++ver) {
+        all_vertices.push_back(*ver);
     }
     delete other.m_root;
 
