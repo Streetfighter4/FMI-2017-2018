@@ -48,7 +48,7 @@ public:
         void setVisited(const bool& isVisited);
     };
 
-    void BFS(const Value& startVertex, Key& toDoAnalyzeVertex);
+    void BFS(const Value& startVertex, std::queue<Key>& toDoAnalyzeVertex);
     void AnalyzeGraph(const Value& startVertex);
 private:
     std::unordered_set<Key> key_storage;
@@ -108,7 +108,7 @@ Graph::Vertex* Graph::vertex(const Key &key) {
 }
 
 
-void Graph::BFS(const Value& startVertex, Key& toDoAnalyzeVertex) {
+void Graph::BFS(const Value& startVertex, std::queue<Key>& toDoAnalyzeVertex) {
     if(all_vertices.find(startVertex) == all_vertices.end()) {
         return;
     }
@@ -118,7 +118,6 @@ void Graph::BFS(const Value& startVertex, Key& toDoAnalyzeVertex) {
     m_queue.push(startVertex);
 
     Key currentVertexName;
-    bool hasChild = false;
     while(!m_queue.empty()) {
         currentVertexName = m_queue.front();
 
@@ -128,11 +127,11 @@ void Graph::BFS(const Value& startVertex, Key& toDoAnalyzeVertex) {
             for(auto& key : current_vert.keysArray) {
                 key_storage.insert(key);
             }
+            toDoAnalyzeVertex.push(currentVertexName);
         }
 
         Key keyName;
         for (auto& edge : current_vert.adjacency) {
-            hasChild = true;
             if(visited.find(edge.first) == visited.end()) {
                 keyName = edge.second.getWeight();
                 if(!keyName.empty()) {
@@ -149,12 +148,6 @@ void Graph::BFS(const Value& startVertex, Key& toDoAnalyzeVertex) {
         current_vert.setVisited(true);
         visited.insert(currentVertexName);
     }
-    if(hasChild) {
-        toDoAnalyzeVertex = currentVertexName;
-    } else {
-        toDoAnalyzeVertex = "";
-    }
-
 }
 
 void Graph::AnalyzeGraph(const Value& startVertex) {
@@ -162,18 +155,13 @@ void Graph::AnalyzeGraph(const Value& startVertex) {
         std::cout << "Start zone don't exist. Sorry :/" << std::endl;
         return;
     }
-    std::unordered_set<Key> visited;
-    Key toDoAnalyzeVertex = startVertex;
+    std::queue<std::string> toDoAnalyzeVertex;
+    toDoAnalyzeVertex.push(startVertex);
 
     while(!toDoAnalyzeVertex.empty()) {
-        const Key currentStartVertex = toDoAnalyzeVertex;
-        if(visited.find(currentStartVertex) != visited.end()) {
-            break;
-        }
-        // BFS from every not visited and potential vertex.
-        // toDoAnalyzeVertex is that vertex which is marked as last in BFS
+        Key currentStartVertex = toDoAnalyzeVertex.front();
+        toDoAnalyzeVertex.pop();
         BFS(currentStartVertex, toDoAnalyzeVertex);
-        visited.insert(currentStartVertex);
     }
 }
 

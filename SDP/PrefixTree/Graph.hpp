@@ -5,9 +5,10 @@
 #ifndef PREFIXTREE_GRAPH_HPP
 #define PREFIXTREE_GRAPH_HPP
 
-#include <unordered_map>
 #include <unordered_set>
 #include <vector>
+#include <iostream>
+#include <map>
 
 
 class Graph {
@@ -16,13 +17,13 @@ public:
     class Vertex {
         friend class Graph;
         bool isFinal;
-
-        std::unordered_map<char, Vertex*> adjacency;
+        typedef std::pair<size_t , Vertex*> value;
+        std::map<wchar_t, value> adjacency;
 
         explicit Vertex(const bool& new_isFinal = false) : isFinal(new_isFinal) {};
     };
 
-    typedef std::pair<char, int> DeltaTransition;
+    typedef std::pair<wchar_t, int> DeltaTransition;
     typedef std::pair<Vertex*, std::vector<DeltaTransition>> VectorDeltaTransitions;
     typedef std::vector<std::vector<Vertex*>> EquivalentClasses;
 private:
@@ -30,37 +31,38 @@ private:
     std::vector<Vertex*> all_vertices;
 
 private:
-    void add_word_recursive(const char* word, Vertex* ver);
+    void add_word_recursive(const wchar_t* word, Vertex* ver);
     void minimized_recursive(EquivalentClasses& equivalent_classes);
     int find(const Vertex* adj, const EquivalentClasses& equivalent_classes);
     std::vector<Vertex*> collectFullClass(std::vector<VectorDeltaTransitions>&);
     void redirectVertices(EquivalentClasses& equivalent_classes);
+    void findEveryPhraseFromVertex(wchar_t* prefix, Vertex* currentVertex, size_t size);
 public:
     Graph();
 
-    void mergerWith(Graph& other);
-    void add_word(const char* word);
+    void add_word(const wchar_t* word);
     void minimized();
     void print() const;
+    void findEveryPhraseWithPrefix(const wchar_t* prefix);
 };
 
 Graph::Graph() : m_root(new Vertex) {
     all_vertices.push_back(m_root);
 }
 
-void Graph::add_word(const char* word) {
+void Graph::add_word(const wchar_t* word) {
 
     add_word_recursive(word, m_root);
 }
 
-void Graph::add_word_recursive(const char* word, Graph::Vertex* ver) {
+void Graph::add_word_recursive(const wchar_t* word, Graph::Vertex* ver) {
     if(!word) {
         return;
     }
     auto it = ver->adjacency.find(*word);
 
     if (it != ver->adjacency.end()) {
-        add_word_recursive(++word, it->second);
+        add_word_recursive(++word, it->second.second);
         return;
     }
 
@@ -69,7 +71,7 @@ void Graph::add_word_recursive(const char* word, Graph::Vertex* ver) {
 
     } else {
         Vertex* new_vertex = new Vertex;
-        ver->adjacency.insert(std::make_pair(*word, new_vertex));
+        ver->adjacency.insert(std::make_pair(*word, std::make_pair(0, new_vertex)));
         all_vertices.push_back(new_vertex);
 
         add_word_recursive(++word, new_vertex);
@@ -121,7 +123,7 @@ int Graph::find(const Graph::Vertex* adj, const EquivalentClasses& equivalent_cl
 }
 
 void Graph::minimized_recursive(EquivalentClasses& equivalent_classes) {
-    //std::cout << "Equivalent classes size: " << equivalent_classes.size() << std::endl;
+    std::cout << "Equivalent classes size: " << equivalent_classes.size() << std::endl;
     size_t sizeOfEquivalentClasses = equivalent_classes.size();
     EquivalentClasses new_equivalent_classes;
     for(auto& single_class : equivalent_classes) {
@@ -137,7 +139,7 @@ void Graph::minimized_recursive(EquivalentClasses& equivalent_classes) {
             array.first = ver;
             for(auto& letter : ver->adjacency) {
 
-                int indexOfEquivalentClass = find(letter.second, equivalent_classes);
+                int indexOfEquivalentClass = find(letter.second.second, equivalent_classes);
                 DeltaTransition DT = std::make_pair(letter.first, indexOfEquivalentClass);
                 array.second.push_back(DT);
             }
@@ -186,8 +188,8 @@ void Graph::redirectVertices(Graph::EquivalentClasses &equivalent_classes) {
     for(auto& single_class : equivalent_classes) {
         for(auto& ver : single_class) {
             for(auto& adj : ver->adjacency) {
-                index = find(adj.second, equivalent_classes);
-                adj.second = equivalent_classes[index][0];
+                index = find(adj.second.second, equivalent_classes);
+                adj.second.second = equivalent_classes[index][0];
             }
         }
     }
@@ -207,17 +209,40 @@ void Graph::redirectVertices(Graph::EquivalentClasses &equivalent_classes) {
     equivalent_classes.clear();
 }
 
-void Graph::mergerWith(Graph& other) {
+void Graph::findEveryPhraseWithPrefix(const wchar_t* prefix) {
+    Vertex* currentVertex = m_root;
 
-    for(auto& ver : other.m_root->adjacency) {
-        m_root->adjacency.insert(ver);
-    }
-    for(auto& ver = ++other.all_vertices.begin(); ver != other.all_vertices.end(); ++ver) {
-        all_vertices.push_back(*ver);
-    }
-    delete other.m_root;
+    auto* word = new wchar_t[64];
+    wcscpy(word, prefix);
 
-    other.all_vertices.clear();
+
+    while(*prefix != '\0') {
+        auto it = currentVertex->adjacency.find(*prefix);
+        if(it != currentVertex->adjacency.end()) {
+
+            it->second.first++;
+            currentVertex = it->second.second;
+            ++prefix;
+        } else {
+            std::cout << "No such phrase :/" << std::endl;
+            return;
+        }
+    }
+
+    findEveryPhraseFromVertex(word, currentVertex, wcslen(word));
+    delete[] word;
+
+}
+
+void Graph::findEveryPhraseFromVertex(wchar_t* prefix, Graph::Vertex *currentVertex, size_t size) {
+    if(currentVertex->isFinal) {
+        std::wcout << prefix << std::endl;
+    }
+    for(auto& ver : currentVertex->adjacency) {
+        prefix[size] = ver.first;
+        prefix[size+1] = '\0';
+        findEveryPhraseFromVertex(prefix, ver.second.second, size+1);
+    }
 }
 
 

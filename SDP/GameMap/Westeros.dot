@@ -35,7 +35,6 @@ digraph Westeros {
 	"Bolton"[label="Bolton\lno balls"]
 	"Castle black"[label="Castle black\lbear", color=red,style=filled,fillcolor="#ffefef"]
 	"Tarth"[color=red,style=filled,fillcolor="#ffefef"]
-	"House Greyjoy"[color=red,style=filled,fillcolor="#ffefef"]
 	"House Targaryen"[label="House Targaryen\ldragon glass"]
 	"House Arryn"[label="House Arryn\lgold"]
 
