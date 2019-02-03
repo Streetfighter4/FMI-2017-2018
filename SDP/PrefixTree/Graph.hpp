@@ -29,14 +29,14 @@ public:
 private:
     Vertex* m_root;
     std::vector<Vertex*> all_vertices;
-
+    size_t countSuggestedPhrase;
 private:
     void add_word_recursive(const wchar_t* word, Vertex* ver);
     void minimized_recursive(EquivalentClasses& equivalent_classes);
     int find(const Vertex* adj, const EquivalentClasses& equivalent_classes);
     std::vector<Vertex*> collectFullClass(std::vector<VectorDeltaTransitions>&);
     void redirectVertices(EquivalentClasses& equivalent_classes);
-    void findEveryPhraseFromVertex(wchar_t* prefix, Vertex* currentVertex, size_t size);
+    void findEveryPhraseFromVertex(wchar_t* prefix, Vertex* currentVertex, size_t size, size_t& countPhrase);
 public:
     Graph();
 
@@ -44,9 +44,12 @@ public:
     void minimized();
     void print() const;
     void findEveryPhraseWithPrefix(const wchar_t* prefix);
+    void setK(size_t newK) {
+        countSuggestedPhrase = newK;
+    }
 };
 
-Graph::Graph() : m_root(new Vertex) {
+Graph::Graph() : m_root(new Vertex), countSuggestedPhrase(10) {
     all_vertices.push_back(m_root);
 }
 
@@ -79,7 +82,7 @@ void Graph::add_word_recursive(const wchar_t* word, Graph::Vertex* ver) {
 }
 
 void Graph::print() const {
-    std::cout << "sizeof prefix tree: " << sizeof(*this) + sizeof(all_vertices) << " bytes" << std::endl;
+    std::cout << "sizeof prefix tree: " << sizeof(Vertex) * all_vertices.size() << " bytes" << std::endl;
     std::cout << "Number of vertices: " << all_vertices.size() << std::endl;
 }
 
@@ -218,20 +221,24 @@ void Graph::findEveryPhraseWithPrefix(const wchar_t* prefix) {
             return;
         }
     }
-
-    findEveryPhraseFromVertex(word, currentVertex, wcslen(word));
+    size_t countPhrase = 0;
+    findEveryPhraseFromVertex(word, currentVertex, wcslen(word), countPhrase);
     delete[] word;
 
 }
 
-void Graph::findEveryPhraseFromVertex(wchar_t* prefix, Graph::Vertex *currentVertex, size_t size) {
+void Graph::findEveryPhraseFromVertex(wchar_t* prefix, Graph::Vertex *currentVertex, size_t size, size_t& countPhrase) {
+    if(countPhrase == countSuggestedPhrase) {
+        return;
+    }
     if(currentVertex->isFinal) {
+        ++countPhrase;
         std::wcout << prefix << std::endl;
     }
     for(auto& ver : currentVertex->adjacency) {
         prefix[size] = ver.first;
         prefix[size+1] = '\0';
-        findEveryPhraseFromVertex(prefix, ver.second.second, size+1);
+        findEveryPhraseFromVertex(prefix, ver.second.second, size+1, countPhrase);
     }
 }
 

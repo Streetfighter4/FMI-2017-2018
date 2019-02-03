@@ -1,6 +1,6 @@
 #include <ctime>
-#include <cstring>
 #include <fstream>
+#include <cstring>
 #include "Graph.hpp"
 
 
@@ -13,7 +13,7 @@ void search(Graph& prefixTree);
 int main() {
     Graph prefixTree;
 
-    fillDictionary(prefixTree, "strings.txt");
+    fillDictionary(prefixTree, "suggest.txt");
 
     minimizedPrefixTree(prefixTree);
 
@@ -22,13 +22,15 @@ int main() {
     return 0;
 }
 
+const size_t MAX_N = 2 << 6;
+
 void fillDictionary(Graph& prefixTree, const char* filename) {
     std::wifstream ifs(filename);
     if(!ifs.is_open()) {
         return;
     }
 
-    wchar_t str[64];
+    wchar_t str[MAX_N];
     int countWords = 0;
 
     clock_t start = clock();
@@ -37,7 +39,7 @@ void fillDictionary(Graph& prefixTree, const char* filename) {
     while (!ifs.eof()) {
         ifs >> str;
         prefixTree.add_word(str);
-        memset(str, 0, 64);
+        memset(str, 0, MAX_N);
         ++countWords;
     }
     ifs.close();
@@ -72,27 +74,31 @@ const wchar_t* COMMAND_EXIT = L"EXIT_T";
 
 void search(Graph& prefixTree) {
 
-    wchar_t prefix[64];
+    std::wstring prefix;
     clock_t start, stop;
     size_t newK;
+    wchar_t phrase[MAX_N];
+
     while (true) {
         std::wcin >> prefix;
-        if (wcscmp(prefix, COMMAND_SET_K) == 0) {
-            std::cin >> newK;
-            //TODO: set new K
+        std::wcout << "prefix: " << prefix << std::endl;
+        if (prefix == COMMAND_SET_K) {
+            std::wcin >> newK;
+            prefixTree.setK(newK);
             continue;
-        } else if(wcscmp(prefix, COMMAND_ADD_PHRASE) == 0) {
-            //TODO: get new phrase
+        } else if(prefix == COMMAND_ADD_PHRASE) {
+            std::wcin.ignore();
+            std::wcin.getline(phrase, MAX_N);
+            std::wcout << L"New phrase: " << phrase << std::endl;
+            prefixTree.add_word(phrase);
+            std::cout << "New phrase has been added" << std::endl;
             continue;
-        } else if(wcscmp(prefix, COMMAND_EXIT) == 0) {
+        } else if(prefix == COMMAND_EXIT) {
             break;
         }
         start = clock();
-        prefixTree.findEveryPhraseWithPrefix(prefix);
+        prefixTree.findEveryPhraseWithPrefix(prefix.c_str());
         stop = clock();
         std::cout << "Time for search: " << (stop-start)/double(CLOCKS_PER_SEC) << " seconds"<< std::endl;
     }
-
-
-
 }
