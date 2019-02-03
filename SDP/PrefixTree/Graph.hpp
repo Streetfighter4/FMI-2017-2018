@@ -79,18 +79,8 @@ void Graph::add_word_recursive(const wchar_t* word, Graph::Vertex* ver) {
 }
 
 void Graph::print() const {
-    std::cout << "sizeof prefix tree: " << sizeof(*this) << " bytes" << std::endl;
+    std::cout << "sizeof prefix tree: " << sizeof(*this) + sizeof(all_vertices) << " bytes" << std::endl;
     std::cout << "Number of vertices: " << all_vertices.size() << std::endl;
-    /*
-    int i = 0;
-    for(auto& ver : all_vertices) {
-        std::cout << i++ << ": ";
-        for(auto& elem : ver->adjacency) {
-            std::cout << elem.first << ", ";
-        }
-        std::cout << std::endl;
-    }
-    */
 }
 
 void Graph::minimized() {
