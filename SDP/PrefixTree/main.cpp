@@ -13,7 +13,11 @@ void search(Graph& prefixTree);
 int main() {
     Graph prefixTree;
 
-    fillDictionary(prefixTree, "test.txt");
+    std::cout << "Enter file name: " << std::endl;
+
+    std::string filename;
+    std::cin >> filename;
+    fillDictionary(prefixTree, filename.c_str());
 
     minimizedPrefixTree(prefixTree);
 
@@ -22,7 +26,6 @@ int main() {
     return 0;
 }
 
-const size_t MAX_N = 2 << 6;
 
 void fillDictionary(Graph& prefixTree, const char* filename) {
     std::wifstream ifs(filename);
@@ -37,7 +40,7 @@ void fillDictionary(Graph& prefixTree, const char* filename) {
 
 
     while (!ifs.eof()) {
-        ifs >> str;
+        ifs.getline(str, MAX_N);
         prefixTree.add_word(str);
         memset(str, 0, MAX_N);
         ++countWords;
@@ -56,7 +59,9 @@ void fillDictionary(Graph& prefixTree, const char* filename) {
 
 
 void minimizedPrefixTree(Graph& prefixTree) {
-
+    if(prefixTree.size() >= 80000) {
+        return;
+    }
     clock_t start = clock();
     prefixTree.minimized();
     clock_t stop = clock();
@@ -73,7 +78,7 @@ const wchar_t* COMMAND_ADD_PHRASE = L"ADD_PHRASE";
 const wchar_t* COMMAND_EXIT = L"EXIT_T";
 
 void search(Graph& prefixTree) {
-
+    std::cout << "Ready for searching...." << std::endl << std::endl;
     std::wstring prefix;
     clock_t start, stop;
     size_t newK;
@@ -97,6 +102,6 @@ void search(Graph& prefixTree) {
         start = clock();
         prefixTree.findEveryPhraseWithPrefix(prefix.c_str());
         stop = clock();
-        std::cout << "Time for search: " << (stop-start)/double(CLOCKS_PER_SEC) << " seconds"<< std::endl;
+        std::cout << "\nTime for search: " << (stop-start)/double(CLOCKS_PER_SEC) << " seconds"<< std::endl;
     }
 }

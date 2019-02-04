@@ -12,51 +12,75 @@
 #include <algorithm>
 #include <iomanip>
 
+const size_t MAX_N = 2 << 7;
 
 class Graph {
 public:
-
     class Vertex {
     public:
         typedef std::pair<size_t , Vertex*> value;
     private:
-
         friend class Graph;
-        bool isFinal;
-        explicit Vertex(const bool& new_isFinal = false) : isFinal(new_isFinal) {};
 
+        bool isFinal;
         std::map<wchar_t, value> adjacency;
+
+    private:
+        explicit Vertex(const bool& new_isFinal = false) : isFinal(new_isFinal) {};
+        Vertex(const Vertex&) = delete;
+        Vertex& operator=(const Vertex&) = delete;
+        ~Vertex() = default;
+
     };
 
+private:
     typedef std::pair<wchar_t, int> DeltaTransition;
     typedef std::pair<Vertex*, std::vector<DeltaTransition>> VectorDeltaTransitions;
     typedef std::vector<std::vector<Vertex*>> EquivalentClasses;
+
 private:
     Vertex* m_root;
     std::vector<Vertex*> all_vertices;
     size_t countSuggestedPhrase;
+
 private:
     void add_word_recursive(const wchar_t* word, Vertex* ver);
-    void minimized_recursive(EquivalentClasses& equivalent_classes);
+    void minimized_recursive(EquivalentClasses& equivalent_classes, int countMinimize);
     int find(const Vertex* adj, const EquivalentClasses& equivalent_classes);
     std::vector<Vertex*> collectFullClass(std::vector<VectorDeltaTransitions>&);
     void redirectVertices(EquivalentClasses& equivalent_classes);
     void findEveryPhraseFromVertex(wchar_t* prefix, Vertex* currentVertex, size_t size, size_t& countPhrase);
+
 public:
     Graph();
+    Graph(const Graph&) = delete;
+    Graph& operator=(const Graph&) = delete;
+    ~Graph();
 
+public:
     void add_word(const wchar_t* word);
     void minimized();
     void print() const;
     void findEveryPhraseWithPrefix(const wchar_t* prefix);
-    void setK(size_t newK) {
+    inline size_t size() { all_vertices.size(); }
+    inline void setK(size_t newK) {
         countSuggestedPhrase = newK;
+        std::cout << "Number of suggested phrases is: " << countSuggestedPhrase << std::endl;
     }
 };
 
 Graph::Graph() : m_root(new Vertex), countSuggestedPhrase(10) {
     all_vertices.push_back(m_root);
 }
+
+Graph::~Graph() {
+    for(auto* vec : all_vertices) {
+        delete vec;
+    }
+    all_vertices.clear();
+}
+
+
 
 void Graph::add_word(const wchar_t* word) {
 
@@ -98,7 +122,7 @@ void Graph::print() const {
         std::cout << (bytesOfGraph / (1 << 10)) << " KB" << std::endl;
     } else {
 
-        std::cout << (bytesOfGraph / (1 << 20)) << " MB" << std::endl;
+        std::cout << (float(bytesOfGraph) / float(1 << 20)) << " MB" << std::endl;
     }
     std::cout << "Number of vertices: " << all_vertices.size() << std::endl;
 }
@@ -113,8 +137,16 @@ void Graph::minimized() {
             equivalent_classes[0].push_back(ver);
         }
     }
+
+    int countMinimize;
+    if(all_vertices.size() <= 30000) {
+        countMinimize = 100; // some big number
+    } else {
+        countMinimize = static_cast<int>(13 - (all_vertices.size() / 10000));
+    }
+
     all_vertices.clear();
-    minimized_recursive(equivalent_classes);
+    minimized_recursive(equivalent_classes, countMinimize);
 
     redirectVertices(equivalent_classes);
 }
@@ -132,7 +164,10 @@ int Graph::find(const Graph::Vertex* adj, const EquivalentClasses& equivalent_cl
     return -1;
 }
 
-void Graph::minimized_recursive(EquivalentClasses& equivalent_classes) {
+void Graph::minimized_recursive(EquivalentClasses& equivalent_classes, int countMinimize) {
+    if(countMinimize == 0) {
+        return;
+    }
     std::cout << "Equivalent classes size: " << equivalent_classes.size() << std::endl;
     size_t sizeOfEquivalentClasses = equivalent_classes.size();
     EquivalentClasses new_equivalent_classes;
@@ -170,7 +205,7 @@ void Graph::minimized_recursive(EquivalentClasses& equivalent_classes) {
 
     if(sizeOfEquivalentClasses != new_equivalent_classes.size()) {
         equivalent_classes = new_equivalent_classes;
-        minimized_recursive(equivalent_classes);
+        minimized_recursive(equivalent_classes, countMinimize-1);
     }
 }
 
@@ -224,7 +259,7 @@ void Graph::redirectVertices(Graph::EquivalentClasses &equivalent_classes) {
 void Graph::findEveryPhraseWithPrefix(const wchar_t* prefix) {
     Vertex* currentVertex = m_root;
 
-    auto* word = new wchar_t[64];
+    auto* word = new wchar_t[MAX_N];
     wcscpy(word, prefix);
 
 
@@ -272,7 +307,7 @@ void Graph::findEveryPhraseFromVertex(wchar_t* prefix, Graph::Vertex *currentVer
     }
     if(currentVertex->isFinal) {
         ++countPhrase;
-        std::wcout << prefix << std::setw(30);
+        std::wcout << prefix << std::setw(20);
 
         if(countPhrase%5 == 0) {
             std::cout << std::endl;
