@@ -15,6 +15,10 @@ iostream
 -
 map
 -
+algorithm
+-
+iomanip
+-
 
 /home/yasen/Programming/FMI-2017-2018/SDP/PrefixTree/main.cpp
 ctime

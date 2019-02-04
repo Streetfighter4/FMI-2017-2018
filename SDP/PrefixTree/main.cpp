@@ -13,7 +13,7 @@ void search(Graph& prefixTree);
 int main() {
     Graph prefixTree;
 
-    fillDictionary(prefixTree, "suggest.txt");
+    fillDictionary(prefixTree, "test.txt");
 
     minimizedPrefixTree(prefixTree);
 
@@ -81,17 +81,15 @@ void search(Graph& prefixTree) {
 
     while (true) {
         std::wcin >> prefix;
-        std::wcout << "prefix: " << prefix << std::endl;
         if (prefix == COMMAND_SET_K) {
+            std::wcin.ignore();
             std::wcin >> newK;
             prefixTree.setK(newK);
             continue;
         } else if(prefix == COMMAND_ADD_PHRASE) {
             std::wcin.ignore();
             std::wcin.getline(phrase, MAX_N);
-            std::wcout << L"New phrase: " << phrase << std::endl;
             prefixTree.add_word(phrase);
-            std::cout << "New phrase has been added" << std::endl;
             continue;
         } else if(prefix == COMMAND_EXIT) {
             break;

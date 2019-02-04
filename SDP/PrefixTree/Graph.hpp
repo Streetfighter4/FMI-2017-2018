@@ -9,18 +9,23 @@
 #include <vector>
 #include <iostream>
 #include <map>
+#include <algorithm>
+#include <iomanip>
 
 
 class Graph {
 public:
 
     class Vertex {
+    public:
+        typedef std::pair<size_t , Vertex*> value;
+    private:
+
         friend class Graph;
         bool isFinal;
-        typedef std::pair<size_t , Vertex*> value;
-        std::map<wchar_t, value> adjacency;
-
         explicit Vertex(const bool& new_isFinal = false) : isFinal(new_isFinal) {};
+
+        std::map<wchar_t, value> adjacency;
     };
 
     typedef std::pair<wchar_t, int> DeltaTransition;
@@ -82,7 +87,19 @@ void Graph::add_word_recursive(const wchar_t* word, Graph::Vertex* ver) {
 }
 
 void Graph::print() const {
-    std::cout << "sizeof prefix tree: " << sizeof(Vertex) * all_vertices.size() << " bytes" << std::endl;
+    size_t bytesOfGraph = sizeof(Vertex) * all_vertices.size();
+
+    std::cout << "Sizeof prefix tree: ";
+    if(bytesOfGraph < 1<<10) {
+
+        std::cout << bytesOfGraph << " bytes" << std::endl;
+    } else if(bytesOfGraph < 1<<20) {
+
+        std::cout << (bytesOfGraph / (1 << 10)) << " KB" << std::endl;
+    } else {
+
+        std::cout << (bytesOfGraph / (1 << 20)) << " MB" << std::endl;
+    }
     std::cout << "Number of vertices: " << all_vertices.size() << std::endl;
 }
 
@@ -133,8 +150,10 @@ void Graph::minimized_recursive(EquivalentClasses& equivalent_classes) {
             for(auto& letter : ver->adjacency) {
 
                 int indexOfEquivalentClass = find(letter.second.second, equivalent_classes);
-                DeltaTransition DT = std::make_pair(letter.first, indexOfEquivalentClass);
-                array.second.push_back(DT);
+                if(indexOfEquivalentClass >= 0) {
+                    DeltaTransition DT = std::make_pair(letter.first, indexOfEquivalentClass);
+                    array.second.push_back(DT);
+                }
             }
 
             singleClassVectorTransitions.push_back(array);
@@ -227,18 +246,43 @@ void Graph::findEveryPhraseWithPrefix(const wchar_t* prefix) {
 
 }
 
+template<typename A, typename B>
+std::pair<B,A> flip_pair(const std::pair<A,B> &p) {
+    return std::pair<B,A>(p.second, p.first);
+}
+
+struct compare {
+    bool operator()(const Graph::Vertex::value& a, const Graph::Vertex::value& b) {
+        return a.first > b.first;
+    }
+};
+
+template<typename A, typename B>
+std::multimap<B,A, compare> flip_map(const std::map<A,B>& src) {
+    std::multimap<B,A, compare> dst;
+    std::transform(src.begin(), src.end(), std::inserter(dst, dst.begin()),
+                   flip_pair<A,B>);
+    return dst;
+}
+
+
 void Graph::findEveryPhraseFromVertex(wchar_t* prefix, Graph::Vertex *currentVertex, size_t size, size_t& countPhrase) {
     if(countPhrase == countSuggestedPhrase) {
         return;
     }
     if(currentVertex->isFinal) {
         ++countPhrase;
-        std::wcout << prefix << std::endl;
+        std::wcout << prefix << std::setw(30);
+
+        if(countPhrase%5 == 0) {
+            std::cout << std::endl;
+        }
     }
-    for(auto& ver : currentVertex->adjacency) {
-        prefix[size] = ver.first;
+    std::multimap<Vertex::value, wchar_t, compare> dst = flip_map(currentVertex->adjacency);
+    for(auto& ver : dst) {
+        prefix[size] = ver.second;
         prefix[size+1] = '\0';
-        findEveryPhraseFromVertex(prefix, ver.second.second, size+1, countPhrase);
+        findEveryPhraseFromVertex(prefix, ver.first.second, size+1, countPhrase);
     }
 }
 
