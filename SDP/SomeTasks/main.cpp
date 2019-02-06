@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 
+#define min(a, b) ((a < b) ? a:b)
 
 struct Node {
     int value;
@@ -21,6 +22,14 @@ struct NodeN {
         std::cout << "In NodeN cnst" << std::endl;
     }
 };
+
+struct Box {
+    int value;
+
+    Box* pNext;
+    explicit Box(int newValue) : value(newValue) , pNext(nullptr) {}
+};
+
 
 bool isComplete(Node* root) {
     if(root == nullptr) {
@@ -109,48 +118,59 @@ std::vector<NodeN*> getBetween(NodeN* root, int A, int B) {
     return vector;
 }
 
-Node* search(Node* node, int number) {
-    if(node->value == number) {
-        return node;
+
+void search(Node* root, int number, bool& isFound, std::vector<Node*> buff, std::vector<Node*>& vector) {
+    buff.push_back(root);
+    if(root->value == number) {
+        vector = buff;
+        isFound = true;
+        return;
     }
-    if(node->left != nullptr) {
-        return search(node->left, number);
+    if(root->left && !isFound) {
+        search(root->left, number, isFound, buff, vector);
     }
-    if(node->right != nullptr) {
-        return search(node->right, number);
+    if(root->right && !isFound) {
+        search(root->right, number, isFound, buff, vector);
+    }
+}
+
+Node* getCommonAncestor(Node* root, int A, int B) {
+    bool isFound = false;
+    std::vector<Node*> buff, vector1, vector2;
+    search(root, A, isFound, buff, vector1);
+    isFound = false;
+    search(root, B, isFound, buff, vector2);
+
+    for(int i = 0; i < min(vector1.size(), vector2.size()); ++i) {
+        if(vector1[i] != vector2[i]) {
+            return vector1[i-1];
+        }
     }
     return nullptr;
 }
 
-Node* getCommonAncestor(Node* root, int A, int B) {
-    if(root == nullptr) {
-        return nullptr;
-    }
-    Node *temp = nullptr;
-    if(root->value == A) {
-        std::cout << "Found A" << std::endl;
-        temp = search(root, B);
-    }
-    if(root->value == B) {
-        std::cout << "Found B" << std::endl;
-        temp = search(root, A);
-    }
-    if(temp) {
-        return root;
-    } else {
-        Node *temp1 = nullptr, *temp2 = nullptr;
-        if(root->left) {
-            temp1 = getCommonAncestor(root->left, A, B);
-        }
-        if(root->right) {
-            temp2 = getCommonAncestor(root->right, A, B);
-        }
-        if(temp1 && temp2) {
-            return root;
-        } else {
-            nullptr;
+std::vector<int> getPath(Node *root, int A, int B) {
+    bool isFound = false;
+    std::vector<Node*> buff, vector1, vector2;
+    search(root, A, isFound, buff, vector1);
+    isFound = false;
+    search(root, B, isFound, buff, vector2);
+
+    int i;
+    for(i = 0; i < min(vector1.size(), vector2.size()); ++i) {
+        if(vector1[i] != vector2[i]) {
+            break;
         }
     }
+
+    std::vector<int> vector;
+    for(int j = vector1.size()-1; j >= i; --j) {
+        vector.push_back(vector1[j]->value);
+    }
+    for(int k = 0; k < vector2.size(); ++k) {
+        vector.push_back(vector2[k]->value);
+    }
+    return vector;
 }
 
 
@@ -218,27 +238,92 @@ void clearNTree(NodeN*& root) {
     }
 }
 
-int main() {
+void insert_back(int elem, Box*& tail) {
+    Box* newElem = new Box(elem);
+    tail->pNext = newElem;
+    tail = newElem;
+}
 
-    Node* root;
-    init_binary_tree(root);
+void init_linked_list(Box*& head, Box*& tail) {
+    head = new Box(5);
+    tail = head;
 
+    insert_back(4, tail);
+    insert_back(-1, tail);
+    insert_back(10, tail);
+    insert_back(0, tail);
+}
 
-    Node* node = getCommonAncestor(root, 0, 2);
-    if(node)
-        std::cout << "node value: " << node->value << std::endl;
+void clear_linked_list(Box*& head) {
+    Box* buff = head;
 
-    clear(root);
-    /*
-    NodeN* root;
-    init_NTree(root);
-
-    std::vector<NodeN*> vector = getBetween(root, 10 , 15);
-    for(auto& node : vector) {
-        std::cout << node->value << ' ';
+    while(head != nullptr) {
+        head = head->pNext;
+        delete buff;
+        buff = head;
     }
+}
 
-    clearNTree(root);
-    */
+void itarate_list(Box*& head) {
+    Box* buff = head;
+
+    while(buff != nullptr) {
+        std::cout << buff->value << " ";
+        buff = buff->pNext;
+    }
+    std::cout << std::endl;
+}
+
+void sort_list(Box*& head) {
+    std::cout << "Sorting list..." << std::endl;t ssttus
+    
+    Box* result_head = head;
+    Box* result_tail = head;
+    Box* it = result_head->pNext;
+    result_head->pNext = nullptr;
+
+    while (it) {
+        if(it->value < result_head->value) {
+            Box* tmp = it;
+            it = it->pNext;
+            tmp->pNext = result_head;
+            result_head = tmp;
+            continue;
+        }
+
+        Box* res_it = result_head;
+
+        while (res_it->pNext && res_it->pNext->value <= it->value) {
+            res_it = res_it->pNext;
+        }
+
+        if(res_it == nullptr) {
+            Box* tmp = it;
+            it = it->pNext;
+            result_tail->pNext = tmp;
+            result_tail = tmp;
+            result_head->pNext = nullptr;
+            continue;
+        }
+
+        Box* tmp = it->pNext;
+        it->pNext = res_it->pNext;
+        res_it->pNext = it;
+        it = tmp;
+    }
+    head = result_head;
+
+}
+
+int main() {
+    Box *head, *tail;
+    init_linked_list(head, tail);
+    itarate_list(head);
+    sort_list(head);
+
+    itarate_list(head);
+
+    clear_linked_list(head);
+
     return 0;
 }
