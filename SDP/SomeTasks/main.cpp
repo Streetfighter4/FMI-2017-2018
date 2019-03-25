@@ -275,8 +275,8 @@ void itarate_list(Box*& head) {
 }
 
 void sort_list(Box*& head) {
-    std::cout << "Sorting list..." << std::endl;t ssttus
-    
+    std::cout << "Sorting list..." << std::endl;
+
     Box* result_head = head;
     Box* result_tail = head;
     Box* it = result_head->pNext;

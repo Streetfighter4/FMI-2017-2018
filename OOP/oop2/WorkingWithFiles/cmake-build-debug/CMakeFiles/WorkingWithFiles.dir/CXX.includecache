@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/yasen/Programming/FMI-2017-2018/OOP/oop2/WorkingWithFiles/main.cpp
+iostream
+-
+fstream
+-
+cstring
+-
+

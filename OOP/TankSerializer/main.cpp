@@ -28,7 +28,6 @@ int main() {
     size_t num = 5;
     outFile.write((const char*)&num, sizeof(size_t));
     alisArmy.serializeArmy(outFile);
-    outFile.close();
     Tank tank6("TankaNaYasen", 40.0, 100.0);
     Tank tank7("TankaNaYasenn", 80.0, 100.0);
     Tank tank8("TankaNaYasennn", 12.3, 100.0);

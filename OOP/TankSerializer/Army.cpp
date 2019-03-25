@@ -7,7 +7,6 @@
 #include "Army.h"
 using std::cout;
 using std::endl;
-u
 
 Army::Army() : tanks(nullptr), currSize(0), capacity(0) {}
 
@@ -60,6 +59,7 @@ void Army::serializeArmy(ofstream& file) {
     for (int i = 0; i < currSize; ++i) {
         tanks[i].serialize(file);
     }
+    file.close();
 }
 
 void Army::deserializeArmy(ifstream& file) {

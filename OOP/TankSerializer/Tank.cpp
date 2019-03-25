@@ -32,9 +32,9 @@ void Tank::serialize(ofstream& outFile) {
 
     outFile.write(this->name, len);
 
-    outFile.write((char*)&this->shotPower, sizeof(double));
+    outFile.write((const char*)&this->shotPower, sizeof(double));
 
-    outFile.write((char*)&this->lifePoints, sizeof(double));
+    outFile.write((const char*)&this->lifePoints, sizeof(double));
 
     if (outFile.good())
         std::cout << "Successfully serialize" << std::endl;
