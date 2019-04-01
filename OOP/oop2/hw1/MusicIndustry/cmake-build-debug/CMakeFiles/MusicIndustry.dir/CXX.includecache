@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/yasen/Programming/FMI-2017-2018/OOP/oop2/hw1/MusicIndustry/Director.cpp
+Director.h
+/home/yasen/Programming/FMI-2017-2018/OOP/oop2/hw1/MusicIndustry/Director.h
+
+/home/yasen/Programming/FMI-2017-2018/OOP/oop2/hw1/MusicIndustry/Director.h
+string.h
+-
+
+/home/yasen/Programming/FMI-2017-2018/OOP/oop2/hw1/MusicIndustry/MusicCompany.cpp
+MusicCompany.h
+/home/yasen/Programming/FMI-2017-2018/OOP/oop2/hw1/MusicIndustry/MusicCompany.h
+
+/home/yasen/Programming/FMI-2017-2018/OOP/oop2/hw1/MusicIndustry/MusicCompany.h
+Director.h
+/home/yasen/Programming/FMI-2017-2018/OOP/oop2/hw1/MusicIndustry/Director.h
+MusicStudio.h
+/home/yasen/Programming/FMI-2017-2018/OOP/oop2/hw1/MusicIndustry/MusicStudio.h
+
+/home/yasen/Programming/FMI-2017-2018/OOP/oop2/hw1/MusicIndustry/MusicStudio.cpp
+MusicStudio.h
+/home/yasen/Programming/FMI-2017-2018/OOP/oop2/hw1/MusicIndustry/MusicStudio.h
+
+/home/yasen/Programming/FMI-2017-2018/OOP/oop2/hw1/MusicIndustry/MusicStudio.h
+stdlib.h
+-
+iostream
+-
+
+/home/yasen/Programming/FMI-2017-2018/OOP/oop2/hw1/MusicIndustry/main.cpp
+iostream
+-
+MusicCompany.h
+/home/yasen/Programming/FMI-2017-2018/OOP/oop2/hw1/MusicIndustry/MusicCompany.h
+
