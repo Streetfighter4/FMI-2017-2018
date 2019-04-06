@@ -4,8 +4,18 @@
 
 #include "MusicCompany.h"
 
-MusicCompany::MusicCompany(Director *newDirector, MusicStudio *newMusicStudio, double newReadlPriceForStudio)
-            : director(newDirector), musicStudio(newMusicStudio), realPriceForStudio(newReadlPriceForStudio) {
+MusicCompany::MusicCompany(const char* newName, Director *newDirector, MusicStudio *newMusicStudio, double newReadlPriceForStudio)
+            : director(newDirector), musicStudio(newMusicStudio) {
+
+    name = new char[strlen(newName)+1];
+    strcpy(name, newName);
+
+    if(newReadlPriceForStudio < musicStudio->getMinimimPricePerHour()) {
+        realPriceForStudio = musicStudio->getMinimimPricePerHour();
+    } else {
+        realPriceForStudio = newReadlPriceForStudio;
+    }
+
     incomeForDay = 0;
 }
 
@@ -53,4 +63,8 @@ void MusicCompany::reductionWithPercentages(double percentages) {
     }
     realPriceForStudio -= reduction;
     std::cout << "New price per hour is: " << realPriceForStudio << std::endl;
+}
+
+MusicCompany::~MusicCompany() {
+    delete[] name;
 }

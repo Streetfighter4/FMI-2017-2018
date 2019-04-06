@@ -16,7 +16,7 @@ void testSetNewRentPrice(MusicCompany& musicCompany) {
     std::cout << "===========================" << std::endl;
 }
 
-void testIncomeForDay(MusicCompany& musicCompany) {
+void testIncomeForDay(const MusicCompany& musicCompany) {
 
     std::cout << "Income for day is: " << musicCompany.getIncomeForDay() << " in FMI coins " << std::endl;
     std::cout << "Income for day is: " << musicCompany.getIncomeForDayInEuro() << " in euros " << std::endl;
@@ -25,7 +25,7 @@ void testIncomeForDay(MusicCompany& musicCompany) {
     std::cout << "===========================" << std::endl;
 }
 
-void testComparisonCompanyPerRent(MusicCompany& m1, MusicCompany& m2, MusicCompany& m3) {
+void testComparisonCompanyPerRent(const MusicCompany& m1, const MusicCompany& m2, const MusicCompany& m3) {
     if(m1.lessThen(m2)) { // 150.0 < 120.0 ?
         std::cout << "Choose music company 1" << std::endl;
     } else {
@@ -48,7 +48,7 @@ void testReductionWithPercentages(MusicCompany& musicCompany) {
     std::cout << "===========================" << std::endl;
 }
 
-void testComparisonCompanyByDirector(MusicCompany& m1, MusicCompany& m2, MusicCompany& m3) {
+void testComparisonCompanyByDirector(const MusicCompany& m1, const MusicCompany& m2, const MusicCompany& m3) {
     if(m1.haveYoungerDirector(m2)) { // 20 < 8 ?
         std::cout << m1.getDirector()->getName() << " is younger than " << m2.getDirector()->getName() << std::endl;
     } else {
@@ -71,9 +71,9 @@ int main() {
 
     MusicStudio musicStudio(100.0, 8);
 
-    MusicCompany musicCompany1(&yasen, &musicStudio, 150.0);
-    MusicCompany musicCompany2(&ali, &musicStudio, 120.0);
-    MusicCompany musicCompany3(&toni, &musicStudio, 200.0);
+    MusicCompany musicCompany1("Stars", &yasen, &musicStudio, 150.0);
+    MusicCompany musicCompany2("Talents", &ali, &musicStudio, 120.0);
+    MusicCompany musicCompany3("Whales", &toni, &musicStudio, 200.0);
 
     testRentMusicStudio(musicCompany1);
 

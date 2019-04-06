@@ -10,14 +10,17 @@
 
 class MusicCompany {
 private:
+    char* name;
     Director* director;
     MusicStudio* musicStudio;
     double realPriceForStudio;
     double incomeForDay;
 
 public:
-    MusicCompany(Director* newDirector, MusicStudio* newMusicStudio, double newRealPriceForStudio);
-
+    MusicCompany(const char* newName, Director* newDirector, MusicStudio* newMusicStudio, double newRealPriceForStudio);
+    MusicCompany(const MusicCompany&) = delete;
+    MusicCompany&operator=(const MusicCompany&) = delete;
+    ~MusicCompany();
 public:
     void rendStudio(size_t perHour);
     void setNewRentPrice(double newRentPrice);
